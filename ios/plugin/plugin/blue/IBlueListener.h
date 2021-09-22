@@ -22,6 +22,8 @@
 - (void) setUpFail;
 - (void) unConnect;
 - (void) scanResult: (NSString*) address name: (NSString*) name;
+- (void) stopScanManual;
+- (void) stopScanTimeOut;
 - (void) connectSuccess;
 - (void) connectFail: (NSInteger) errCode message: (NSString*) message;
 - (void) disconnectSuccess;

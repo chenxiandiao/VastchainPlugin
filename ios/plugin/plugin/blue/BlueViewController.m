@@ -62,7 +62,8 @@
     //    NSString *url = @"http://10.159.179.214:8000";
     //    NSString *url = @"http://10.150.229.13:8000";
     //    NSString *url = @"http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456";
-    NSString *url = @"http://www.baidu.com";
+//    NSString *url = @"http://www.baidu.com";
+    NSString *url = @"http://10.144.1.116:8000";
     NSString *jspath = [[NSBundle mainBundle]pathForResource:@"log.js" ofType:nil];
     NSString *javaScriptSource = [NSString stringWithContentsOfFile:jspath encoding:NSUTF8StringEncoding error:nil];
     NSLog(@"%@", javaScriptSource);
@@ -94,17 +95,25 @@
     NSLog(@"method:%@", method);
     NSDictionary *params = [body objectForKey:@"params"];
     NSLog(@"params:%@", params);
-    if ([method isEqual: SET_UP]) {
+    if ([method isEqualToString: SET_UP]) {
         [self initBlue];
-    } else if ([method isEqual:SCAN]) {
+    } else if ([method isEqualToString:SCAN]) {
+        NSInteger timeOut = [[params objectForKey:@"timeout"] integerValue]/1000;
+        NSLog(@"超时时间:%@", params);
         [self scan];
-    } else if ([method isEqual:CONNECT]) {
+        [self performSelector:@selector(stopScan) withObject:nil afterDelay:timeOut];
+    } else if ([method isEqualToString:CONNECT]) {
         NSString *uuid = [params objectForKey:@"deviceId"];
         NSLog(@"uuid:%@", uuid);
         [self connect:uuid];
-    } else if([method isEqual:WRITE]) {
+    } else if ([method isEqualToString:DISCONNECT]) {
+        
+    }
+    else if([method isEqualToString:WRITE]) {
         NSString *data = [params objectForKey:@"data"];
         [self write:data];
+    } else if([method isEqualToString:STOP_SCAN]) {
+        [self stopScan:YES];
     }
 }
 
@@ -179,8 +188,15 @@
     [self.myCentralManager scanForPeripheralsWithServices:nil options:nil];
 }
 
-- (void)stopScan {
+- (void)stopScan:(BOOL)manual {
     [self.myCentralManager stopScan];
+    [self.blueListener stopScanTimeOut];
+}
+
+- (void)stopScan {
+    NSLog(@"扫描停止");
+    [self.myCentralManager stopScan];
+    [self.blueListener stopScanManual];
 }
 
 
@@ -236,6 +252,15 @@
     //    self.connectBlock = completion;
     //2.连接外设 centralManager   connectPeripheral
     [self.myCentralManager connectPeripheral:peripheral options:nil];
+}
+
+- (void)cancelPeripheral:(CBPeripheral *)peripheral {
+    [self.myCentralManager cancelPeripheralConnection:self.peripheral];
+}
+
+- (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
+    [self.blueListener disconnectSuccess];
+    NSLog(@"断开蓝牙连接成功")
 }
 
 // 连接成功

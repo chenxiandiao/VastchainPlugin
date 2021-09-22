@@ -34,6 +34,14 @@
     return jsonString;
 }
 
+
+- (NSString*)successCode: (NSInteger)code message: (NSString*) message {
+    NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:10];
+    [data setObject: [NSNumber numberWithInteger:code] forKey:@"code"];
+    [data setObject:message forKey:@"message"];
+    return [self dictToJson:data];
+}
+
 - (NSString*)success:(NSString*) message {
     NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:10];
     [data setObject:@0 forKey:@"code"];
@@ -70,6 +78,16 @@
     [self invoke:SCAN data:response];
 }
 
+- (void)stopScanManual {
+    NSString* response = [self success:MESSAGE_SUCCESS];
+    [self invoke:SCAN data:response];
+}
+
+- (void)stopScanTimeOut {
+    NSString* response = [self successCode:1 message:MESSAGE_SUCCESS];
+    [self invoke:SCAN data:response];
+}
+
 - (void) connectSuccess{
     NSString* response = [self success:MESSAGE_SUCCESS];
     [self invoke:CONNECT data:response];
@@ -81,15 +99,20 @@
 }
 
 - (void) disconnectSuccess{
-    
+    NSString* response = [self success:MESSAGE_SUCCESS];
+    [self invoke:DISCONNECT data:response];
 }
 
+// 暂未调用
 - (void) writeSuccess{
-    
+    NSString* response = [self success:MESSAGE_SUCCESS];
+    [self invoke:WRITE data:response];
 }
 
+// 暂未调用
 - (void) writeFail{
-    
+    NSString* response = [self success:MESSAGE_FAIL];
+    [self invoke:WRITE data:response];
 }
 
 - (void) readCallback: (NSString*) data{
@@ -102,7 +125,7 @@
 - (void) invoke: (NSString*) method data: (NSString*) data{
     NSString *callback = [NSString stringWithFormat:@"blueCallback(\"%@\",%@)",method, data];
     NSLog(@"callback:%@", callback);
-    [myWebView evaluateJavaScript:callback completionHandler:^(id _Nullable, NSError * _Nullable error) {
+    [myWebView evaluateJavaScript:callback completionHandler:^(id _Nullable , NSError * _Nullable error) {
         NSLog(@"js返回");
     }];
 }

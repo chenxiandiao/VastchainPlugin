@@ -20,7 +20,9 @@
 - (void) initBlue;
 - (void) scan;
 - (void) stopScan;
+- (void) stopScan:(BOOL) manual;
 - (void) connectPeripheral:(CBPeripheral*)peripheral;
+- (void) cancelPeripheral:(CBPeripheral*)peripheral;
 
 - (void) write;
 
