@@ -169,6 +169,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 			return
 		}
 		mBluetoothGatt?.disconnect()
+		blueListener?.disconnectSuccess()
 	}
 
 	fun writeCharacteristic(
