@@ -10,12 +10,15 @@
 #import <WebKit/WebKit.h>
 
 @interface BlueViewController : UIViewController<CBCentralManagerDelegate,CBPeripheralDelegate,WKScriptMessageHandler>{
+    NSString *mUrl;
 }
 @property(nonatomic,strong)CBCentralManager *myCentralManager;
 @property(nonatomic,strong)CBPeripheral *peripheral;
 @property(nonatomic,strong)CBCharacteristic *characteristic;
 @property WKWebView *myWebView;
 
+
+- (id) initWithUrl: (NSString*) url;
 - (void) initWebView;
 - (void) initBlue;
 - (void) scan;

@@ -23,11 +23,19 @@
 
 @implementation BlueViewController
 
+
+- (id)initWithUrl:(NSString *)url {
+    self = [super init];
+    if (self){
+        mUrl = url;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     [self.view setBackgroundColor: [UIColor whiteColor]];
-    //        [self scan];
     [self initToolBar];
     [self initWebView];
     [self initListener];
@@ -62,8 +70,8 @@
     //    NSString *url = @"http://10.159.179.214:8000";
     //    NSString *url = @"http://10.150.229.13:8000";
     //    NSString *url = @"http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456";
-//    NSString *url = @"http://www.baidu.com";
-    NSString *url = @"http://10.144.1.116:8000";
+    //    NSString *url = @"http://www.baidu.com";
+    NSString *url = mUrl;
     NSString *jspath = [[NSBundle mainBundle]pathForResource:@"log.js" ofType:nil];
     NSString *javaScriptSource = [NSString stringWithContentsOfFile:jspath encoding:NSUTF8StringEncoding error:nil];
     NSLog(@"%@", javaScriptSource);
@@ -260,7 +268,7 @@
 
 - (void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
     [self.blueListener disconnectSuccess];
-    NSLog(@"断开蓝牙连接成功")
+    NSLog(@"断开蓝牙连接成功");
 }
 
 // 连接成功
