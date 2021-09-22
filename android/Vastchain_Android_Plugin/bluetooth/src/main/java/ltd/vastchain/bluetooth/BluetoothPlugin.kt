@@ -67,6 +67,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 		if (timeOut != 0L) {
 			Handler(Looper.getMainLooper()).postDelayed({
 				LogUtil.e("超时停止扫描")
+				blueListener?.scanStopByTimeOut()
 				stopScan21()
 			}, timeOut)
 		}
@@ -124,9 +125,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 			LogUtil.e("请先初始化蓝牙模块")
 			return
 		}
-		if (deviceIds.isEmpty()) {
-			blueListener?.scanFail()
-		}
+		blueListener?.scanStop()
 		val scanner = mBluetoothAdapter?.bluetoothLeScanner
 		scanner?.stopScan(getScanCallback21())
 	}

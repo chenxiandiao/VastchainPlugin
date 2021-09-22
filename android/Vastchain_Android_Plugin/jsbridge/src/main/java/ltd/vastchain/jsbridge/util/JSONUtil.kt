@@ -7,9 +7,9 @@ import org.json.JSONObject
  */
 object JSONUtil {
 
-	fun success(message: String? = null):JSONObject {
+	fun success(code: Int = 0, message: String? = null):JSONObject {
 		var res = JSONObject()
-		res.put("code", 0)
+		res.put("code", code)
 		if (message.isNullOrEmpty()) {
 			res.put("message", "成功")
 		} else {

@@ -118,8 +118,12 @@ class BlueJSBridge(var webView: WebView) {
 				callback.invoke(SCAN, JSONUtil.success().put("data", obj))
 			}
 
-			override fun scanFail() {
-				callback.invoke(SCAN, JSONUtil.error(message = "未搜索到设备"))
+			override fun scanStop() {
+				callback.invoke(SCAN, JSONUtil.success(message = "停止搜索到设备"))
+			}
+
+			override fun scanStopByTimeOut() {
+				callback.invoke(SCAN, JSONUtil.success(1, "超时停止扫描"))
 			}
 
 			override fun connectSuccess() {
@@ -147,7 +151,7 @@ class BlueJSBridge(var webView: WebView) {
 			}
 
 			override fun setMtuSuccess() {
-				callback.invoke(MTU, JSONUtil.success("设置mtu成功"))
+				callback.invoke(MTU, JSONUtil.success(message = "设置mtu成功"))
 			}
 
 			override fun setMtuFail() {

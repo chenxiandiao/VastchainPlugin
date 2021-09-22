@@ -11,7 +11,9 @@ interface IBlueListener {
 
 	fun scanResult(address: String, name: String?)
 
-	fun scanFail()
+	fun scanStop()
+
+	fun scanStopByTimeOut()
 
 	fun connectSuccess()
 
