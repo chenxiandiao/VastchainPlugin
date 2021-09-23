@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'VastchainPlugin/Classes/**/*'
+  s.source_files = 'sdk/ios/VastchainPlugin/Classes/**/*'
   
   # s.resource_bundles = {
   #   'VastchainPlugin' => ['VastchainPlugin/Assets/*.png']
