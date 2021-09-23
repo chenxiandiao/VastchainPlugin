@@ -7,11 +7,11 @@
 //
 
 @import UIKit;
-#import "MAINAppDelegate.h"
+#import "MainAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([MAINAppDelegate class]));
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([MainAppDelegate class]));
     }
 }

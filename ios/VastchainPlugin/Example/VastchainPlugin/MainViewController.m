@@ -6,15 +6,15 @@
 //  Copyright (c) 2021 chenxiandiao. All rights reserved.
 //
 
-#import "MAINViewController.h"
+#import "MainViewController.h"
 #import "BlueViewController.h"
 
-@interface MAINViewController ()
+@interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *goBtn;
 
 @end
 
-@implementation MAINViewController
+@implementation MainViewController
 
 - (void)viewDidLoad
 {

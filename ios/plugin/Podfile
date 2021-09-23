@@ -6,5 +6,6 @@ target 'plugin' do
   use_frameworks!
 
   # Pods for plugin
+    pod 'BPodCxd', '0.1.0'
 
 end

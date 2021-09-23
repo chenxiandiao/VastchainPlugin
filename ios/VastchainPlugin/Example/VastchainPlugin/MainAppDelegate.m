@@ -6,9 +6,9 @@
 //  Copyright (c) 2021 chenxiandiao. All rights reserved.
 //
 
-#import "MAINAppDelegate.h"
+#import "MainAppDelegate.h"
 
-@implementation MAINAppDelegate
+@implementation MainAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

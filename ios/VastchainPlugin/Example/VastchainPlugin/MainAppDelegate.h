@@ -1,5 +1,5 @@
 //
-//  MAINViewController.h
+//  MAINAppDelegate.h
 //  VastchainPlugin
 //
 //  Created by chenxiandiao on 09/22/2021.
@@ -8,6 +8,8 @@
 
 @import UIKit;
 
-@interface MAINViewController : UIViewController
+@interface MainAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
 
 @end
