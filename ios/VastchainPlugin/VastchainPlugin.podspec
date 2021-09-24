@@ -21,20 +21,22 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/chenxiandiao/VastchainPlugin'
+  s.homepage         = 'https://vastchain.coding.net/p/patrol/d/sdk/git'                       
+  # s.homepage         = 'https://github.com/chenxiandiao/VastchainPlugin'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'chenxiandiao' => '15068808239@163.com' }
-  s.source           = { :git => 'https://github.com/chenxiandiao/VastchainPlugin.git', :tag => s.version.to_s }
+  # s.source           = { :git => 'https://github.com/chenxiandiao/VastchainPlugin.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://e.coding.net/vastchain/patrol/sdk.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'ios/VastchainPlugin/VastchainPlugin/Classes/**/*'
   
-#  s.resource_bundles = {
-#     'VastchainPlugin' => ['ios/VastchainPlugin/VastchainPlugin/Assets/*.png']
-#  }
+  s.resource_bundles = {
+    'VastchainPlugin' => ['ios/VastchainPlugin/VastchainPlugin/Assets/*.png']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
