@@ -1,6 +1,5 @@
 package ltd.vastchain.jsbridge
 
-import android.util.Log
 import android.webkit.WebView
 import ltd.vastchain.jsbridge.util.LogUtil
 import org.json.JSONObject
@@ -23,7 +22,7 @@ class CoreJsCallback(private val webView: WebView?, private val method: String? 
 		LogUtil.e(callback)
 		webView?.post{
 			webView?.evaluateJavascript(callback) {
-				Log.e("cxd", "js回调：$it")
+				LogUtil.e("cxd", "js回调：$it")
 			}
 		}
 	}

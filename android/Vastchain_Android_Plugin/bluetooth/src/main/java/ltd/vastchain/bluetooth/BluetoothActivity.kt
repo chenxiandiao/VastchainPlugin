@@ -6,12 +6,17 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import ltd.vastchain.jsbridge.CoreJsCallback
+import ltd.vastchain.jsbridge.CoreWebProgressBar
 import ltd.vastchain.jsbridge.CoreWebView
 import ltd.vastchain.jsbridge.util.JSONUtil
 import ltd.vastchain.jsbridge.util.LogUtil
@@ -36,6 +41,7 @@ class BluetoothActivity : AppCompatActivity() {
 	private var bluetoothPlugin: BluetoothPlugin? = null
 
 	private var callback: CoreJsCallback? = null
+	private var progressBar: CoreWebProgressBar? = null
 
 	private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
@@ -47,14 +53,34 @@ class BluetoothActivity : AppCompatActivity() {
 		if (intent.getStringExtra("url").isNullOrEmpty()) {
 			LogUtil.e("intent无传递参数")
 		}
-
+		progressBar = findViewById(R.id.web_progressbar)
 		url = intent.getStringExtra("url") ?: URL
 		webView = findViewById(R.id.webView)
 		mJSBridge = BlueJSBridge(webView!!)
+		initData()
 		webView?.addJavascriptInterface(mJSBridge!!, "BlueJSBridge")
 //		webView?.loadUrl("http://10.150.229.13:8000/")
 		webView?.loadUrl(url)
-		initData()
+		webView?.webViewClient = object : WebViewClient() {
+			override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+				println("开始加载了")
+				progressBar?.visibility = View.VISIBLE
+			}
+
+			//设置结束加载函数
+			override fun onPageFinished(view: WebView, url: String) {
+				println("结束加载了")
+				progressBar?.startProgressAnimation(100, true)
+			}
+
+		}
+		webView?.handleWebViewClient = object : WebChromeClient(){
+			override fun onProgressChanged(view: WebView?, newProgress: Int) {
+				super.onProgressChanged(view, newProgress)
+				progressBar?.startProgressAnimation(newProgress, false)
+
+			}
+		}
 		initListener()
 	}
 
@@ -79,6 +105,7 @@ class BluetoothActivity : AppCompatActivity() {
 						val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 						startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 					} else {
+						LogUtil.e("checkLocation")
 						checkLocation()
 					}
 				} else {
@@ -105,6 +132,11 @@ class BluetoothActivity : AppCompatActivity() {
 				REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS
 			)
 		} else {
+			if (this.callback!= null ) {
+				LogUtil.e("callback is not null")
+			} else {
+				LogUtil.e("callback is null")
+			}
 			this.callback?.invoke(BlueJSBridge.SET_UP, JSONUtil.success())
 		}
 	}

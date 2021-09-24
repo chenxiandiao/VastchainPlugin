@@ -36,9 +36,9 @@ class BlueJSBridge(var webView: WebView) {
 	@JavascriptInterface
 	fun blueInvoke(method: String, params: String?) {
 		try {
-			Log.e("cxd", "method:" + method)
+			LogUtil.e("cxd", "method:" + method)
 			params?.let {
-				Log.e("cxd", "params:" + it)
+				LogUtil.e("cxd", "params:" + it)
 			}
 			var jsonObject: JSONObject? = null
 			if (params != null) {
@@ -81,7 +81,7 @@ class BlueJSBridge(var webView: WebView) {
 			WRITE -> {
 				var data: String = params?.optString("data").orEmpty()
 				val length: Int = params?.optInt("length") ?: 0
-				LogUtil.e("待发送数据长度："+ data.length)
+				LogUtil.e("待发送数据长度：" + data.length)
 				bluetoothPlugin?.writeCharacteristic(data, length)
 			}
 			READ -> {
@@ -119,7 +119,7 @@ class BlueJSBridge(var webView: WebView) {
 			}
 
 			override fun scanStop() {
-				callback.invoke(SCAN, JSONUtil.success(message = "停止搜索到设备"))
+				callback.invoke(SCAN, JSONUtil.success(2, message = "停止搜索到设备"))
 			}
 
 			override fun scanStopByTimeOut() {

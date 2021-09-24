@@ -84,7 +84,7 @@ object LogUtil {
 
 	@JvmStatic
 	private fun log(tag: String, msg: String?, t: Throwable?, priority: Int) {
-		if (!BuildConfig.DEBUG) return
+//		if (!BuildConfig.DEBUG) return
 		if (msg.isNullOrBlank() && t == null) return
 		val log = getLogString(msg, t)
 		when (priority) {

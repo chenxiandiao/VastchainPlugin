@@ -2,11 +2,13 @@ package ltd.vastchain.jsbridge
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
+import android.webkit.ConsoleMessage
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import ltd.vastchain.jsbridge.BuildConfig
+import ltd.vastchain.jsbridge.util.LogUtil
+
+
 //import com.github.lzyzsd.library.BuildConfig
 
 
@@ -14,6 +16,8 @@ import ltd.vastchain.jsbridge.BuildConfig
  * Created by admin on 2021/9/10.
  */
 class CoreWebView: WebView {
+
+	var handleWebViewClient: WebChromeClient? = null
 
 	constructor(context: Context) : super(context) {
 		initView()
@@ -49,19 +53,22 @@ class CoreWebView: WebView {
 		webSettings.loadsImagesAutomatically = true
 		webSettings.mediaPlaybackRequiresUserGesture = true
 
+		webSettings.allowContentAccess = true
+		webSettings.allowFileAccess = true
+
 		//UserAgent
 //		val userAgent = StringBuilder()
 //		userAgent.append(AppUtils.getWebViewUserAgent(context))
 //		webSettings.userAgentString = userAgent.toString()
 
-		this.webViewClient = object : WebViewClient() {
-			override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-				Log.e("cxd", url)
-				view.loadUrl(url)
-				return true
-			}
-
-//            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
+//		this.webViewClient = object : WebViewClient() {
+//			override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+//				Log.e("cxd", url)
+//				view.loadUrl(url)
+//				return true
+//			}
+//
+//            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
 //                println("开始加载了")
 //            }
 //
@@ -69,6 +76,25 @@ class CoreWebView: WebView {
 //            override fun onPageFinished(view: WebView, url: String) {
 //                println("结束加载了")
 //            }
+//		}
+		this.webChromeClient = object : WebChromeClient() {
+			override fun onConsoleMessage(message: String, lineNumber: Int, sourceID: String) {
+				LogUtil.i("console", "$message($sourceID:$lineNumber)")
+				super.onConsoleMessage(message, lineNumber, sourceID)
+			}
+
+			override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
+				LogUtil.i(
+					"console",
+					"[" + consoleMessage.messageLevel() + "] " + consoleMessage.message() + "(" + consoleMessage.sourceId() + ":" + consoleMessage.lineNumber() + ")"
+				)
+				return super.onConsoleMessage(consoleMessage)
+			}
+
+			override fun onProgressChanged(view: WebView?, newProgress: Int) {
+				super.onProgressChanged(view, newProgress)
+				handleWebViewClient?.onProgressChanged(view, newProgress)
+			}
 		}
 	}
 }
