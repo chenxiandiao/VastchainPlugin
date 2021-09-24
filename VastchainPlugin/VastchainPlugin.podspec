@@ -25,12 +25,12 @@ TODO: Add long description of the pod here.
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'chenxiandiao' => '15068808239@163.com' }
-  s.source           = { :git => 'https://github.com/chenxiandiao/VastchainPlugin.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://e.coding.net/vastchain/potral/sdk.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'VastchainPlugin/Classes/**/*'
+  s.source_files = 'ios/VastchainPlugin/VastchainPlugin/Classes/**/*'
   
   # s.resource_bundles = {
   #   'VastchainPlugin' => ['VastchainPlugin/Assets/*.png']

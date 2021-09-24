@@ -7,7 +7,7 @@
 //
 
 #import "MainViewController.h"
-#import "VastchainPlugin/BlueViewController.h"
+#import "BlueViewController.h"
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *goBtn;
@@ -24,7 +24,7 @@
 
 - (IBAction)clickGoBtn:(id)sender {
     BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8000"];
-
+    
     [self.navigationController pushViewController:viewController animated:NO];
 }
 
