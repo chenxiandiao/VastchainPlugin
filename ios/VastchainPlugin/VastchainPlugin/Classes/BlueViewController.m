@@ -48,7 +48,11 @@
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
     UIImageView *backBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10,height,44,44)];
     [backBtn setContentMode:UIViewContentModeCenter];
-    [backBtn setImage:[UIImage imageNamed:@"BackIcon"]];
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
+                                stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
+    NSLog(@"bundlePath:%@", bundlePath);
+    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
+    [backBtn setImage:[UIImage imageNamed:@"BackIcon" inBundle:resource_bundle compatibleWithTraitCollection:nil]];
     [self.view addSubview:backBtn];
     backBtn.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goBack)];
@@ -73,9 +77,13 @@
     //    NSString *url = @"http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456";
     //    NSString *url = @"http://www.baidu.com";
     NSString *url = mUrl;
-    NSString *jspath = [[NSBundle mainBundle]pathForResource:@"log.js" ofType:nil];
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
+                                stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
+    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString *jspath = [resource_bundle pathForResource:@"log.js" ofType:nil];
+    NSLog(@"jspath:%@", jspath);
     NSString *javaScriptSource = [NSString stringWithContentsOfFile:jspath encoding:NSUTF8StringEncoding error:nil];
-    NSLog(@"%@", javaScriptSource);
+    NSLog(@"ScriptSource:%@", javaScriptSource);
     
     WKUserScript *userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     [self.myWebView.configuration.userContentController addUserScript:userScript];

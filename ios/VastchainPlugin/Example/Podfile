@@ -1,10 +1,11 @@
+#source 'https://e.coding.net/vastchain/potral/sdk.git'
 use_frameworks!
 
 platform :ios, '9.0'
 
 target 'VastchainPlugin_Example' do
   pod 'VastchainPlugin', :path => '../'
-
+#  pod 'VastchainPlugin', '0.1.2'
   target 'VastchainPlugin_Tests' do
     inherit! :search_paths
 
