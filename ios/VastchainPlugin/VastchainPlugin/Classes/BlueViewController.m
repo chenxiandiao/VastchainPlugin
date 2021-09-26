@@ -46,7 +46,8 @@
 
 - (void) initToolBar{
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    UIImageView *backBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10,height+10,24,24)];
+    UIImageView *backBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10,height,44,44)];
+    [backBtn setContentMode:UIViewContentModeCenter];
     [backBtn setImage:[UIImage imageNamed:@"BackIcon"]];
     [self.view addSubview:backBtn];
     backBtn.userInteractionEnabled = YES;
@@ -55,7 +56,7 @@
     
     UILabel *aLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, height,[UIScreen mainScreen].bounds.size.width-60, 44)];
     aLabel.numberOfLines = 0;
-    aLabel.textColor = [UIColor blueColor];
+    aLabel.font = [UIFont boldSystemFontOfSize:16];
     aLabel.backgroundColor = [UIColor clearColor];
     aLabel.textAlignment = NSTextAlignmentCenter;
     aLabel.text = @"蓝牙打卡";
@@ -66,7 +67,7 @@
 - (void)initWebView {
     //    self.myWebView = [[WKWebView alloc]initWithFrame:self.view.bounds];
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.myWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, height+44, self.view.bounds.size.width, self.view.bounds.size.height -44)];
+    self.myWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, height+60, self.view.bounds.size.width, self.view.bounds.size.height -44)];
     //    NSString *url = @"http://10.159.179.214:8000";
     //    NSString *url = @"http://10.150.229.13:8000";
     //    NSString *url = @"http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456";
