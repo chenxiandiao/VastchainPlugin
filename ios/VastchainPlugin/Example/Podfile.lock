@@ -1,0 +1,16 @@
+PODS:
+  - VastchainPlugin (0.1.3)
+
+DEPENDENCIES:
+  - VastchainPlugin (from `../`)
+
+EXTERNAL SOURCES:
+  VastchainPlugin:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  VastchainPlugin: 580043095729ab856603180a0ff7948af4cd6899
+
+PODFILE CHECKSUM: 718c5846fed8e8aed974aec8ee050481a6c64dd3
+
+COCOAPODS: 1.10.2

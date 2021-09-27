@@ -28,7 +28,7 @@
 
 - (IBAction)clickBtn:(id)sender {
     NSLog(@"点击");
-    BlueViewController *blueViewController = [[BlueViewController alloc]init];
+    BlueViewController *blueViewController = [[BlueViewController alloc]initWithUrl:@"http://www.baidu.com"];
     [self.navigationController pushViewController:blueViewController animated:NO];
 }
 

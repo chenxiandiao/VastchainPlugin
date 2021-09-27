@@ -5,7 +5,7 @@
 //  Created by cxd on 2021/9/16.
 //
 
-#import "WebViewController.h"
+
 #import "BlueViewController.h"
 #import "IBlueListener.h"
 #import "BlueJsApi.h"
@@ -46,8 +46,13 @@
 
 - (void) initToolBar{
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    UIImageView *backBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10,height+10,24,24)];
-    [backBtn setImage:[UIImage imageNamed:@"BackIcon"]];
+    UIImageView *backBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10,height,44,44)];
+    [backBtn setContentMode:UIViewContentModeCenter];
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
+                                stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
+    NSLog(@"bundlePath:%@", bundlePath);
+    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
+    [backBtn setImage:[UIImage imageNamed:@"BackIcon" inBundle:resource_bundle compatibleWithTraitCollection:nil]];
     [self.view addSubview:backBtn];
     backBtn.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goBack)];
@@ -55,7 +60,7 @@
     
     UILabel *aLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, height,[UIScreen mainScreen].bounds.size.width-60, 44)];
     aLabel.numberOfLines = 0;
-    aLabel.textColor = [UIColor blueColor];
+    aLabel.font = [UIFont boldSystemFontOfSize:16];
     aLabel.backgroundColor = [UIColor clearColor];
     aLabel.textAlignment = NSTextAlignmentCenter;
     aLabel.text = @"蓝牙打卡";
@@ -66,15 +71,19 @@
 - (void)initWebView {
     //    self.myWebView = [[WKWebView alloc]initWithFrame:self.view.bounds];
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.myWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, height+44, self.view.bounds.size.width, self.view.bounds.size.height -44)];
+    self.myWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, height+60, self.view.bounds.size.width, self.view.bounds.size.height -44)];
     //    NSString *url = @"http://10.159.179.214:8000";
     //    NSString *url = @"http://10.150.229.13:8000";
     //    NSString *url = @"http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456";
     //    NSString *url = @"http://www.baidu.com";
     NSString *url = mUrl;
-    NSString *jspath = [[NSBundle mainBundle]pathForResource:@"log.js" ofType:nil];
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
+                                stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
+    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString *jspath = [resource_bundle pathForResource:@"log.js" ofType:nil];
+    NSLog(@"jspath:%@", jspath);
     NSString *javaScriptSource = [NSString stringWithContentsOfFile:jspath encoding:NSUTF8StringEncoding error:nil];
-    NSLog(@"%@", javaScriptSource);
+    NSLog(@"ScriptSource:%@", javaScriptSource);
     
     WKUserScript *userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     [self.myWebView.configuration.userContentController addUserScript:userScript];
