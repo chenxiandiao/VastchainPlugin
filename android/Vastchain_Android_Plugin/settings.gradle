@@ -14,3 +14,4 @@ rootProject.name = "Vastchain_Android_Plugin"
 include ':app'
 include ':bluetooth'
 include ':jsbridge'
+include ':qrscan'

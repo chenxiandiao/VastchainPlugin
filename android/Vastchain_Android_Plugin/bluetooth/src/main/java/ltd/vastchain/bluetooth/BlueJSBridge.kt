@@ -1,11 +1,11 @@
 package ltd.vastchain.bluetooth
 
-import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import ltd.vastchain.jsbridge.CoreJsCallback
 import ltd.vastchain.jsbridge.util.JSONUtil
 import ltd.vastchain.jsbridge.util.LogUtil
+import ltd.vastchain.qrscan.QrScanManager
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -24,6 +24,7 @@ class BlueJSBridge(var webView: WebView) {
 		const val WRITE = "writeBLECharacteristicValue"
 		const val READ = "readBLECharacteristicValue"
 		const val MTU = "setBLEMTU"
+		const val SCAN_QR_CODE = "scanQrCode"
 	}
 
 	private var blueListener: IBlueListener? = null
@@ -90,6 +91,9 @@ class BlueJSBridge(var webView: WebView) {
 			MTU -> {
 				var mtu = params?.optInt("mtu")
 				bluetoothPlugin?.setMtu(mtu = mtu)
+			}
+			SCAN_QR_CODE -> {
+				QrScanManager.start(webView.context, callback = callback)
 			}
 			else -> {
 
