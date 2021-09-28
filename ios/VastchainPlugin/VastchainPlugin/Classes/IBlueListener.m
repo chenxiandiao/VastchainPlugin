@@ -122,6 +122,13 @@
     [self invoke:READ data:response];
 }
 
+- (void)qrScanResult:(NSString *)data {
+    NSMutableDictionary *responsObj = [self successObj:@"扫描结果"];
+    [responsObj setObject:data forKey:@"data"];
+    NSString *response = [self dictToJson:responsObj];
+    [self invoke:SCAN_QR_CODE data:response];
+}
+
 - (void) invoke: (NSString*) method data: (NSString*) data{
     NSString *callback = [NSString stringWithFormat:@"blueCallback(\"%@\",%@)",method, data];
     NSLog(@"callback:%@", callback);

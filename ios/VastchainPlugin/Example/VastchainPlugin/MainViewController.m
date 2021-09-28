@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "VastchainPlugin/BlueViewController.h"
+#import "VastchainPlugin/WCQRCodeVC.h"
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *goBtn;
@@ -23,9 +24,18 @@
 }
 
 - (IBAction)clickGoBtn:(id)sender {
-    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8000"];
+    [self openBlue];
+//    [self openScan];
+}
 
+- (void) openBlue {
+    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8000"];
     [self.navigationController pushViewController:viewController animated:NO];
+}
+
+- (void) openScan {
+    WCQRCodeVC *WCVC = [[WCQRCodeVC alloc] init];
+    [self.navigationController pushViewController:WCVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

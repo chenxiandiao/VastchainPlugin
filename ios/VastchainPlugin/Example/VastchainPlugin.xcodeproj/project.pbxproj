@@ -305,10 +305,12 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-VastchainPlugin_Example/Pods-VastchainPlugin_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SGQRCode/SGQRCode.framework",
 				"${BUILT_PRODUCTS_DIR}/VastchainPlugin/VastchainPlugin.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SGQRCode.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VastchainPlugin.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

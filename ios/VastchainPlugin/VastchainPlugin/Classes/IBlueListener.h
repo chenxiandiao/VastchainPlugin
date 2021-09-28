@@ -30,5 +30,6 @@
 - (void) writeSuccess;
 - (void) writeFail;
 - (void) readCallback: (NSString*) data;
+- (void) qrScanResult: (NSString*) data;
 - (void) invoke: (NSString*) method data: (NSString*) data;
 @end
