@@ -124,14 +124,13 @@
         NSLog(@"uuid:%@", uuid);
         [self connect:uuid];
     } else if ([method isEqualToString:DISCONNECT]) {
-        
-    }
-    else if([method isEqualToString:WRITE]) {
+        [self cancelPeripheral: self.peripheral];
+    }else if([method isEqualToString:WRITE]) {
         NSString *data = [params objectForKey:@"data"];
         [self write:data];
     } else if([method isEqualToString:STOP_SCAN]) {
         [self stopScan:YES];
-    }
+    } 
 }
 
 - (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
