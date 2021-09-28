@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,15 +15,26 @@
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/icon_back"/>
+            android:src="@drawable/icon_back" />
 
 
     </RelativeLayout>
 
-    <ltd.vastchain.jsbridge.CoreWebView
-        android:id="@+id/webView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ltd.vastchain.jsbridge.CoreWebView>
+        android:layout_height="match_parent">
+
+        <ltd.vastchain.jsbridge.CoreWebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ltd.vastchain.jsbridge.CoreWebView>
+
+        <ltd.vastchain.jsbridge.CoreWebProgressBar
+            android:id="@+id/web_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:progressDrawable="@drawable/core_web_progressbar" />
+    </RelativeLayout>
 
 </LinearLayout>
