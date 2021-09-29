@@ -1,18 +1,24 @@
 package ltd.vastchain.plugin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ltd.vastchain.bluetooth.BlueManager
+import ltd.vastchain.face.FaceActivity
+import ltd.vastchain.plugin.databinding.ActivityMainBinding
 import ltd.vastchain.qrscan.QrScanManager
 
 class MainActivity : AppCompatActivity() {
 
+	private lateinit var activityMainBinding: ActivityMainBinding
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
+		activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+		setContentView(activityMainBinding.root)
 
-		findViewById<View>(R.id.tv_go_web).setOnClickListener {
+		activityMainBinding.tvGoWeb.setOnClickListener {
 //			val intent = Intent(this, BluetoothActivity::class.java)
 //			startActivity(intent)
 //			BlueManager.start(this, "http://10.144.2.172:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456")
@@ -21,10 +27,15 @@ class MainActivity : AppCompatActivity() {
 			BlueManager.start(this, "http://10.144.1.116:8000")
 		}
 
-		findViewById<View>(R.id.tv_go_scan).setOnClickListener {
+		activityMainBinding.tvGoScan.setOnClickListener {
 //			val intent = Intent(this, TestScanActivity::class.java)
 //			startActivity(intent)
 			QrScanManager.start(this)
+		}
+
+		activityMainBinding.tvGoFace.setOnClickListener {
+			val intent = Intent(this, FaceActivity::class.java)
+			startActivity(intent)
 		}
 	}
 }
