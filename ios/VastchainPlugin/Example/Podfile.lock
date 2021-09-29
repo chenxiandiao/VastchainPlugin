@@ -1,16 +1,23 @@
 PODS:
-  - VastchainPlugin (0.1.3)
+  - SGQRCode (3.5.1)
+  - VastchainPlugin (0.1.5):
+    - SGQRCode (~> 3.5.1)
 
 DEPENDENCIES:
   - VastchainPlugin (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - SGQRCode
 
 EXTERNAL SOURCES:
   VastchainPlugin:
     :path: "../"
 
 SPEC CHECKSUMS:
-  VastchainPlugin: 580043095729ab856603180a0ff7948af4cd6899
+  SGQRCode: 65d6170ddcf3feecc6e2f3601aac78ad93e56589
+  VastchainPlugin: ca40ca08a91c280e019abbb61da3e0e64b9035ff
 
-PODFILE CHECKSUM: 718c5846fed8e8aed974aec8ee050481a6c64dd3
+PODFILE CHECKSUM: 66cfac67d467101253b0bafe89709500eaca033c
 
 COCOAPODS: 1.10.2

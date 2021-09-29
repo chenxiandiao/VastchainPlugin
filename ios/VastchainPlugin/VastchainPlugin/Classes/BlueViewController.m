@@ -9,6 +9,7 @@
 #import "BlueViewController.h"
 #import "IBlueListener.h"
 #import "BlueJsApi.h"
+#import "WCQRCodeVC.h"
 #import <JavaScriptCore/JavaScriptCore.h>
 
 @interface BlueViewController () {
@@ -124,13 +125,14 @@
         NSLog(@"uuid:%@", uuid);
         [self connect:uuid];
     } else if ([method isEqualToString:DISCONNECT]) {
-        
-    }
-    else if([method isEqualToString:WRITE]) {
+        [self cancelPeripheral: self.peripheral];
+    }else if([method isEqualToString:WRITE]) {
         NSString *data = [params objectForKey:@"data"];
         [self write:data];
     } else if([method isEqualToString:STOP_SCAN]) {
         [self stopScan:YES];
+    } else if([method isEqualToString:SCAN_QR_CODE]) {
+        [self openScanPage];
     }
 }
 
@@ -427,6 +429,12 @@
         NSLog(@"关闭WebView页面");
         [self.navigationController popViewControllerAnimated:FALSE];
     }
+}
+
+- (void) openScanPage {
+    WCQRCodeVC *scanViewController = [[WCQRCodeVC alloc] init];
+    scanViewController.blueListener = self.blueListener;
+    [self.navigationController pushViewController:scanViewController animated:YES];
 }
 
 @end
