@@ -308,7 +308,7 @@ class CameraFragment : Fragment() {
 					// Values returned from our analyzer are passed to the attached listener
 					// We log image analysis results here - you should do something useful
 					// instead!
-					Log.d(TAG, "Average luminosity: $luma")
+//					Log.d(TAG, "Average luminosity: $luma")
 				})
 			}
 		// Must unbind the use-cases before rebinding them

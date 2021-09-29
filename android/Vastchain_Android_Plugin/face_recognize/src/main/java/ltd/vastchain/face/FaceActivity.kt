@@ -12,10 +12,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ltd.vastchain.face.databinding.ActivityFaceBinding
 import ltd.vastchain.face.http.FaceApi
 import ltd.vastchain.face.widget.FaceTipsView
 import java.io.File
+import java.lang.Exception
 
 
 const val KEY_EVENT_ACTION = "key_event_action"
@@ -47,15 +49,22 @@ class FaceActivity : AppCompatActivity() {
 		FaceManager.init(this)
 		FaceManager.clearDirectory()
 		GlobalScope.launch {
-			val requestId = FaceApi.faceApi.getRequestId(
-				"AFA72CFB6FED0343F81FC94BB3D3FFC3",
-				"330327199203168272",
-				"陈贤雕"
-			)
-				.request_id
-//			val requestId = ""
-			// TODO: 2021/9/29 remove
-//			FaceManager.start(requestId)
+			try {
+				Log.e("cxd", Thread.currentThread().name)
+				val requestId = FaceApi.faceApi.getRequestId(
+					"AFA72CFB6FED0343F81FC94BB3D3FFC3",
+					"330327199203168272",
+					"陈贤雕"
+				)
+					.request_id
+				FaceManager.start(requestId)
+			} catch (e: Exception) {
+				e.printStackTrace()
+				Log.e("cxd", Thread.currentThread().name)
+				withContext(Dispatchers.Main) {
+					Toast.makeText(this@FaceActivity, "获取会话信息失败,请检查网络是否正常", Toast.LENGTH_SHORT).show()
+				}
+			}
 		}
 //		Toast.makeText(this@FaceActivity, "请正对人脸", Toast.LENGTH_LONG).show()
 		FaceManager.listener = object : IFaceListener {
