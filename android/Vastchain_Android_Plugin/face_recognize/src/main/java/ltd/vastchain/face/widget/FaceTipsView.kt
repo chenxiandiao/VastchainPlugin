@@ -28,6 +28,10 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun compareSuccess() {
+//		tvTips?.text = "请闭眼后再睁开"
+	}
+
+	override fun beginEyeCheck() {
 		tvTips?.text = "请闭眼后再睁开"
 	}
 
@@ -36,6 +40,10 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun eyeCheckSuccess() {
+		tvTips?.text = "眨眼检测成功"
+	}
+
+	override fun beginMouthCheck() {
 		tvTips?.text = "请张开嘴巴再合上"
 	}
 
@@ -44,7 +52,11 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun mouthCheckSuccess() {
-		tvTips?.text = "人脸检测成功"
+		tvTips?.text = "张嘴检测成功"
+	}
+
+	override fun compareEnd() {
+		tvTips?.text = "人脸检测完成"
 	}
 
 

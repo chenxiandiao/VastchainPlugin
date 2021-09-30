@@ -9,11 +9,17 @@ interface IFaceListener {
 
 	fun compareSuccess()
 
+	fun beginEyeCheck()
+
 	fun eyeCheckFail()
 
 	fun eyeCheckSuccess()
 
+	fun beginMouthCheck()
+
 	fun mouthCheckFail()
 
 	fun mouthCheckSuccess()
+
+	fun compareEnd()
 }

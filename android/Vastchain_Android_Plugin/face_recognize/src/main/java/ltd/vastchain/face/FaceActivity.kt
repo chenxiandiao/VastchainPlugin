@@ -17,7 +17,6 @@ import ltd.vastchain.face.databinding.ActivityFaceBinding
 import ltd.vastchain.face.http.FaceApi
 import ltd.vastchain.face.widget.FaceTipsView
 import java.io.File
-import java.lang.Exception
 
 
 const val KEY_EVENT_ACTION = "key_event_action"
@@ -29,9 +28,10 @@ private const val IMMERSIVE_FLAG_TIMEOUT = 500L
  */
 class FaceActivity : AppCompatActivity() {
 
-
 	private lateinit var activityMainBinding: ActivityFaceBinding
 	private var tipsView: FaceTipsView? = null
+	private var eyeSkip: Boolean = false
+	private var mouthSkip: Boolean = false
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -46,31 +46,34 @@ class FaceActivity : AppCompatActivity() {
 	}
 
 	private fun initData() {
+		eyeSkip = intent?.getBooleanExtra(PARAMS_EYE, false) ?: false
+		mouthSkip = intent?.getBooleanExtra(PARAMS_MOUTH, false) ?: false
 		FaceManager.init(this)
+		FaceManager.config(eyeSkip, mouthSkip)
 		FaceManager.clearDirectory()
 		GlobalScope.launch {
 			try {
-				Log.e("cxd", Thread.currentThread().name)
+//				Log.e("cxd", Thread.currentThread().name)
 				val requestId = FaceApi.faceApi.getRequestId(
 					"AFA72CFB6FED0343F81FC94BB3D3FFC3",
 					"330327199203168272",
 					"陈贤雕"
 				)
 					.request_id
+//				val requestId = ""
 				FaceManager.start(requestId)
 			} catch (e: Exception) {
 				e.printStackTrace()
 				Log.e("cxd", Thread.currentThread().name)
 				withContext(Dispatchers.Main) {
-					Toast.makeText(this@FaceActivity, "获取会话信息失败,请检查网络是否正常", Toast.LENGTH_SHORT).show()
+					Toast.makeText(this@FaceActivity, "获取会话信息失败,请检查网络是否正常", Toast.LENGTH_SHORT)
+						.show()
 				}
 			}
 		}
-//		Toast.makeText(this@FaceActivity, "请正对人脸", Toast.LENGTH_LONG).show()
 		FaceManager.listener = object : IFaceListener {
 			override fun compareFail() {
 				GlobalScope.launch(Dispatchers.Main) {
-//					Toast.makeText(this@FaceActivity, "人脸识别失败", Toast.LENGTH_LONG).show()
 					tipsView?.compareFail()
 				}
 
@@ -78,14 +81,18 @@ class FaceActivity : AppCompatActivity() {
 
 			override fun compareSuccess() {
 				GlobalScope.launch(Dispatchers.Main) {
-//					Toast.makeText(this@FaceActivity, "人脸识别成功,请开始眨眼", Toast.LENGTH_LONG).show()
 					tipsView?.compareSuccess()
+				}
+			}
+
+			override fun beginEyeCheck() {
+				GlobalScope.launch(Dispatchers.Main) {
+					tipsView?.beginEyeCheck()
 				}
 			}
 
 			override fun eyeCheckFail() {
 				GlobalScope.launch(Dispatchers.Main) {
-//					Toast.makeText(this@FaceActivity, "眨眼检测失败", Toast.LENGTH_LONG).show()
 					tipsView?.eyeCheckFail()
 				}
 
@@ -93,22 +100,32 @@ class FaceActivity : AppCompatActivity() {
 
 			override fun eyeCheckSuccess() {
 				GlobalScope.launch(Dispatchers.Main) {
-//					Toast.makeText(this@FaceActivity, "眨眼检测成功,请张嘴", Toast.LENGTH_LONG).show()
 					tipsView?.eyeCheckSuccess()
+				}
+			}
+
+			override fun beginMouthCheck() {
+				GlobalScope.launch(Dispatchers.Main) {
+					tipsView?.beginMouthCheck()
 				}
 			}
 
 			override fun mouthCheckFail() {
 				GlobalScope.launch(Dispatchers.Main) {
-//					Toast.makeText(this@FaceActivity, "张嘴检测失败", Toast.LENGTH_LONG).show()
 					tipsView?.eyeCheckSuccess()
 				}
 			}
 
 			override fun mouthCheckSuccess() {
 				GlobalScope.launch(Dispatchers.Main) {
-//					Toast.makeText(this@FaceActivity, "人脸验证通过", Toast.LENGTH_LONG).show()
 					tipsView?.mouthCheckSuccess()
+				}
+			}
+
+			override fun compareEnd() {
+				GlobalScope.launch(Dispatchers.Main) {
+					Toast.makeText(this@FaceActivity, "人脸检测完成", Toast.LENGTH_LONG).show()
+					tipsView?.compareEnd()
 				}
 			}
 		}
@@ -153,6 +170,16 @@ class FaceActivity : AppCompatActivity() {
 	}
 
 	companion object {
+
+		const val PARAMS_EYE = "eyeSkip"
+		const val PARAMS_MOUTH = "mouthSkip"
+
+		fun start(context: Context, eyeSkip: Boolean = false, mouthSkip: Boolean = false) {
+			val intent = Intent(context, FaceActivity::class.java)
+			intent.putExtra(PARAMS_EYE, eyeSkip)
+			intent.putExtra(PARAMS_MOUTH, mouthSkip)
+			context.startActivity(intent)
+		}
 
 		/** Use external media if it is available, our app's file directory otherwise */
 		fun getOutputDirectory(context: Context): File {

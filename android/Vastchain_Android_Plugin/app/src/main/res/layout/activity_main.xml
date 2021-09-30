@@ -34,12 +34,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_go_face"
+        android:id="@+id/tv_go_face_eye_mouth"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="打开人脸识别页面"
+        android:text="打开人脸识别页面(眨眼，张嘴)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_go_face_eye"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="打开人脸识别页面(眨眼)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_go_face_mouth"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="打开人脸识别页面(张嘴)"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

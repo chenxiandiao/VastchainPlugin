@@ -33,9 +33,17 @@ class MainActivity : AppCompatActivity() {
 			QrScanManager.start(this)
 		}
 
-		activityMainBinding.tvGoFace.setOnClickListener {
-			val intent = Intent(this, FaceActivity::class.java)
-			startActivity(intent)
+		activityMainBinding.tvGoFaceEyeMouth.setOnClickListener {
+			FaceActivity.start(this, eyeSkip = false, mouthSkip = false)
 		}
+
+		activityMainBinding.tvGoFaceEye.setOnClickListener {
+			FaceActivity.start(this, eyeSkip = false, mouthSkip = true)
+		}
+
+		activityMainBinding.tvGoFaceMouth.setOnClickListener {
+			FaceActivity.start(this, eyeSkip = true, mouthSkip = false)
+		}
+
 	}
 }
