@@ -45,7 +45,7 @@ class MouthInterceptor(private val requestId: String) : LiveInterceptor() {
 					FaceManager.listener?.compareEnd()
 				} else {
 					showNextTips(chain = interceptChain)
-					Thread.sleep(2000)
+					Thread.sleep(1000)
 					FaceManager.resumeCheck()
 				}
 				Log.e("mouth", "张嘴检测通过")

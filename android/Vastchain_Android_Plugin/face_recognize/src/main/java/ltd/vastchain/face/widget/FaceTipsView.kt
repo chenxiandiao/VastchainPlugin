@@ -53,7 +53,7 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun beginEyeCheck() {
-		tvTips?.text = "请闭眼后再睁开"
+		tvTips?.text = "请闭眼后再缓慢睁眼"
 	}
 
 	override fun eyeCheckFail() {

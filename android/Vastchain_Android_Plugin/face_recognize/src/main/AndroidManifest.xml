@@ -3,6 +3,8 @@
     package="ltd.vastchain.face">
     <application>
         <activity android:name=".FaceActivity" />
+        <activity android:name=".PersonInfoActivity"/>
+        <activity android:name=".FaceIndexActivity"/>
     </application>
 
 </manifest>

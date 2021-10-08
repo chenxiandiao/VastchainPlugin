@@ -13,6 +13,8 @@ import java.io.File
  */
 class VerifyInterceptor(private val requestId: String) : Interceptor {
 	private var verifySuccess = false
+	private var count = 0
+	private val compareCount = 20
 	override fun proceed(file: String, interceptChain: InterceptChain) {
 		if (checked()) {
 			interceptChain.proceed(file)
@@ -21,9 +23,23 @@ class VerifyInterceptor(private val requestId: String) : Interceptor {
 		Log.e("cxd", "开始人脸比对")
 		FaceManager.pauseCheck()
 		verifySuccess = verifyCompare(file, requestId) == true
-		showNextTips(interceptChain)
-		Thread.sleep(2000)
-		FaceManager.resumeCheck()
+		if (verifySuccess) {
+			if (interceptChain.isLast()) {
+				Log.e("VerifyInterceptor", "无活体检测")
+				FaceManager.listener?.compareEnd()
+			} else {
+				showNextTips(interceptChain)
+				Thread.sleep(1000)
+				FaceManager.resumeCheck()
+			}
+		} else {
+			count++
+			if (count > compareCount) {
+				FaceManager.listener?.compareFail()
+			} else {
+				FaceManager.resumeCheck()
+			}
+		}
 		return
 	}
 

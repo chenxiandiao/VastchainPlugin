@@ -19,7 +19,6 @@ object FaceManager {
 	var listener: IFaceListener? = null
 
 	var skipAllCheck = false
-	private var requestId: String = ""
 	private var savePhoto: Boolean = false
 
 	private var interceptors: MutableList<Interceptor> = mutableListOf()
@@ -191,5 +190,6 @@ object FaceManager {
 
 	fun release() {
 		savePhoto = false
+		interceptors.clear()
 	}
 }

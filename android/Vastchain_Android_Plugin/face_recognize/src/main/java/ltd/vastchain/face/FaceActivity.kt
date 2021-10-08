@@ -32,6 +32,8 @@ class FaceActivity : AppCompatActivity() {
 	private var tipsView: FaceTipsView? = null
 	private var eyeSkip: Boolean = false
 	private var mouthSkip: Boolean = false
+	private var idCard: String? = null
+	private var name: String? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -46,19 +48,22 @@ class FaceActivity : AppCompatActivity() {
 	}
 
 	private fun initData() {
-		eyeSkip = intent?.getBooleanExtra(PARAMS_EYE, false) ?: false
-		mouthSkip = intent?.getBooleanExtra(PARAMS_MOUTH, false) ?: false
+		eyeSkip = intent.getBooleanExtra(PARAMS_EYE, false) ?: false
+		mouthSkip = intent.getBooleanExtra(PARAMS_MOUTH, false) ?: false
+		idCard = intent.getStringExtra(PARAMS_ID_CARD)
+		name = intent.getStringExtra(PARAMS_NAME)
+		if (idCard.isNullOrEmpty() || name.isNullOrEmpty()) {
+			return
+		}
 		FaceManager.init(this)
 		GlobalScope.launch {
 			try {
 //				Log.e("cxd", Thread.currentThread().name)
 				val requestId = FaceApi.faceApi.getRequestId(
 					"AFA72CFB6FED0343F81FC94BB3D3FFC3",
-					"330327199203168272",
-					"陈贤雕"
-				)
-					.request_id
-//				val requestId = ""
+					idCard!!,
+					name!!
+				).request_id
 				FaceManager.config(eyeSkip, mouthSkip, requestId)
 				FaceManager.clearDirectory()
 				FaceManager.start()
@@ -180,11 +185,21 @@ class FaceActivity : AppCompatActivity() {
 
 		const val PARAMS_EYE = "eyeSkip"
 		const val PARAMS_MOUTH = "mouthSkip"
+		const val PARAMS_ID_CARD = "PARAMS_ID_CARD"
+		const val PARAMS_NAME = "PARAMS_NAME"
 
-		fun start(context: Context, eyeSkip: Boolean = false, mouthSkip: Boolean = false) {
+		fun start(
+			context: Context,
+			eyeSkip: Boolean = false,
+			mouthSkip: Boolean = false,
+			idCard: String?,
+			name: String?
+		) {
 			val intent = Intent(context, FaceActivity::class.java)
 			intent.putExtra(PARAMS_EYE, eyeSkip)
 			intent.putExtra(PARAMS_MOUTH, mouthSkip)
+			intent.putExtra(PARAMS_ID_CARD, idCard)
+			intent.putExtra(PARAMS_NAME, name)
 			context.startActivity(intent)
 		}
 

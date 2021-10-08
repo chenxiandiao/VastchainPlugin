@@ -1,11 +1,9 @@
 package ltd.vastchain.plugin
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ltd.vastchain.bluetooth.BlueManager
-import ltd.vastchain.face.FaceActivity
+import ltd.vastchain.face.PersonInfoActivity
 import ltd.vastchain.plugin.databinding.ActivityMainBinding
 import ltd.vastchain.qrscan.QrScanManager
 
@@ -33,17 +31,25 @@ class MainActivity : AppCompatActivity() {
 			QrScanManager.start(this)
 		}
 
-		activityMainBinding.tvGoFaceEyeMouth.setOnClickListener {
-			FaceActivity.start(this, eyeSkip = false, mouthSkip = false)
+		activityMainBinding.tvGoFaceHome.setOnClickListener {
+			PersonInfoActivity.start(this)
 		}
 
-		activityMainBinding.tvGoFaceEye.setOnClickListener {
-			FaceActivity.start(this, eyeSkip = false, mouthSkip = true)
-		}
-
-		activityMainBinding.tvGoFaceMouth.setOnClickListener {
-			FaceActivity.start(this, eyeSkip = true, mouthSkip = false)
-		}
+//		activityMainBinding.tvGoFaceEyeMouth.setOnClickListener {
+//			FaceActivity.start(this, eyeSkip = false, mouthSkip = false)
+//		}
+//
+//		activityMainBinding.tvGoFaceEye.setOnClickListener {
+//			FaceActivity.start(this, eyeSkip = false, mouthSkip = true)
+//		}
+//
+//		activityMainBinding.tvGoFaceMouth.setOnClickListener {
+//			FaceActivity.start(this, eyeSkip = true, mouthSkip = false)
+//		}
+//
+//		activityMainBinding.tvGoFace.setOnClickListener {
+//			FaceActivity.start(this, eyeSkip = true, mouthSkip = true)
+//		}
 
 	}
 }

@@ -45,7 +45,7 @@ class EyeInterceptor(private val requestId: String) : LiveInterceptor() {
 					FaceManager.listener?.compareEnd()
 				} else {
 					showNextTips(chain = interceptChain)
-					Thread.sleep(2000)
+					Thread.sleep(1000)
 					FaceManager.resumeCheck()
 				}
 				Log.e("eye", "眨眼检测通过")
