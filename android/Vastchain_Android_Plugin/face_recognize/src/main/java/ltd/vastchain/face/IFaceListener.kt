@@ -5,6 +5,8 @@ package ltd.vastchain.face
  */
 interface IFaceListener {
 
+	fun beginCompare()
+
 	fun compareFail()
 
 	fun compareSuccess()

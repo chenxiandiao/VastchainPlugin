@@ -72,6 +72,12 @@ class FaceActivity : AppCompatActivity() {
 			}
 		}
 		FaceManager.listener = object : IFaceListener {
+			override fun beginCompare() {
+				GlobalScope.launch(Dispatchers.Main) {
+					tipsView?.beginCompare()
+				}
+			}
+
 			override fun compareFail() {
 				GlobalScope.launch(Dispatchers.Main) {
 					tipsView?.compareFail()
@@ -129,6 +135,7 @@ class FaceActivity : AppCompatActivity() {
 				}
 			}
 		}
+		FaceManager.listener?.beginCompare()
 	}
 
 	private fun initView() {

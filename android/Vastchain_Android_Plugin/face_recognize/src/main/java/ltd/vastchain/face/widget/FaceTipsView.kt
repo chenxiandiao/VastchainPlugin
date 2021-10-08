@@ -1,12 +1,17 @@
 package ltd.vastchain.face.widget
 
 import android.content.Context
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import ltd.vastchain.face.IFaceListener
 import ltd.vastchain.face.R
+import android.content.ContentResolver
+import android.net.Uri
+
 
 /**
  * Created by admin on 2021/9/29.
@@ -17,10 +22,26 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 
 
 	private var tvTips: TextView? = null
+	var mediaPlayer: MediaPlayer? = null
 
 	init {
 		View.inflate(context, R.layout.view_face_tips, this)
 		tvTips = findViewById(R.id.tv_tips)
+
+		mediaPlayer = MediaPlayer()
+	}
+
+	override fun beginCompare() {
+//		val uri: Uri =
+//			Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" + context.packageName + "/raw/" + "face_verify.aac")
+//		mediaPlayer?.apply {
+//			setAudioStreamType(AudioManager.STREAM_MUSIC)
+//			setDataSource(context, uri)
+//			prepare()
+//			start()
+//		}
+		mediaPlayer = MediaPlayer.create(context, R.raw.face_verify)
+		mediaPlayer?.start()
 	}
 
 	override fun compareFail() {

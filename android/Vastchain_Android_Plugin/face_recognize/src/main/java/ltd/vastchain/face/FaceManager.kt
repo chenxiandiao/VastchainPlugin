@@ -18,7 +18,7 @@ object FaceManager {
 
 	var listener: IFaceListener? = null
 
-	var skipAllCheck = true
+	var skipAllCheck = false
 	private var requestId: String = ""
 	private var savePhoto: Boolean = false
 
