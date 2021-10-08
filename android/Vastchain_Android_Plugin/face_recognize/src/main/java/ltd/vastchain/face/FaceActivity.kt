@@ -49,8 +49,6 @@ class FaceActivity : AppCompatActivity() {
 		eyeSkip = intent?.getBooleanExtra(PARAMS_EYE, false) ?: false
 		mouthSkip = intent?.getBooleanExtra(PARAMS_MOUTH, false) ?: false
 		FaceManager.init(this)
-		FaceManager.config(eyeSkip, mouthSkip)
-		FaceManager.clearDirectory()
 		GlobalScope.launch {
 			try {
 //				Log.e("cxd", Thread.currentThread().name)
@@ -61,7 +59,9 @@ class FaceActivity : AppCompatActivity() {
 				)
 					.request_id
 //				val requestId = ""
-				FaceManager.start(requestId)
+				FaceManager.config(eyeSkip, mouthSkip, requestId)
+				FaceManager.clearDirectory()
+				FaceManager.start()
 			} catch (e: Exception) {
 				e.printStackTrace()
 				Log.e("cxd", Thread.currentThread().name)

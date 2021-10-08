@@ -22,7 +22,7 @@ class EyeInterceptor(private val requestId: String) : LiveInterceptor() {
 			return
 		}
 
-		FaceManager.listener?.beginEyeCheck()
+//		FaceManager.listener?.beginEyeCheck()
 		if (eyePhotos.size == 0) {
 			eyeTime = System.currentTimeMillis()
 			Log.e("eye", "图片第一张存储时间" + System.currentTimeMillis())

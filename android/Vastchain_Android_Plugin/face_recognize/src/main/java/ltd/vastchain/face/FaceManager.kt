@@ -31,7 +31,7 @@ object FaceManager {
 		this.context = context
 	}
 
-	fun config(eyeSkip: Boolean, mouthSkip: Boolean) {
+	fun config(eyeSkip: Boolean, mouthSkip: Boolean, requestId: String) {
 		interceptors.add(VerifyInterceptor(requestId))
 		if (eyeSkip.not()) {
 			interceptors.add(EyeInterceptor(requestId))
@@ -42,9 +42,8 @@ object FaceManager {
 		chain = InterceptChain(interceptors, 0)
 	}
 
-	fun start(requestId: String) {
+	fun start() {
 		this.savePhoto = true
-		this.requestId = requestId
 	}
 
 	fun analyse(image: ImageProxy) {

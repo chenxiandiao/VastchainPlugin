@@ -21,7 +21,7 @@ class MouthInterceptor(private val requestId: String) : LiveInterceptor() {
 			interceptChain.proceed(file)
 			return
 		}
-		FaceManager.listener?.beginMouthCheck()
+//		FaceManager.listener?.beginMouthCheck()
 		if (mouthPhotos.size == 0) {
 			mouthTime = System.currentTimeMillis()
 			Log.e("mouth", "图片第一张存储时间" + System.currentTimeMillis())
