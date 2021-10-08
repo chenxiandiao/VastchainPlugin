@@ -51,6 +51,7 @@ class EyeInterceptor(private val requestId: String) : LiveInterceptor() {
 				Log.e("eye", "眨眼检测通过")
 			} else {
 				FaceManager.listener?.eyeCheckFail()
+				eyePhotos.clear()
 				FaceManager.resumeCheck()
 				Log.e("eye", "眨眼检测未通过")
 			}

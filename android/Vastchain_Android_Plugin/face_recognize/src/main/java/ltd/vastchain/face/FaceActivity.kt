@@ -123,7 +123,7 @@ class FaceActivity : AppCompatActivity() {
 
 			override fun mouthCheckFail() {
 				GlobalScope.launch(Dispatchers.Main) {
-					tipsView?.eyeCheckSuccess()
+					tipsView?.mouthCheckFail()
 				}
 			}
 

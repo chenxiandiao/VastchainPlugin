@@ -50,6 +50,7 @@ class MouthInterceptor(private val requestId: String) : LiveInterceptor() {
 				}
 				Log.e("mouth", "张嘴检测通过")
 			} else {
+				mouthPhotos.clear()
 				FaceManager.listener?.mouthCheckFail()
 				FaceManager.resumeCheck()
 				Log.e("mouth", "张嘴检测未通过")
