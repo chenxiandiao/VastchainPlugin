@@ -40,7 +40,7 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 //			prepare()
 //			start()
 //		}
-		mediaPlayer = MediaPlayer.create(context, R.raw.face_verify)
+		mediaPlayer = MediaPlayer.create(context, R.raw.face)
 		mediaPlayer?.start()
 	}
 
@@ -53,11 +53,15 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun beginEyeCheck() {
+		mediaPlayer = MediaPlayer.create(context, R.raw.eye)
+		mediaPlayer?.start()
 		tvTips?.text = "请闭眼后再缓慢睁眼"
+//		tvTips?.text = "请缓慢眨眼"
 	}
 
 	override fun eyeCheckFail() {
 		tvTips?.text = "请再次，闭眼后再睁开"
+//		tvTips?.text = "请再次缓慢眨眼"
 	}
 
 	override fun eyeCheckSuccess() {
@@ -65,11 +69,15 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun beginMouthCheck() {
+		mediaPlayer = MediaPlayer.create(context, R.raw.mouth)
+		mediaPlayer?.start()
 		tvTips?.text = "请张开嘴巴再合上"
+//		tvTips?.text = "请缓慢张嘴"
 	}
 
 	override fun mouthCheckFail() {
 		tvTips?.text = "请再次，张开嘴巴再合上"
+//		tvTips?.text = "请再次缓慢张嘴"
 	}
 
 	override fun mouthCheckSuccess() {

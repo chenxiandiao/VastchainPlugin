@@ -31,16 +31,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.webkit.MimeTypeMap
-import androidx.camera.core.AspectRatio
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraInfoUnavailableException
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.Metadata
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
@@ -59,6 +50,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 import android.view.*
+import androidx.camera.core.*
+import androidx.camera.core.Camera
 import ltd.vastchain.face.databinding.CameraUiContainerBinding
 import ltd.vastchain.face.databinding.FragmentCameraBinding
 import ltd.vastchain.face.utils.ANIMATION_FAST_MILLIS
@@ -281,6 +274,7 @@ class CameraFragment : Fragment() {
 			.setTargetRotation(rotation)
 			.build()
 
+
 		// ImageCapture
 		imageCapture = ImageCapture.Builder()
 			.setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
@@ -323,6 +317,9 @@ class CameraFragment : Fragment() {
 
 			// Attach the viewfinder's surface provider to preview use case
 			preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
+
+
+//			camera?.cameraControl?.setZoomRatio(0.1f)
 		} catch (exc: Exception) {
 			Log.e(TAG, "Use case binding failed", exc)
 		}
