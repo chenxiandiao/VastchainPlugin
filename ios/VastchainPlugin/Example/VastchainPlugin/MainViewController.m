@@ -7,11 +7,14 @@
 //
 
 #import "MainViewController.h"
+#import "FaceViewController.h"
+#import "ImageViewController.h"
 #import "VastchainPlugin/BlueViewController.h"
 #import "VastchainPlugin/WCQRCodeVC.h"
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *goBtn;
+@property (weak, nonatomic) IBOutlet UIButton *readImageBtn;
 
 @end
 
@@ -20,12 +23,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (IBAction)clickGoBtn:(id)sender {
-    [self openBlue];
-//    [self openScan];
+    //    [self openBlue];
+    //    [self openScan];
+    [self openTest];
+}
+- (IBAction)clickReadImageBtn:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    ImageViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"imageViewController"];
+    
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void) openTest {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    FaceViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceViewController"];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void) openBlue {

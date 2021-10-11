@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,11 +21,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Lw-41-Fz3">
-                                <rect key="frame" x="172" y="318" width="31" height="30"/>
+                                <rect key="frame" x="149" y="318" width="77" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="跳转"/>
+                                <state key="normal" title="打开摄像头"/>
                                 <connections>
                                     <action selector="clickGoBtn:" destination="whP-gf-Uak" eventType="touchUpInside" id="pzP-OA-s6p"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n49-kd-qlz">
+                                <rect key="frame" x="150" y="388" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="读取图片"/>
+                                <connections>
+                                    <action selector="clickReadImageBtn:" destination="whP-gf-Uak" eventType="touchUpInside" id="sz6-lg-97c"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -33,6 +42,7 @@
                     <navigationItem key="navigationItem" id="IRP-4U-5cY"/>
                     <connections>
                         <outlet property="goBtn" destination="1Lw-41-Fz3" id="9Bs-3z-nzO"/>
+                        <outlet property="readImageBtn" destination="n49-kd-qlz" id="dRs-UF-qd2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -57,5 +67,65 @@
             </objects>
             <point key="canvasLocation" x="304.80000000000001" y="432.23388305847078"/>
         </scene>
+        <!--Face View Controller-->
+        <scene sceneID="LuY-a6-IAp">
+            <objects>
+                <viewController storyboardIdentifier="faceViewController" id="w2f-74-kXh" customClass="FaceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Fyb-fn-38D"/>
+                        <viewControllerLayoutGuide type="bottom" id="uBX-uL-lTA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="POy-MU-I2a">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yFl-XS-Bi4" userLabel="Preview" customClass="AVCamPreviewView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="previewView" destination="yFl-XS-Bi4" id="AEb-Ve-u9y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DXA-ym-Bb2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="305" y="-262"/>
+        </scene>
+        <!--Image View Controller-->
+        <scene sceneID="yBQ-l0-43L">
+            <objects>
+                <viewController storyboardIdentifier="imageViewController" id="W3z-tQ-Or9" customClass="ImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Z9e-Eh-0N5"/>
+                        <viewControllerLayoutGuide type="bottom" id="H26-UJ-gu4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HFT-MT-b38">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ezH-rr-6JN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="savedImage" destination="ezH-rr-6JN" id="Ohf-jy-lZ8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Mi-m0-Bqy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1244" y="-252"/>
+        </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

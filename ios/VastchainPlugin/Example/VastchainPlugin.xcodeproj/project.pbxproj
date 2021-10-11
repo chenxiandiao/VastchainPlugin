@@ -24,6 +24,9 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		CF5A838F7F0B479009D251D6 /* Pods_VastchainPlugin_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AA3CF8F87CCB67141655A3 /* Pods_VastchainPlugin_Tests.framework */; };
+		EC3CBFC5271041A50067FE91 /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3CBFC4271041A50067FE91 /* AVCamPreviewView.m */; };
+		EC3CBFC8271170060067FE91 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3CBFC7271170060067FE91 /* ImageViewController.m */; };
+		ECE694C22705B6A300F4509C /* FaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE694C12705B6A300F4509C /* FaceViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,13 @@
 		8CBFC510614BA7DE340A2774 /* Pods-VastchainPlugin_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VastchainPlugin_Example.debug.xcconfig"; path = "Target Support Files/Pods-VastchainPlugin_Example/Pods-VastchainPlugin_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9EA095B4005E3D3F888C9B68 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D37027DF7A807A022B218F67 /* Pods-VastchainPlugin_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VastchainPlugin_Example.release.xcconfig"; path = "Target Support Files/Pods-VastchainPlugin_Example/Pods-VastchainPlugin_Example.release.xcconfig"; sourceTree = "<group>"; };
+		EC3CBFC3271041A50067FE91 /* AVCamPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamPreviewView.h; sourceTree = "<group>"; };
+		EC3CBFC4271041A50067FE91 /* AVCamPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPreviewView.m; sourceTree = "<group>"; };
+		EC3CBFC6271170060067FE91 /* ImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		EC3CBFC7271170060067FE91 /* ImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		EC3CBFC9271188070067FE91 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
+		ECE694C02705B6A300F4509C /* FaceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceViewController.h; sourceTree = "<group>"; };
+		ECE694C12705B6A300F4509C /* FaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +142,8 @@
 		6003F593195388D20070C39A /* Example for VastchainPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				EC3CBFC3271041A50067FE91 /* AVCamPreviewView.h */,
+				EC3CBFC4271041A50067FE91 /* AVCamPreviewView.m */,
 				6003F59C195388D20070C39A /* MainAppDelegate.h */,
 				6003F59D195388D20070C39A /* MainAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -140,6 +152,11 @@
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				ECE694C02705B6A300F4509C /* FaceViewController.h */,
+				ECE694C12705B6A300F4509C /* FaceViewController.m */,
+				EC3CBFC6271170060067FE91 /* ImageViewController.h */,
+				EC3CBFC7271170060067FE91 /* ImageViewController.m */,
+				EC3CBFC9271188070067FE91 /* Api.h */,
 			);
 			name = "Example for VastchainPlugin";
 			path = VastchainPlugin;
@@ -305,11 +322,13 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-VastchainPlugin_Example/Pods-VastchainPlugin_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/SGQRCode/SGQRCode.framework",
 				"${BUILT_PRODUCTS_DIR}/VastchainPlugin/VastchainPlugin.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SGQRCode.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VastchainPlugin.framework",
 			);
@@ -369,9 +388,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC3CBFC8271170060067FE91 /* ImageViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MainAppDelegate.m in Sources */,
+				ECE694C22705B6A300F4509C /* FaceViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* MainViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				EC3CBFC5271041A50067FE91 /* AVCamPreviewView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

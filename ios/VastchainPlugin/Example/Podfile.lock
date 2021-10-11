@@ -1,13 +1,30 @@
 PODS:
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
   - SGQRCode (3.5.1)
   - VastchainPlugin (0.1.5):
     - SGQRCode (~> 3.5.1)
 
 DEPENDENCIES:
+  - AFNetworking (~> 4.0)
   - VastchainPlugin (from `../`)
 
 SPEC REPOS:
   trunk:
+    - AFNetworking
     - SGQRCode
 
 EXTERNAL SOURCES:
@@ -15,9 +32,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   SGQRCode: 65d6170ddcf3feecc6e2f3601aac78ad93e56589
   VastchainPlugin: ca40ca08a91c280e019abbb61da3e0e64b9035ff
 
-PODFILE CHECKSUM: 66cfac67d467101253b0bafe89709500eaca033c
+PODFILE CHECKSUM: 3d9a2d735851c9877d2a28407798d0f227639ae0
 
 COCOAPODS: 1.10.2
