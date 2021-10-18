@@ -26,6 +26,8 @@
     FaceViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceViewController"];
     controller.needEyeCheck = YES;
     controller.needMouthCheck = YES;
+    controller.idCard = _idCard;
+    controller.name = _name;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -34,6 +36,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     FaceViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceViewController"];
     controller.needEyeCheck = YES;
+    controller.idCard = _idCard;
+    controller.name = _name;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -42,6 +46,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     FaceViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceViewController"];
     controller.needMouthCheck = YES;
+    controller.idCard = _idCard;
+    controller.name = _name;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -49,6 +55,8 @@
 - (IBAction)faceCheck:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     FaceViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceViewController"];
+    controller.idCard = _idCard;
+    controller.name = _name;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

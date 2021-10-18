@@ -1,8 +1,8 @@
 //
-//  FaceIndexViewController.h
+//  IdentityViewController.h
 //  VastchainPlugin_Example
 //
-//  Created by cxd on 2021/10/15.
+//  Created by cxd on 2021/10/18.
 //  Copyright © 2021 chenxiandiao. All rights reserved.
 //
 
@@ -10,10 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FaceIndexViewController : UIViewController
-
-@property NSString *name;
-@property NSString *idCard;
+@interface IdentityViewController : UIViewController
 
 @end
 

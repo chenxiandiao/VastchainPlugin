@@ -25,10 +25,10 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="打开人脸识别页面"/>
                                 <connections>
-                                    <action selector="clickFaceCompareBtn:" destination="whP-gf-Uak" eventType="touchUpInside" id="nUQ-YY-f1r"/>
+                                    <segue destination="Ovc-vQ-VMU" kind="show" id="U3b-k2-cm9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n49-kd-qlz">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n49-kd-qlz">
                                 <rect key="frame" x="150" y="388" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="读取图片"/>
@@ -36,7 +36,7 @@
                                     <action selector="clickReadImageBtn:" destination="whP-gf-Uak" eventType="touchUpInside" id="sz6-lg-97c"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mrd-oW-iQ3">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mrd-oW-iQ3">
                                 <rect key="frame" x="150" y="259" width="77" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="打开扫一扫"/>
@@ -230,7 +230,7 @@
         <!--Face Index View Controller-->
         <scene sceneID="92p-M2-cfC">
             <objects>
-                <viewController storyboardIdentifier="faceIndexViewController" id="0uo-TP-Uog" customClass="FaceIndexViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="faceIndexViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0uo-TP-Uog" customClass="FaceIndexViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6cR-7U-XZx"/>
                         <viewControllerLayoutGuide type="bottom" id="XHN-qQ-0MQ"/>
@@ -274,13 +274,97 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="s2V-pI-zPR"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GtE-mf-e0o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2123" y="432"/>
         </scene>
+        <!--Identity View Controller-->
+        <scene sceneID="PJR-Bm-z0m">
+            <objects>
+                <viewController id="Ovc-vQ-VMU" customClass="IdentityViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ruI-D2-Lcs"/>
+                        <viewControllerLayoutGuide type="bottom" id="Fd1-2N-utU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3K5-Vl-NU8">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="身份证" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPg-wU-Qk1">
+                                <rect key="frame" x="30" y="114" width="52" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b5p-SP-XGi">
+                                <rect key="frame" x="39" y="158" width="52" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="52" id="4sI-fI-QTQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="001" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7pL-uQ-FHN">
+                                <rect key="frame" x="99" y="107.66666666666669" width="261" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="陈贤雕" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDd-ss-5IR">
+                                <rect key="frame" x="101" y="151" width="263" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPx-8w-6su">
+                                <rect key="frame" x="77" y="218" width="246" height="34"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <state key="normal" title="下一步"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="0uo-TP-Uog" kind="show" id="HoG-pR-Lag"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="cPg-wU-Qk1" firstAttribute="top" secondItem="ruI-D2-Lcs" secondAttribute="bottom" constant="26" id="3MG-9e-KI2"/>
+                            <constraint firstItem="hPx-8w-6su" firstAttribute="centerX" secondItem="3K5-Vl-NU8" secondAttribute="centerX" id="6Qq-uV-gP3"/>
+                            <constraint firstItem="7pL-uQ-FHN" firstAttribute="leading" secondItem="cPg-wU-Qk1" secondAttribute="trailing" constant="17" id="AcO-zI-fca"/>
+                            <constraint firstItem="b5p-SP-XGi" firstAttribute="leading" secondItem="3K5-Vl-NU8" secondAttribute="leading" constant="39" id="JaG-MR-I1e"/>
+                            <constraint firstItem="hPx-8w-6su" firstAttribute="top" secondItem="GDd-ss-5IR" secondAttribute="bottom" constant="33" id="Kfo-1l-sCI"/>
+                            <constraint firstItem="GDd-ss-5IR" firstAttribute="top" secondItem="7pL-uQ-FHN" secondAttribute="bottom" constant="9.3333333333333144" id="OCL-fN-Vhf"/>
+                            <constraint firstItem="hPx-8w-6su" firstAttribute="leading" secondItem="3K5-Vl-NU8" secondAttribute="leading" constant="77" id="WJg-wf-UMP"/>
+                            <constraint firstItem="7pL-uQ-FHN" firstAttribute="centerY" secondItem="cPg-wU-Qk1" secondAttribute="centerY" id="X9e-1e-lCD"/>
+                            <constraint firstItem="b5p-SP-XGi" firstAttribute="firstBaseline" secondItem="cPg-wU-Qk1" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="Y0n-wf-NZJ"/>
+                            <constraint firstAttribute="trailing" secondItem="hPx-8w-6su" secondAttribute="trailing" constant="67" id="Zhg-Kh-tS3"/>
+                            <constraint firstItem="GDd-ss-5IR" firstAttribute="centerY" secondItem="b5p-SP-XGi" secondAttribute="centerY" id="c8j-YE-WUb"/>
+                            <constraint firstAttribute="trailing" secondItem="7pL-uQ-FHN" secondAttribute="trailing" constant="30" id="u1R-1w-ngZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="GDd-ss-5IR" secondAttribute="trailing" constant="10" id="u4T-r3-XyL"/>
+                            <constraint firstItem="GDd-ss-5IR" firstAttribute="leading" secondItem="b5p-SP-XGi" secondAttribute="trailing" constant="10" id="x95-Rh-nx2"/>
+                            <constraint firstItem="cPg-wU-Qk1" firstAttribute="leading" secondItem="3K5-Vl-NU8" secondAttribute="leading" constant="30" id="z57-fo-r8t"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="tps-nj-Kl1"/>
+                    <connections>
+                        <outlet property="etIdCard" destination="7pL-uQ-FHN" id="TFW-vg-bKu"/>
+                        <outlet property="etName" destination="GDd-ss-5IR" id="FB7-st-rRC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eOy-5x-fUG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1241.5384615384614" y="1176.5402843601896"/>
+        </scene>
     </scenes>
     <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

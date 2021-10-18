@@ -157,9 +157,8 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     manager.securityPolicy.validatesDomainName = NO;
     NSString *getSessionURL = [NSString stringWithFormat:@"%@%@" , SERVER_URL,GET_SESSION_ID];
     NSLog(@"%@", getSessionURL);
-    NSString *name = @"陈贤雕";
-    //    NSString *idCard = @"330327199203162872";
-    NSString *idCard = @"001";
+    NSString *name = _name;
+    NSString *idCard = _idCard;
     NSString *appid = @"AFA72CFB6FED0343F81FC94BB3D3FFC3";
     //拼接get访问URL请求参数
     NSDictionary *dict = @{@"app_id" : appid,

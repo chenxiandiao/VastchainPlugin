@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property BOOL needEyeCheck;
 @property BOOL needMouthCheck;
 
+@property NSString *name;
+@property NSString *idCard;
+
 
 @end
 

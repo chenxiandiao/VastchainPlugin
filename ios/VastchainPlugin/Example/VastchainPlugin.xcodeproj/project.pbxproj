@@ -37,6 +37,7 @@
 		EC9E847E27192F1800E52A63 /* FaceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E847D27192F1800E52A63 /* FaceManager.m */; };
 		EC9E848127196F1000E52A63 /* EyeInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E848027196F1000E52A63 /* EyeInterceptor.m */; };
 		EC9E84842719799400E52A63 /* FaceIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E84832719799400E52A63 /* FaceIndexViewController.m */; };
+		EC9E8487271D50B200E52A63 /* IdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E8486271D50B100E52A63 /* IdentityViewController.m */; };
 		ECE694C22705B6A300F4509C /* FaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE694C12705B6A300F4509C /* FaceViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,8 @@
 		EC9E848027196F1000E52A63 /* EyeInterceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EyeInterceptor.m; sourceTree = "<group>"; };
 		EC9E84822719799400E52A63 /* FaceIndexViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceIndexViewController.h; sourceTree = "<group>"; };
 		EC9E84832719799400E52A63 /* FaceIndexViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceIndexViewController.m; sourceTree = "<group>"; };
+		EC9E8485271D50B100E52A63 /* IdentityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentityViewController.h; sourceTree = "<group>"; };
+		EC9E8486271D50B100E52A63 /* IdentityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentityViewController.m; sourceTree = "<group>"; };
 		ECE694C02705B6A300F4509C /* FaceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceViewController.h; sourceTree = "<group>"; };
 		ECE694C12705B6A300F4509C /* FaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -270,6 +273,8 @@
 				EC9E848027196F1000E52A63 /* EyeInterceptor.m */,
 				EC9E84822719799400E52A63 /* FaceIndexViewController.h */,
 				EC9E84832719799400E52A63 /* FaceIndexViewController.m */,
+				EC9E8485271D50B100E52A63 /* IdentityViewController.h */,
+				EC9E8486271D50B100E52A63 /* IdentityViewController.m */,
 			);
 			path = FaceVerify;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC9E847E27192F1800E52A63 /* FaceManager.m in Sources */,
+				EC9E8487271D50B200E52A63 /* IdentityViewController.m in Sources */,
 				EC3CBFC8271170060067FE91 /* ImageViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MainAppDelegate.m in Sources */,
 				EC9E847327167FEE00E52A63 /* VerifyInterceptor.m in Sources */,
@@ -598,7 +604,7 @@
 				GCC_PREFIX_HEADER = "VastchainPlugin/VastchainPlugin-Prefix.pch";
 				INFOPLIST_FILE = "VastchainPlugin/VastchainPlugin-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = ltd.vastchain.plugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "VastchainPlugin/**";
@@ -616,7 +622,7 @@
 				GCC_PREFIX_HEADER = "VastchainPlugin/VastchainPlugin-Prefix.pch";
 				INFOPLIST_FILE = "VastchainPlugin/VastchainPlugin-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = ltd.vastchain.plugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				USER_HEADER_SEARCH_PATHS = "VastchainPlugin/**";
