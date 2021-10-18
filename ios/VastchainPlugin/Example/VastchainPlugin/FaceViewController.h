@@ -22,6 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *requestId;
 @property NSString *comparePhoto;
 @property NSMutableArray *mouthPhotos;
+@property BOOL startMouthCheckFlag;
+
+@property NSDate* tmpStartData;
+
+@property BOOL needEyeCheck;
+@property BOOL needMouthCheck;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

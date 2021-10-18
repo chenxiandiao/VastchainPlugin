@@ -9,8 +9,8 @@
 #ifndef Api_h
 #define Api_h
 
-//#define SERVER_URL     @"https://face-center-api-test.tmp.vastchain.ltd"
-#define SERVER_URL     @"http://10.144.1.84:12222"
+#define SERVER_URL     @"https://face-center-api-test.tmp.vastchain.ltd"
+//#define SERVER_URL     @"http://10.144.1.84:12222"
 
 #define GET_SESSION_ID @"/common/get_request_id"
 #define FACE_COMPARE   @"/common/face_compare"

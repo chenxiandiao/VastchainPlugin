@@ -7,13 +7,15 @@
 //
 
 #import "MainViewController.h"
-#import "FaceViewController.h"
+#import "FaceIndexViewController.h"
 #import "ImageViewController.h"
 #import "VastchainPlugin/BlueViewController.h"
 #import "VastchainPlugin/WCQRCodeVC.h"
 
 @interface MainViewController ()
-@property (weak, nonatomic) IBOutlet UIButton *goBtn;
+@property (weak, nonatomic) IBOutlet UIButton *openQrScanbtn;
+
+@property (weak, nonatomic) IBOutlet UIButton *faceBtn;
 @property (weak, nonatomic) IBOutlet UIButton *readImageBtn;
 
 @end
@@ -23,13 +25,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
-- (IBAction)clickGoBtn:(id)sender {
-    //    [self openBlue];
-    //    [self openScan];
-    [self openTest];
+- (IBAction)clickFaceCompareBtn:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    FaceIndexViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceIndexViewController"];
+    [self.navigationController pushViewController:controller animated:YES];
+}
+- (IBAction)clickOpenQrScan:(id)sender {
+    WCQRCodeVC *WCVC = [[WCQRCodeVC alloc] init];
+    [self.navigationController pushViewController:WCVC animated:YES];
 }
 - (IBAction)clickReadImageBtn:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -38,21 +43,12 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void) openTest {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    FaceViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"faceViewController"];
-    [self.navigationController pushViewController:controller animated:YES];
-}
 
 - (void) openBlue {
     BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8000"];
     [self.navigationController pushViewController:viewController animated:NO];
 }
 
-- (void) openScan {
-    WCQRCodeVC *WCVC = [[WCQRCodeVC alloc] init];
-    [self.navigationController pushViewController:WCVC animated:YES];
-}
 
 - (void)didReceiveMemoryWarning
 {

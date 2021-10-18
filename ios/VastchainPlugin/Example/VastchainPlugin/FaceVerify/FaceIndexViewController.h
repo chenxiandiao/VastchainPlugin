@@ -1,8 +1,8 @@
 //
-//  ImageViewController.h
+//  FaceIndexViewController.h
 //  VastchainPlugin_Example
 //
-//  Created by cxd on 2021/10/9.
+//  Created by cxd on 2021/10/15.
 //  Copyright © 2021 chenxiandiao. All rights reserved.
 //
 
@@ -10,9 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ImageViewController : UIViewController
-
-@property BOOL flag;
+@interface FaceIndexViewController : UIViewController
 
 @end
 

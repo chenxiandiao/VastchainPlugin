@@ -11,6 +11,11 @@
 #import "AVCamPreviewView.h"
 #import "Api.h"
 #import <AVFoundation/AVFoundation.h>
+#import "InterceptChain.h"
+#import "VerifyInterceptor.h"
+#import "EyeInterceptor.h"
+#import "MouthInterceptor.h"
+#import "FaceManager.h"
 
 typedef NS_ENUM(NSInteger, AVCamSetupResult) {
     AVCamSetupResultSuccess,
@@ -35,6 +40,15 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 @property (nonatomic) NSArray<AVSemanticSegmentationMatteType>* selectedSemanticSegmentationMatteTypes;
 @property (nonatomic, strong) AVCaptureMetadataOutput *metadataOutput;
 @property (nonatomic, strong) AVCaptureVideoDataOutput *videoDataOutput;
+@property (weak, nonatomic) IBOutlet UIImageView *topImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *leftImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *rightImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *bottomImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *circleImageView;
+@property (weak, nonatomic) IBOutlet UILabel *tipsLabel;
+
+@property InterceptChain *interceptChain;
+
 @end
 
 @implementation FaceViewController
@@ -42,12 +56,50 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self.view setBackgroundColor: [UIColor whiteColor]];
-    self.savePhoto = YES;
+    //    [self.view setBackgroundColor: [UIColor redColor]];
     self.mouthPhotos = [NSMutableArray arrayWithCapacity:20];
     [self initCamera];
     [self clearDictonory: @"compare"];
     [self clearDictonory: @"mouth"];
+    [self clearDictonory: @"eye"];
+    
+    UIImage *img = [self createImageWithColor:[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.56f]];
+    if (img == nil) {
+        NSLog(@"读取失败");
+    }
+    
+    [self.topImageView setImage:img];
+    [self.bottomImageView setImage:img];
+    [self.leftImageView setImage:img];
+    [self.rightImageView setImage:img];
+    
+    
+    UIImage *circleImage = [UIImage imageNamed:@"FaceCircle"];
+    [self.circleImageView setImage:circleImage];
+    
+    self.tipsLabel.text = @"请正对人脸框";
+    [self getSessionId];
+}
+
+- (UIImage*) createImageWithColor: (UIColor*) color
+
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    
+    UIGraphicsBeginImageContext(rect.size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    
+    CGContextFillRect(context, rect);
+    
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return theImage;
+    
 }
 
 - (void) clearDictonory:(NSString*) prefix {
@@ -65,36 +117,48 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
         NSString* fullPath = [dictonory stringByAppendingPathComponent:fileName];
         
         if ([NSFileManager.defaultManager fileExistsAtPath:fullPath isDirectory:&flag]) {
-            
-            NSLog(@"%@", fullPath);
+//            NSLog(@"%@", fullPath);
             BOOL result = [NSFileManager.defaultManager removeItemAtPath:fullPath error:&error];
-            if (error != nil) {
-                NSLog(@"删除文件出错");
-                NSLog(@"%@", [error localizedDescription]);
-            }
-            if (result) {
-                NSLog(@"删除文件成功");
-            } else {
-                NSLog(@"删除文件出错");
-            }
+            //            if (error != nil) {
+            //                NSLog(@"删除文件出错");
+            //                NSLog(@"%@", [error localizedDescription]);
+            //            }
+            //            if (result) {
+            //                NSLog(@"删除文件成功");
+            //            } else {
+            //                NSLog(@"删除文件出错");
+            //            }
         }
     }
     
-    if([NSFileManager.defaultManager fileExistsAtPath:dictonory]) {
-        NSLog(@"文件夹存在");
-    } else {
-        NSLog(@"文件夹不存在");
-    }
+    //    if([NSFileManager.defaultManager fileExistsAtPath:dictonory]) {
+    //        NSLog(@"文件夹存在");
+    //    } else {
+    //        NSLog(@"文件夹不存在");
+    //    }
 }
 
 - (void) getSessionId {
+    
+    if ([FaceManager shareManager].skipFaceCheck) {
+        [FaceManager shareManager].savePhoto = YES;
+        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
+                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
+                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+                                 nil];
+        self.interceptChain = [[InterceptChain alloc]init:interceptors index:0];
+        return;
+    }
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.securityPolicy.allowInvalidCertificates = YES;
     manager.securityPolicy.validatesDomainName = NO;
     NSString *getSessionURL = [NSString stringWithFormat:@"%@%@" , SERVER_URL,GET_SESSION_ID];
     NSLog(@"%@", getSessionURL);
     NSString *name = @"陈贤雕";
-    NSString *idCard = @"330327199203162872";
+    //    NSString *idCard = @"330327199203162872";
+    NSString *idCard = @"001";
     NSString *appid = @"AFA72CFB6FED0343F81FC94BB3D3FFC3";
     //拼接get访问URL请求参数
     NSDictionary *dict = @{@"app_id" : appid,
@@ -102,10 +166,28 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
                            @"user_name" : name};
     [manager GET: getSessionURL parameters:dict headers:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"获取session成功");
-        self.requestId = [responseObject objectForKey:@"request_id"];
-        NSLog(@"%@", self.requestId);
-        [self verifyCompare];
+        _requestId = [responseObject objectForKey:@"request_id"];
+        NSLog(@"%@", _requestId);
+        
+        [FaceManager shareManager].savePhoto = YES;
+        NSMutableArray *interceptors = [[NSMutableArray alloc]init];
+        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        if(_needEyeCheck) {
+            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        }
+        if(_needMouthCheck) {
+            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        }
+        
+//        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
+//                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId],
+//                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 nil];
+        
+        self.interceptChain = [[InterceptChain alloc]init:interceptors index:0];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        [self.navigationController popViewControllerAnimated:true];
         NSLog(@"获取session失败");
     }];
 }
@@ -118,7 +200,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
         [NSFileManager.defaultManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:&error];
         NSLog(@"saveImage 文件夹重新创建");
     } else {
-        NSLog(@"saveImage 文件夹已存在");
+        //        NSLog(@"saveImage 文件夹已存在");
     }
     if(error != nil) {
         NSLog(@"创建文件夹失败");
@@ -129,11 +211,10 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     NSString *fileName = [NSString stringWithFormat:@"%f",[senddate timeIntervalSince1970]];
     
     NSString *filePath = [NSString stringWithFormat:@"%@/%@.jpg", directory, fileName];
-    NSLog(@"fileName:%@",filePath);
+    
     //    NSURL *url = [NSURL fileURLWithPath:filepath];
     BOOL result = [UIImageJPEGRepresentation(image, 0.01) writeToFile:filePath atomically:YES];
     if (result) {
-        NSLog(@"写入成功");
         return filePath;
     } else {
         return @"";
@@ -184,7 +265,11 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 
 - (void) checkMouth {
     
-    NSDate* tmpStartData = [NSDate date];
+    self.savePhoto = NO;
+    
+    //    NSDate* tmpStartData = [NSDate date];
+    double deltaTime = [[NSDate date] timeIntervalSinceDate:self.tmpStartData];
+    NSLog(@"cost time 1 = %f", deltaTime);
     
     NSString *verifyCompare = [NSString stringWithFormat:@"%@%@" , SERVER_URL,LIVE_CHECK];
     NSString *requestId = self.requestId;
@@ -223,8 +308,16 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
             NSLog(@"%@", [responseObject objectForKey:@"code"]);
             NSLog(@"%@", [responseObject objectForKey:@"msg"]);
             
-            double deltaTime = [[NSDate date] timeIntervalSinceDate:tmpStartData];
-            NSLog(@"cost time = %f", deltaTime);
+            double deltaTime = [[NSDate date] timeIntervalSinceDate:self.tmpStartData];
+            NSLog(@"cost time 2= %f", deltaTime);
+            NSString *code = [responseObject objectForKey:@"code"];
+            if([code isEqualToString:@"Ok"] || [code isEqualToString:@"Pass"]) {
+                NSLog(@"人脸检测通过");
+                self.tipsLabel.text = @"人脸检测通过";
+                self.mouthChecked = YES;
+            } else {
+                self.savePhoto = YES;
+            }
         }
     }];
     
@@ -358,7 +451,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
      We do not create an AVCaptureMovieFileOutput when setting up the session because
      Live Photo is not supported when AVCaptureMovieFileOutput is added to the session.
      */
-    self.session.sessionPreset = AVCaptureSessionPresetPhoto;
+    self.session.sessionPreset = AVCaptureSessionPreset640x480;
     
     // Add video input.
     
@@ -366,7 +459,11 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     AVCaptureDevice* videoDevice = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInDualCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront];
     if (!videoDevice) {
         // If a rear dual camera is not available, default to the rear dual wide angle camera.
-        videoDevice = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInDualWideCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront];
+        if (@available(iOS 13.0, *)) {
+            videoDevice = [AVCaptureDevice defaultDeviceWithDeviceType:AVCaptureDeviceTypeBuiltInDualWideCamera mediaType:AVMediaTypeVideo position:AVCaptureDevicePositionFront];
+        } else {
+            // Fallback on earlier versions
+        }
     }
     if (!videoDevice) {
         // If a rear dual wide camera is not available, default to the rear wide angle camera.
@@ -403,6 +500,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
             }
             
             self.previewView.videoPreviewLayer.connection.videoOrientation = initialVideoOrientation;
+            self.previewView.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         });
     }
     else {
@@ -447,6 +545,40 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     [self.session commitConfiguration];
 }
 
+
+- (NSString *)canSetSessionPreset:(AVCaptureDevice*) device {
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPreset3840x2160]) {
+        NSLog(@"AVCaptureSessionPreset3840x2160");
+        return AVCaptureSessionPreset3840x2160;
+    }
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPreset1920x1080]) {
+        NSLog(@"AVCaptureSessionPreset1920x1080");
+        return AVCaptureSessionPreset1920x1080;
+    }
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPreset1280x720]) {
+        NSLog(@"AVCaptureSessionPreset1280x720");
+        return AVCaptureSessionPreset1280x720;
+    }
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPreset640x480]) {
+        NSLog(@"AVCaptureSessionPreset640x480");
+        return AVCaptureSessionPreset640x480;
+    }
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPreset352x288]) {
+        NSLog(@"AVCaptureSessionPreset352x288");
+        return AVCaptureSessionPreset352x288;
+    }
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPresetHigh]) {
+        NSLog(@"AVCaptureSessionPresetHigh");
+        return AVCaptureSessionPresetHigh;
+    }
+    if ([device supportsAVCaptureSessionPreset:AVCaptureSessionPresetMedium]) {
+        NSLog(@"AVCaptureSessionPresetMedium");
+        return AVCaptureSessionPresetMedium;
+    }
+    NSLog(@"AVCaptureSessionPresetLow");
+    return AVCaptureSessionPresetLow;
+}
+
 - (UIInterfaceOrientation)windowOrientation {
     if (@available(iOS 13.0, *)) {
         return self.view.window.windowScene.interfaceOrientation;
@@ -475,35 +607,52 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 }
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    self.count = self.count + 1;
-    if (self.count >= 40) {
-        if (self.savePhoto) {
-            if (!self.faceCompareSuccess) {
-                self.savePhoto = NO;
-//                self.comparePhoto = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:@"compare"];
-                
-//                NSDictionary * attributes = [NSFileManager.defaultManager attributesOfItemAtPath:self.comparePhoto error:nil];
-//                NSNumber *fileSize = [attributes objectForKey:NSFileSize];
-//                NSLog(@"%@", fileSize);
-            } else {
-                if (!self.mouthChecked) {
-                    NSLog(@"开始保存图片");
-                    NSString *filePath = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:@"mouth"];
-                    NSLog(@"保存图片完成");
-                    if (filePath.length != 0) {
-                        if([self.mouthPhotos count] == 20) {
-                            self.savePhoto = NO;
-                            [self checkMouth];
-                        } else {
-                            [self.mouthPhotos addObject: filePath];
-                        }
-                    }
-                }
-            }
+    //    NSLog(@"摄像头数据");
+    if ([FaceManager shareManager].savePhoto) {
+        self.count = self.count + 1;
+        //跳一帧
+        if (self.count >= 40 && self.count%2 == 0) {
+            NSString* prefix = [self.interceptChain currentType];
+            NSString *savedFile = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:prefix];
+            [_interceptChain procced:savedFile];
             
-            
+            //        if (self.savePhoto) {
+            //            if (!self.faceCompareSuccess) {
+            //                self.savePhoto = NO;
+            //                self.comparePhoto = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:@"compare"];
+            //                [self verifyCompare];
+            //                NSDictionary * attributes = [NSFileManager.defaultManager attributesOfItemAtPath:self.comparePhoto error:nil];
+            //                NSNumber *fileSize = [attributes objectForKey:NSFileSize];
+            //                NSLog(@"%@", fileSize);
+            //            } else {
+            //                if (!self.mouthChecked) {
+            //                    self.tipsLabel.text = @"请张开嘴巴后合上";
+            //                    if (self.startMouthCheckFlag) {
+            //                        NSLog(@"开始保存图片");
+            //                        NSString *filePath = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:@"mouth"];
+            //                        NSLog(@"保存图片完成");
+            //                        if (filePath.length != 0) {
+            //                            if([self.mouthPhotos count] == 20) {
+            //                                [self checkMouth];
+            //                            } else {
+            //                                [self.mouthPhotos addObject: filePath];
+            //                            }
+            //                        }
+            //                    } else {
+            //                        [self performSelector:@selector(startMoutchCheck) withObject:nil afterDelay:1];
+            //                    }
+            //                }
+            //
+            //
+            //            }
+            //        }
         }
     }
+}
+
+- (void) startMoutchCheck{
+    self.startMouthCheckFlag = YES;
+    self.tmpStartData = [NSDate date];
 }
 
 
