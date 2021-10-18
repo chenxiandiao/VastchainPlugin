@@ -78,6 +78,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     [self.circleImageView setImage:circleImage];
     
     self.tipsLabel.text = @"请正对人脸框";
+    [[FaceManager shareManager] playSoundName:@"face.wav"];
     [self getSessionId];
 }
 

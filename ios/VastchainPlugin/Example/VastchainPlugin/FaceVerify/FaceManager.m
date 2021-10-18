@@ -7,6 +7,7 @@
 //
 
 #import "FaceManager.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation FaceManager
 
@@ -51,5 +52,28 @@ static FaceManager *manager = nil;
 - (id)mutableCopy{
     return self;
 }
+
+/** 播放音效文件 */
+- (void)playSoundName:(NSString *)name {
+    /// 静态库 path 的获取
+    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
+                                stringByAppendingPathComponent:@"/FaceVerify.bundle"];
+    NSLog(@"bundlePath:%@", bundlePath);
+    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString *path = [resource_bundle pathForResource:name ofType:nil];
+
+    if (!path) {
+        /// 动态库 path 的获取
+        path = [[NSBundle bundleForClass:[self class]] pathForResource:name ofType:nil];
+    }
+    NSURL *fileUrl = [NSURL fileURLWithPath:path];
+    
+    SystemSoundID soundID = 0;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &soundID);
+    AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, soundCompleteCallback, NULL);
+    AudioServicesPlaySystemSound(soundID);
+}
+
+void soundCompleteCallback(SystemSoundID soundID, void *clientData){}
 @end
 

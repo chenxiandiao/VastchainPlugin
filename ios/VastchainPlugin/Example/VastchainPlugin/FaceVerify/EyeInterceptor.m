@@ -37,6 +37,7 @@
     
     if (_eyePhotos.count == 0) {
         NSLog(@"开始保存张嘴图片");
+        [[FaceManager shareManager] playSoundName:@"eye.wav"];
     }
    
     [_eyePhotos addObject:file];
@@ -72,9 +73,9 @@
                     if ([chain isLast]) {
                         NSLog(@"人脸检测完成");
                         _tipsLabel.text = @"人脸检测完成";
-                    } else {
-                        [FaceManager shareManager].savePhoto = YES;
+                    } else {                        
                         [self showNextTips:chain];
+                        [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
                     }
                 } else {
                     _tipsLabel.text = @"请再次，闭眼后缓慢睁开";
@@ -96,5 +97,8 @@
     _tipsLabel.text = @"请闭眼后再缓慢睁开";
 }
 
+- (void)startSavePhoto{
+    [FaceManager shareManager].savePhoto = YES;
+}
 
 @end

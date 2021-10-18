@@ -68,7 +68,7 @@
                     _tipsLabel.text = @"人脸检测完成";
                 } else {
                     [self showNextTips:chain];
-                    [FaceManager shareManager].savePhoto = YES;
+                    [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
                 }
                 NSLog(@"人脸比对完成");
             } else {
@@ -115,6 +115,10 @@
 
 - (BOOL)checked {
     return _verifySuccess;
+}
+
+- (void)startSavePhoto{
+    [FaceManager shareManager].savePhoto = YES;
 }
 @end
 

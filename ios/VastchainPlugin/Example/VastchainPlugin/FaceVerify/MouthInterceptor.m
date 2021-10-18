@@ -37,6 +37,7 @@
     
     if (_mouthPhotos.count == 0) {
         NSLog(@"开始保存张嘴图片");
+        [[FaceManager shareManager] playSoundName:@"mouth.wav"];
     }
    
     [_mouthPhotos addObject:file];
@@ -76,8 +77,8 @@
                         NSLog(@"人脸检测完成");
                         _tipsLabel.text = @"人脸检测完成";
                     } else {
-                        [FaceManager shareManager].savePhoto = YES;
                         [self showNextTips:chain];
+                        [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
                     }
                 } else {                
                     _tipsLabel.text = @"请再次，张开嘴巴再合上";
@@ -99,5 +100,7 @@
     _tipsLabel.text = @"请张开嘴巴再合上";
 }
 
-
+- (void)startSavePhoto{
+    [FaceManager shareManager].savePhoto = YES;
+}
 @end

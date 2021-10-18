@@ -14,6 +14,8 @@
 
 @property BOOL savePhoto;
 @property BOOL skipFaceCheck;
+/** 播放音效文件 */
+- (void)playSoundName:(NSString *)name;
 
 @end
 
