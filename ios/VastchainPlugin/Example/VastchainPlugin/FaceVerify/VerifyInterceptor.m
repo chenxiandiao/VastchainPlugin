@@ -54,8 +54,8 @@
                 NSLog(@"人脸比对失败");
             } else {
                 NSLog(@"尝试继续比对");
+                [FaceManager shareManager].savePhoto = YES;
             }
-            [FaceManager shareManager].savePhoto = YES;
         } else {
             NSString *code = [responseObject objectForKey:@"code"];
             NSLog(@"%@ %@", response, responseObject);
@@ -72,11 +72,11 @@
                 }
                 NSLog(@"人脸比对完成");
             } else {
-                [FaceManager shareManager].savePhoto = YES;
                 _count = _count + 1;
                 if(_count > _compareCount) {
                     NSLog(@"人脸比对失败");
                 } else {
+                    [FaceManager shareManager].savePhoto = YES;
                     NSLog(@"尝试继续比对");
                 }
             }
