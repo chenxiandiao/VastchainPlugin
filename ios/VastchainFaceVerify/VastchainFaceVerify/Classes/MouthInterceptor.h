@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define PHOTO_COUNT 20
+#define COMPARE_COUNT 5
 
 @interface MouthInterceptor : LiveInterceptor
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property BOOL mouthChecked;
 @property NSString *requestId;
 @property UILabel *tipsLabel;
+@property NSInteger tryCount;
 
 -(id) initWithRequestId:(NSString *)requestId label:(UILabel *)tipsLabel;
 
