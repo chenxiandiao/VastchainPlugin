@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "FaceIndexViewController.h"
+#import "VastchainPlugin/FaceTestViewController.h"
 #import "ImageViewController.h"
 #import "VastchainPlugin/BlueViewController.h"
 #import "VastchainPlugin/WCQRCodeVC.h"
@@ -43,6 +44,17 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (IBAction)clickStoryBoardTest:(id)sender {
+    NSURL *url = [[NSBundle bundleForClass:[FaceTestViewController class]] URLForResource:@"VastchainPlugin" withExtension:@"bundle"];
+    if (url == nil)  {
+        NSLog(@"null");
+    } else {
+        NSBundle *resource_bundle = [NSBundle bundleWithURL:url];
+        UIStoryboard *faceStoryboard =[UIStoryboard storyboardWithName:@"Face" bundle:resource_bundle];
+        [self.navigationController pushViewController: [faceStoryboard instantiateInitialViewController] animated:YES];
+    }
+  
+}
 
 - (void) openBlue {
     BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8000"];

@@ -38,9 +38,10 @@ TODO: Add long description of the pod here.
 #}
 s.source_files = 'VastchainPlugin/Classes/**/*'
 s.resource_bundles = {
+#    'VastchainPlugin' => ['VastchainPlugin/Assets/**/*.{storyboard,xib,xcassets,json,imageset,png}']
     'VastchainPlugin' => ['VastchainPlugin/Assets/*']
 }
-
+#s.resource = ['VastchainPlugin/Assets/Face.storyboard']
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
 s.dependency 'SGQRCode', '~> 3.5.1'
