@@ -1,0 +1,29 @@
+# VastchainFaceVerify
+
+[![CI Status](https://img.shields.io/travis/chenxiandiao/VastchainFaceVerify.svg?style=flat)](https://travis-ci.org/chenxiandiao/VastchainFaceVerify)
+[![Version](https://img.shields.io/cocoapods/v/VastchainFaceVerify.svg?style=flat)](https://cocoapods.org/pods/VastchainFaceVerify)
+[![License](https://img.shields.io/cocoapods/l/VastchainFaceVerify.svg?style=flat)](https://cocoapods.org/pods/VastchainFaceVerify)
+[![Platform](https://img.shields.io/cocoapods/p/VastchainFaceVerify.svg?style=flat)](https://cocoapods.org/pods/VastchainFaceVerify)
+
+## Example
+
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
+
+## Requirements
+
+## Installation
+
+VastchainFaceVerify is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'VastchainFaceVerify'
+```
+
+## Author
+
+chenxiandiao, 15068808239@163.com
+
+## License
+
+VastchainFaceVerify is available under the MIT license. See the LICENSE file for more info.

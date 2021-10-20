@@ -1,0 +1,32 @@
+{
+  "name": "VastchainFaceVerify",
+  "version": "0.1.0",
+  "summary": "A short description of VastchainFaceVerify.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/chenxiandiao/VastchainFaceVerify",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "chenxiandiao": "15068808239@163.com"
+  },
+  "source": {
+    "git": "https://github.com/chenxiandiao/VastchainFaceVerify.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "VastchainFaceVerify/Classes/**/*",
+  "resource_bundles": {
+    "VastchainFaceVerify": [
+      "VastchainFaceVerify/Assets/*"
+    ]
+  },
+  "dependencies": {
+    "AFNetworking": [
+      "~> 4.0"
+    ]
+  }
+}

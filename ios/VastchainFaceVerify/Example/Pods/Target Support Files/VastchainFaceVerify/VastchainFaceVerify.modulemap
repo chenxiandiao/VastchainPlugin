@@ -1,0 +1,6 @@
+framework module VastchainFaceVerify {
+  umbrella header "VastchainFaceVerify-umbrella.h"
+
+  export *
+  module * { export * }
+}
