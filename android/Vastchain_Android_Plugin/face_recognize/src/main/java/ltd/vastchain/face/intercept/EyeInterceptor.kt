@@ -11,9 +11,11 @@ class EyeInterceptor(private val requestId: String) : LiveInterceptor() {
 	private var eyeCheck: Boolean = false
 	private var eyePhotos: MutableList<String> = mutableListOf()
 	private var eyeTime = 0L
+	private var tryCount = 0
 
 	companion object {
 		private var PHOTO_MAX_SIZE = 20
+		private const val COMPARE_COUNT = 5
 	}
 
 	override fun proceed(file: String, interceptChain: InterceptChain) {
@@ -50,10 +52,16 @@ class EyeInterceptor(private val requestId: String) : LiveInterceptor() {
 				}
 				Log.e("eye", "眨眼检测通过")
 			} else {
-				FaceManager.listener?.eyeCheckFail()
-				eyePhotos.clear()
-				FaceManager.resumeCheck()
-				Log.e("eye", "眨眼检测未通过")
+				tryCount++
+				if (tryCount<= COMPARE_COUNT) {
+					FaceManager.listener?.eyeCheckFail()
+					eyePhotos.clear()
+					FaceManager.resumeCheck()
+					Log.e("eye", "眨眼检测未通过")
+				} else {
+					eyePhotos.clear()
+					FaceManager?.listener?.compareFail()
+				}
 			}
 		}
 	}

@@ -45,7 +45,7 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	}
 
 	override fun compareFail() {
-		tvTips?.text = "识别失败，请正对屏幕"
+		tvTips?.text = "人脸识别失败,请稍后重试"
 	}
 
 	override fun compareSuccess() {
@@ -87,6 +87,7 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	override fun compareEnd() {
 		tvTips?.text = "人脸检测完成"
 	}
+
 
 
 }

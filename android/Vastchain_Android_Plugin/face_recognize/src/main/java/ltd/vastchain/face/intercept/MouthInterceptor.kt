@@ -11,9 +11,11 @@ class MouthInterceptor(private val requestId: String) : LiveInterceptor() {
 	private var mouthCheck: Boolean = false
 	private var mouthPhotos: MutableList<String> = mutableListOf()
 	private var mouthTime = 0L
+	private var tryCount = 0
 
 	companion object {
 		private var PHOTO_MAX_SIZE = 20
+		private const val COMPARE_COUNT = 5
 	}
 
 	override fun proceed(file: String, interceptChain: InterceptChain) {
@@ -50,10 +52,16 @@ class MouthInterceptor(private val requestId: String) : LiveInterceptor() {
 				}
 				Log.e("mouth", "张嘴检测通过")
 			} else {
-				mouthPhotos.clear()
-				FaceManager.listener?.mouthCheckFail()
-				FaceManager.resumeCheck()
-				Log.e("mouth", "张嘴检测未通过")
+				tryCount++
+				if (tryCount<= COMPARE_COUNT) {
+					mouthPhotos.clear()
+					FaceManager.listener?.mouthCheckFail()
+					FaceManager.resumeCheck()
+					Log.e("mouth", "张嘴检测未通过")
+				} else {
+					 mouthPhotos.clear()
+					FaceManager.listener?.compareFail()
+				}
 			}
 		}
 	}
