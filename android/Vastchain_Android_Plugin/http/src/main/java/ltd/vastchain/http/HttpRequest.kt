@@ -46,7 +46,7 @@ object HttpRequest {
             builder.addInterceptor(loggingInterceptor)
 
             retrofit = Retrofit.Builder()
-                .baseUrl("http://10.144.1.84:12222")
+                .baseUrl("https://face-center-api-test.tmp.vastchain.ltd")
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

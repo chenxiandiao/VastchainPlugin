@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 android {
@@ -63,4 +64,29 @@ dependencies {
     implementation 'androidx.window:window:1.0.0-alpha09'
 
     implementation project(path: ':http')
+}
+
+// Because the components are created only during the afterEvaluate phase, you must
+// configure your publications using the afterEvaluate() lifecycle method.
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            maven(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'ltd.vastchain.android'
+                artifactId = 'faceverify'
+                version = '1.0'
+            }
+        }
+        repositories {
+            maven {
+                //指定要上传的maven私服仓库
+                url = "file:\\D:\\maven"
+            }
+        }
+    }
 }

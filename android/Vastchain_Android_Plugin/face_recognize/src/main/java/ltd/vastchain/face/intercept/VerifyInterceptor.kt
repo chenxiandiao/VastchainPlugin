@@ -14,7 +14,7 @@ import java.io.File
 class VerifyInterceptor(private val requestId: String) : Interceptor {
 	private var verifySuccess = false
 	private var count = 0
-	private val compareCount = 20
+	private val compareCount = 10
 	override fun proceed(file: String, interceptChain: InterceptChain) {
 		if (checked()) {
 			interceptChain.proceed(file)

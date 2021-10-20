@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 android {
@@ -43,5 +44,27 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+}
 
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            maven(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'ltd.vastchain.android'
+                artifactId = 'facehttp'
+                version = '1.0'
+            }
+        }
+        repositories {
+            maven {
+                //指定要上传的maven私服仓库
+                url = "file:\\D:\\maven"
+            }
+        }
+    }
 }

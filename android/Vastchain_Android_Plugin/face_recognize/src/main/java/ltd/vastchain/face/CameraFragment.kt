@@ -319,7 +319,12 @@ class CameraFragment : Fragment() {
 			preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
 
 
-//			camera?.cameraControl?.setZoomRatio(0.1f)
+
+			Log.e("cxd", camera?.cameraInfo?.zoomState?.value?.zoomRatio?.toString()?:"")
+			Log.e("cxd", camera?.cameraInfo?.zoomState?.value?.maxZoomRatio?.toString()?:"")
+			Log.e("cxd", camera?.cameraInfo?.zoomState?.value?.minZoomRatio?.toString()?:"")
+
+//			camera?.cameraControl?.setZoomRatio(1f);
 		} catch (exc: Exception) {
 			Log.e(TAG, "Use case binding failed", exc)
 		}
