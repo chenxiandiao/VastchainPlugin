@@ -75,11 +75,13 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
     if (!url) {
-        NSLog(@"bundle 组件化");
+        NSLog(@"image bundle 组件化");
         url = [[NSBundle bundleForClass:[self class]] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
     }
     NSBundle *resource_bundle = [NSBundle bundleWithURL:url];
     UIImage *circleImage = [UIImage imageNamed:@"FaceCircle" inBundle:resource_bundle compatibleWithTraitCollection:nil];
+    //暂时使用主工程中的图片资源
+//    UIImage *circleImage = [UIImage imageNamed:@"FaceCircle"];
     [self.circleImageView setImage:circleImage];
     
     self.tipsLabel.text = @"请正对人脸框";

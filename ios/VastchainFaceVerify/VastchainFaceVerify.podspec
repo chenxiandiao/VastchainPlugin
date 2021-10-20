@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'VastchainFaceVerify'
-  s.version          = 'face_0.1.0'
+  s.version          = '0.1.0'
   s.summary          = 'A short description of VastchainFaceVerify.'
 
 # This description is used to generate tags and improve search results.
@@ -21,26 +21,26 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://vastchain.coding.net/p/patrol/d/sdk/git'
-#  s.homepage         = 'https://github.com/chenxiandiao/VastchainFaceVerify'
+#  s.homepage         = 'https://vastchain.coding.net/p/patrol/d/sdk/git'
+  s.homepage         = 'https://github.com/chenxiandiao/VastchainFaceVerify'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'chenxiandiao' => '15068808239@163.com' }
-  s.source           = { :git => 'https://e.coding.net/vastchain/patrol/sdk.git', :tag => s.version.to_s }
-#  s.source           = { :git => 'https://github.com/chenxiandiao/VastchainFaceVerify.git', :tag => s.version.to_s }
+#  s.source           = { :git => 'https://e.coding.net/vastchain/patrol/sdk.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/chenxiandiao/VastchainFaceVerify.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '9.0'
 
-#  s.source_files = 'VastchainFaceVerify/Classes/**/*'
-#  s.resource_bundles = {
-#     'VastchainFaceVerify' => ['VastchainFaceVerify/Assets/*']
-#  }
-  
-  s.source_files = 'ios/VastchainFaceVerify/VastchainFaceVerify/Classes/**/*'
+  s.source_files = 'VastchainFaceVerify/Classes/**/*'
   s.resource_bundles = {
-      'VastchainPlugin' => ['ios/VastchainFaceVerify/VastchainFaceVerify/Assets/*']
+     'VastchainFaceVerify' => ['VastchainFaceVerify/Assets/*']
   }
+  
+#  s.source_files = 'ios/VastchainFaceVerify/VastchainFaceVerify/Classes/**/*'
+#  s.resource_bundles = {
+#      'VastchainFaceVerify' => ['ios/VastchainFaceVerify/VastchainFaceVerify/Assets/*']
+#  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
 #  s.frameworks = 'UIKit', 'MapKit'

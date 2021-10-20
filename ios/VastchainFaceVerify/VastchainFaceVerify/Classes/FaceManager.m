@@ -63,7 +63,7 @@ static FaceManager *manager = nil;
     
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
     if (!url) {
-        NSLog(@"bundle 组件化");
+        NSLog(@"wav bundle 组件化");
         url = [[NSBundle bundleForClass:[self class]] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
     }
     NSBundle *resource_bundle = [NSBundle bundleWithURL:url];
