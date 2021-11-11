@@ -16,7 +16,6 @@
 -(id)init
 {
     if (self = [super init]) {
-        _compareCount = 20;
     }
     return self;
 }
@@ -25,7 +24,7 @@
     self = [super init];
     if (self) {
         _requestId = requestId;
-        _compareCount = 20;
+        _tryCount = 0;
         _tipsLabel = tipsLabel;
     }
     return self;
@@ -49,9 +48,10 @@
     [self faceComapre:file requestId:_requestId completionHandler:^(NSURLResponse * _Nonnull response, id  _Nonnull responseObject, NSError * _Nonnull error) {
         if (error) {
             NSLog(@"%@", error);
-            _count = _count + 1;
-            if(_count > _compareCount) {
+            self.tryCount++;
+            if(self->_tryCount > COMPARE_COUNT) {
                 NSLog(@"人脸比对失败");
+                self->_tipsLabel.text = @"人脸识别失败,请稍后重试";
             } else {
                 NSLog(@"尝试继续比对");
                 [FaceManager shareManager].savePhoto = YES;
@@ -62,19 +62,20 @@
             NSLog(@"%@", code);
             NSLog(@"%@", [responseObject objectForKey:@"msg"]);
             if ([code isEqualToString:@"Ok"] || [code isEqualToString:@"Pass"]) {
-                _verifySuccess = YES;
+                self->_verifySuccess = YES;
                 if ([chain isLast]) {
                     NSLog(@"人脸检测完成");
-                    _tipsLabel.text = @"人脸检测完成";
+                    self->_tipsLabel.text = @"人脸检测完成";
                 } else {
                     [self showNextTips:chain];
                     [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
                 }
                 NSLog(@"人脸比对完成");
             } else {
-                _count = _count + 1;
-                if(_count > _compareCount) {
+                self.tryCount++;
+                if(self.tryCount > COMPARE_COUNT) {
                     NSLog(@"人脸比对失败");
+                    self->_tipsLabel.text = @"人脸识别失败,请稍后重试";
                 } else {
                     [FaceManager shareManager].savePhoto = YES;
                     NSLog(@"尝试继续比对");

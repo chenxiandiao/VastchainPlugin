@@ -11,13 +11,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define COMPARE_COUNT 10
+
 @class InterceptChain;
 
 @interface VerifyInterceptor : Interceptor
 
 
 @property BOOL verifySuccess;
-@property NSInteger count;
+@property NSInteger tryCount;
 @property NSInteger compareCount;
 @property NSString *requestId;
 @property UILabel *tipsLabel;

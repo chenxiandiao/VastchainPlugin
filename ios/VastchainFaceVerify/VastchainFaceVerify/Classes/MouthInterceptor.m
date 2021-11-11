@@ -20,6 +20,7 @@
         _requestId = requestId;
         _mouthPhotos = [[NSMutableArray alloc]initWithCapacity:20];
         _tipsLabel = tipsLabel;
+        _tryCount = 0;
     }
     return self;
 }
@@ -61,7 +62,14 @@
         [super checkLive:_mouthPhotos type:@"mouth" requestId:_requestId completionHandler:^(NSURLResponse * _Nonnull response, id  _Nonnull responseObject, NSError * _Nonnull error) {
             if (error) {
                 NSLog(@"Error: %@", error);
-                [FaceManager shareManager].savePhoto = YES;
+                self->_tryCount++;
+                if(self->_tryCount > COMPARE_COUNT) {
+                    NSLog(@"人脸比对失败");
+                    self->_tipsLabel.text = @"人脸识别失败,请稍后重试";
+                } else {
+                    NSLog(@"尝试继续比对");
+                    [FaceManager shareManager].savePhoto = YES;
+                }            
             } else {
                 NSLog(@"%@ %@", response, responseObject);
                 NSLog(@"%@", [responseObject objectForKey:@"code"]);
@@ -71,19 +79,25 @@
     //            NSLog(@"cost time 2= %f", deltaTime);
                 NSString *code = [responseObject objectForKey:@"code"];
                 if([code isEqualToString:@"Ok"] || [code isEqualToString:@"Pass"]) {
-                    _mouthChecked = YES;
+                    self->_mouthChecked = YES;
                     NSLog(@"人脸检测通过");
                     if ([chain isLast]) {
                         NSLog(@"人脸检测完成");
-                        _tipsLabel.text = @"人脸检测完成";
+                        self->_tipsLabel.text = @"人脸检测完成";
                     } else {
                         [self showNextTips:chain];
                         [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
                     }
-                } else {                
-                    _tipsLabel.text = @"请再次，张开嘴巴再合上";
-                    [_mouthPhotos removeAllObjects];
-                    [FaceManager shareManager].savePhoto = YES;
+                } else {
+                    self->_tryCount++;
+                    if (self->_tryCount <= COMPARE_COUNT) {
+                        self->_tipsLabel.text = @"请再次，张开嘴巴再合上";
+                        [self->_mouthPhotos removeAllObjects];
+                        [FaceManager shareManager].savePhoto = YES;
+                    } else {
+                        self->_tipsLabel.text = @"人脸识别失败,请稍后重试";
+                    }
+                   
                 }
             }
         }];
