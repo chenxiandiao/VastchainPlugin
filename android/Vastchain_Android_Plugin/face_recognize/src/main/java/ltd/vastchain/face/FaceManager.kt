@@ -8,6 +8,16 @@ import android.util.Log
 import androidx.camera.core.ImageProxy
 import ltd.vastchain.face.intercept.*
 import java.io.*
+import android.media.FaceDetector
+import android.graphics.BitmapFactory
+
+import android.graphics.Bitmap
+
+
+
+
+
+
 
 
 /**
@@ -64,7 +74,33 @@ object FaceManager {
 		//生成bitmap
 		val bitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.toByteArray().size)
 		val rotate = rotateBitmap(bitmap, 270f)
-		return saveBitmapToFile(rotate, fullName)
+
+		val filePath = saveBitmapToFile(rotate, fullName)
+		return if(detectFace(filePath)){
+			filePath
+		} else {
+			File(filePath).delete()
+			""
+		}
+	}
+
+	private fun detectFace(file: String):Boolean {
+		val time = System.currentTimeMillis()
+		val option = BitmapFactory.Options()
+		option.inPreferredConfig = Bitmap.Config.RGB_565
+		val bitmap = BitmapFactory.decodeFile(file, option)
+		if (bitmap != null) {
+			val mImageWidth = bitmap.width
+			val mImageHeight = bitmap.height
+			val mFaces = arrayOfNulls<FaceDetector.Face>(1)
+			val mFaceDetector = FaceDetector(mImageWidth, mImageHeight, 1)
+			val mNumberOfFaceDetected = mFaceDetector.findFaces(bitmap, mFaces)
+			Log.e("cxd", mNumberOfFaceDetected.toString())
+			Log.e("cxd", "耗时：" + (System.currentTimeMillis() - time))
+			return mNumberOfFaceDetected >= 1
+		}
+		return false
+
 	}
 
 	private fun yuv420ToNv21(image: ImageProxy): ByteArray? {
@@ -165,6 +201,14 @@ object FaceManager {
 	}
 
 	private fun addPhoto(file: String) {
+		if (file.isEmpty()) {
+			Log.e("cxd", "无人脸框")
+			if (chain?.currentType() == "compare") {
+				//人脸识别过程中没有人脸，提示请正对人脸框
+				listener?.compareFail("请正对人脸框")
+			}
+			return
+		}
 		chain?.proceed(file)
 	}
 
