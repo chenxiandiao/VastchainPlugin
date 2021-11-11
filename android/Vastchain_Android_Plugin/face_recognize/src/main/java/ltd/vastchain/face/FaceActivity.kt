@@ -83,9 +83,9 @@ class FaceActivity : AppCompatActivity() {
 				}
 			}
 
-			override fun compareFail() {
+			override fun compareFail(msg: String) {
 				GlobalScope.launch(Dispatchers.Main) {
-					tipsView?.compareFail()
+					tipsView?.compareFail(msg)
 				}
 
 			}

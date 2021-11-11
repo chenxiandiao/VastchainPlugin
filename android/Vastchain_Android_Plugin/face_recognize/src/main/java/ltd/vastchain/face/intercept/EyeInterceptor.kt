@@ -60,7 +60,7 @@ class EyeInterceptor(private val requestId: String) : LiveInterceptor() {
 					Log.e("eye", "眨眼检测未通过")
 				} else {
 					eyePhotos.clear()
-					FaceManager?.listener?.compareFail()
+					FaceManager?.listener?.compareFail("眨眼检测未通过")
 				}
 			}
 		}

@@ -44,8 +44,12 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 		mediaPlayer?.start()
 	}
 
-	override fun compareFail() {
-		tvTips?.text = "人脸识别失败,请稍后重试"
+	override fun compareFail(msg: String) {
+		if (msg.isEmpty()) {
+			tvTips?.text = "人脸识别失败,请稍后重试"
+		} else {
+			tvTips?.text = msg
+		}
 	}
 
 	override fun compareSuccess() {

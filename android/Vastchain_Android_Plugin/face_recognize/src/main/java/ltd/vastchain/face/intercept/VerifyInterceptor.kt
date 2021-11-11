@@ -3,6 +3,7 @@ package ltd.vastchain.face.intercept
 import android.util.Log
 import ltd.vastchain.face.FaceManager
 import ltd.vastchain.face.http.FaceApi
+import ltd.vastchain.face.model.BasicResponse
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -22,7 +23,8 @@ class VerifyInterceptor(private val requestId: String) : Interceptor {
 		}
 		Log.e("cxd", "开始人脸比对")
 		FaceManager.pauseCheck()
-		verifySuccess = verifyCompare(file, requestId) == true
+		val response = verifyCompare(file, requestId)
+		verifySuccess = response?.success() == true
 		if (verifySuccess) {
 			if (interceptChain.isLast()) {
 				Log.e("VerifyInterceptor", "无活体检测")
@@ -35,7 +37,7 @@ class VerifyInterceptor(private val requestId: String) : Interceptor {
 		} else {
 			count++
 			if (count > compareCount) {
-				FaceManager.listener?.compareFail()
+				FaceManager.listener?.compareFail(response?.msg.orEmpty())
 			} else {
 				FaceManager.resumeCheck()
 			}
@@ -52,9 +54,9 @@ class VerifyInterceptor(private val requestId: String) : Interceptor {
 	}
 
 
-	private fun verifyCompare(fullPath: String, requestId: String): Boolean? {
+	private fun verifyCompare(fullPath: String, requestId: String): BasicResponse? {
 		if (FaceManager.skipAllCheck) {
-			return true
+			return BasicResponse("Ok", "Pass");
 		}
 		val file = File(fullPath)
 		val imgBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
@@ -65,20 +67,22 @@ class VerifyInterceptor(private val requestId: String) : Interceptor {
 				part,
 			).execute()
 			return if (execute.isSuccessful) {
-				Log.e("cxd", "图片上报成功")
+//				Log.e("cxd", "图片上报成功")
 				val response = execute.body()
-				Log.e("cxd", response.toString())
-				response?.success()
+				response
+//				Log.e("cxd", response.toString())
+//				response?.success()
 			} else {
-				Log.e("cxd", "错误：" + execute.errorBody()?.string().orEmpty())
-				false
+//				Log.e("cxd", "错误：" + execute.errorBody()?.string().orEmpty())
+//				false
+				return BasicResponse("Fail", execute.errorBody()?.string().orEmpty())
 			}
 		} catch (e: Exception) {
 			e.printStackTrace()
 		} finally {
 
 		}
-		return false
+		return BasicResponse("Fail", "Pass");
 	}
 
 	private fun showNextTips(chain: InterceptChain) {
