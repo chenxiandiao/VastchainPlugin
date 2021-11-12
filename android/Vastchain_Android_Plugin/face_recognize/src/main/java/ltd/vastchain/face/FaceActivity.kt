@@ -9,10 +9,7 @@ import android.view.KeyEvent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import ltd.vastchain.face.databinding.ActivityFaceBinding
 import ltd.vastchain.face.http.FaceApi
 import ltd.vastchain.face.widget.FaceTipsView
@@ -90,9 +87,18 @@ class FaceActivity : AppCompatActivity() {
 				}
 			}
 
+			override fun checkFace() {
+				GlobalScope.launch(Dispatchers.Main) {
+					tipsView?.checkFace()
+				}
+			}
+
 			override fun compareFail(msg: String) {
 				GlobalScope.launch(Dispatchers.Main) {
 					tipsView?.compareFail(msg)
+					delay(200)
+					finish()
+					FaceManager.getFaceCallBack()?.fail(msg)
 				}
 
 			}
@@ -144,6 +150,8 @@ class FaceActivity : AppCompatActivity() {
 				GlobalScope.launch(Dispatchers.Main) {
 					Toast.makeText(this@FaceActivity, "人脸检测完成", Toast.LENGTH_LONG).show()
 					tipsView?.compareEnd()
+					delay(200)
+					FaceManager.getFaceCallBack()?.success()
 				}
 			}
 		}

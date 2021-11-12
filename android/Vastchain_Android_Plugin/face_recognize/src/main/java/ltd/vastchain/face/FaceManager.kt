@@ -28,6 +28,8 @@ object FaceManager {
 
 	var listener: IFaceListener? = null
 
+	private var faceCallBack: IFaceCallBack? = null;
+
 	var skipAllCheck = false
 	private var savePhoto: Boolean = false
 
@@ -203,9 +205,10 @@ object FaceManager {
 	private fun addPhoto(file: String) {
 		if (file.isEmpty()) {
 			Log.e("cxd", "无人脸框")
-			if (chain?.currentType() == "compare") {
+			Log.e("cxd", chain?.currentType().orEmpty())
+			if (chain?.currentType() == "compare/") {
 				//人脸识别过程中没有人脸，提示请正对人脸框
-				listener?.compareFail("请正对人脸框")
+				listener?.checkFace()
 			}
 			return
 		}
@@ -235,5 +238,13 @@ object FaceManager {
 	fun release() {
 		savePhoto = false
 		interceptors.clear()
+	}
+
+	fun getFaceCallBack(): IFaceCallBack? {
+		return faceCallBack
+	}
+
+	fun setFaceCallBack(callback: IFaceCallBack) {
+		this.faceCallBack = callback
 	}
 }

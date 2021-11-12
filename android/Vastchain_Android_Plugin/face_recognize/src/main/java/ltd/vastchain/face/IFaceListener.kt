@@ -7,6 +7,8 @@ interface IFaceListener {
 
 	fun beginCompare()
 
+	fun checkFace();
+
 	fun compareFail(msg: String)
 
 	fun compareSuccess()

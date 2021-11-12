@@ -1,8 +1,11 @@
 package ltd.vastchain.plugin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ltd.vastchain.bluetooth.BlueManager
+import ltd.vastchain.face.FaceManager
+import ltd.vastchain.face.IFaceCallBack
 import ltd.vastchain.face.PersonInfoActivity
 import ltd.vastchain.plugin.databinding.ActivityMainBinding
 import ltd.vastchain.qrscan.QrScanManager
@@ -33,6 +36,15 @@ class MainActivity : AppCompatActivity() {
 
 		activityMainBinding.tvGoFaceHome.setOnClickListener {
 			PersonInfoActivity.start(this)
+			FaceManager.setFaceCallBack(object : IFaceCallBack{
+				override fun success() {
+					Log.e("cxd", "人脸识别成功")
+				}
+
+				override fun fail(msg: String) {
+
+				}
+			})
 		}
 
 //		activityMainBinding.tvGoFaceEyeMouth.setOnClickListener {
