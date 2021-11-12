@@ -45,6 +45,13 @@ class FaceActivity : AppCompatActivity() {
 
 		initView()
 		initData()
+		initListener()
+	}
+
+	private fun initListener() {
+		activityMainBinding.ivClose.setOnClickListener {
+			finish()
+		}
 	}
 
 	private fun initData() {
