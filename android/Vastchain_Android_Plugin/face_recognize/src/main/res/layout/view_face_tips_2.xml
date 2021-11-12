@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/v_center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/face_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/v_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#8e000000"
+        app:layout_constraintBottom_toTopOf="@+id/v_center"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/v_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#8e000000"
+        app:layout_constraintTop_toBottomOf="@+id/v_center"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="请正对屏幕"
+        android:textColor="#FF4040"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/v_center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        tools:text="请正对屏幕" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

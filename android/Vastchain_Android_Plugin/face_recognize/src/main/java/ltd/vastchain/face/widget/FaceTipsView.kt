@@ -25,7 +25,7 @@ class FaceTipsView @kotlin.jvm.JvmOverloads constructor(
 	var mediaPlayer: MediaPlayer? = null
 
 	init {
-		View.inflate(context, R.layout.view_face_tips, this)
+		View.inflate(context, R.layout.view_face_tips_2, this)
 		tvTips = findViewById(R.id.tv_tips)
 
 		mediaPlayer = MediaPlayer()

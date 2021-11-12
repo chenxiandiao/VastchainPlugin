@@ -30,7 +30,7 @@ object FaceManager {
 
 	private var faceCallBack: IFaceCallBack? = null;
 
-	var skipAllCheck = false
+	var skipAllCheck = true
 	private var savePhoto: Boolean = false
 
 	private var interceptors: MutableList<Interceptor> = mutableListOf()
