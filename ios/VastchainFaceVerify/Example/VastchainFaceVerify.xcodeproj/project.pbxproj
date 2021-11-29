@@ -248,7 +248,7 @@
 				ORGANIZATIONNAME = chenxiandiao;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = CZ52H53A7T;
+						DevelopmentTeam = 2G393W563F;
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
@@ -499,7 +499,7 @@
 			baseConfigurationReference = 4002C94ECDA195898A1D968A /* Pods-VastchainFaceVerify_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = CZ52H53A7T;
+				DEVELOPMENT_TEAM = 2G393W563F;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VastchainFaceVerify/VastchainFaceVerify-Prefix.pch";
 				INFOPLIST_FILE = "VastchainFaceVerify/VastchainFaceVerify-Info.plist";
@@ -516,7 +516,7 @@
 			baseConfigurationReference = A98BF187C24517E74EFDD34E /* Pods-VastchainFaceVerify_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = CZ52H53A7T;
+				DEVELOPMENT_TEAM = 2G393W563F;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VastchainFaceVerify/VastchainFaceVerify-Prefix.pch";
 				INFOPLIST_FILE = "VastchainFaceVerify/VastchainFaceVerify-Info.plist";

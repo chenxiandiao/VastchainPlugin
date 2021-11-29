@@ -150,11 +150,19 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     
     if ([FaceManager shareManager].skipFaceCheck) {
         [FaceManager shareManager].savePhoto = YES;
-        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
-                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
-                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
-                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
-                                 nil];
+//        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
+//                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 nil];
+        NSMutableArray *interceptors = [[NSMutableArray alloc]init];
+        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        if(_needEyeCheck) {
+            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        }
+        if(_needMouthCheck) {
+            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        }
         self.interceptChain = [[InterceptChain alloc]init:interceptors index:0];
         return;
     }
@@ -185,7 +193,6 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
         if(_needMouthCheck) {
             [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
         }
-        
 //        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
 //                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId],
 //                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
@@ -620,7 +627,14 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
         //跳一帧
         if (self.count >= 40 && self.count%2 == 0) {
             NSString* prefix = [self.interceptChain currentType];
-            NSString *savedFile = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:prefix];
+            
+            UIImage *image = [self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]];
+            
+            if(![self detectFace:image]) {
+                return;
+            }
+            
+            NSString *savedFile = [self saveImage:image filePrefix:prefix];
             [_interceptChain procced:savedFile];
             
             //        if (self.savePhoto) {
@@ -655,6 +669,22 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
             //        }
         }
     }
+}
+
+- (BOOL) detectFace: (UIImage*)image{
+    CIContext *context = [CIContext context];
+    NSDictionary *opts = @{
+        CIDetectorAccuracy: CIDetectorAccuracyHigh
+    };
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:opts];
+    CIImage *myImage = [[CIImage alloc] initWithImage:image options:nil];
+    NSArray *features = [detector featuresInImage:myImage options:opts];
+    if (features.count>0) {
+        NSLog(@"检测人脸");
+        return YES;
+    }
+    NSLog(@"没有检测人脸");
+    return NO;
 }
 
 - (void) startMoutchCheck{

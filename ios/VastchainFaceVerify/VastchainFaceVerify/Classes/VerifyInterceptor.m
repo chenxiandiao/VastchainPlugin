@@ -36,14 +36,21 @@
         return;
     }
     
+    [FaceManager shareManager].savePhoto = NO;
+    
     if([FaceManager shareManager].skipFaceCheck) {
-        [FaceManager shareManager].savePhoto = YES;
         _verifySuccess = YES;
-        [self showNextTips:chain];
+        if ([chain isLast]) {
+            NSLog(@"人脸检测完成");
+            self->_tipsLabel.text = @"人脸检测完成";
+        } else {
+            NSLog(@"人脸检测完成2222");
+            NSLog(@"%lu", (unsigned long)chain.interceptors.count);
+            [self showNextTips:chain];
+            [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
+        }
         return;
     }
-    
-    [FaceManager shareManager].savePhoto = NO;
     
     [self faceComapre:file requestId:_requestId completionHandler:^(NSURLResponse * _Nonnull response, id  _Nonnull responseObject, NSError * _Nonnull error) {
         if (error) {
