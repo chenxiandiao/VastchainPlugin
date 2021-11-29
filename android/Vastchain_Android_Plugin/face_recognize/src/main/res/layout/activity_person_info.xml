@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include android:id="@+id/toolbar" layout="@layout/view_toolbar"/>
+
     <TextView
         android:id="@+id/tv_id_card"
         android:layout_width="80dp"
@@ -13,7 +15,7 @@
         android:text="身份证"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_id_card"

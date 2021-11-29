@@ -12,12 +12,7 @@ import android.media.FaceDetector
 import android.graphics.BitmapFactory
 
 import android.graphics.Bitmap
-
-
-
-
-
-
+import ltd.vastchain.face.utils.SPUtils
 
 
 /**

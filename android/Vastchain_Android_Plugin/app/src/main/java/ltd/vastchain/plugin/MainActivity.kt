@@ -25,7 +25,10 @@ class MainActivity : AppCompatActivity() {
 //			BlueManager.start(this, "http://10.144.2.172:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456")
 //			BlueManager.start(this, "https://nimiq.github.io/qr-scanner/demo/")
 //			BlueManager.start(this, "https://cozmo.github.io/jsQR")
-			BlueManager.start(this, "http://10.144.1.116:8000")
+//			BlueManager.start(this, "http://10.144.1.116:8000")
+
+//			BlueManager.start(this, "https://patrol-test.tmp.vastchain.ltd/public/h5/index.html#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
+				BlueManager.start(this, " http://10.144.1.116:80/#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
 		}
 
 		activityMainBinding.tvGoScan.setOnClickListener {
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 		}
 
 		activityMainBinding.tvGoFaceHome.setOnClickListener {
+			FaceManager.init(this)
 			PersonInfoActivity.start(this)
 			FaceManager.setFaceCallBack(object : IFaceCallBack{
 				override fun success() {

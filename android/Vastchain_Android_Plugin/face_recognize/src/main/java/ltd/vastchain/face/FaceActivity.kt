@@ -1,13 +1,16 @@
 package ltd.vastchain.face
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.*
 import ltd.vastchain.face.databinding.ActivityFaceBinding
@@ -24,13 +27,13 @@ private const val IMMERSIVE_FLAG_TIMEOUT = 500L
  * Created by admin on 2021/9/27.
  */
 class FaceActivity : AppCompatActivity() {
-
 	private lateinit var activityMainBinding: ActivityFaceBinding
 	private var tipsView: FaceTipsView? = null
 	private var eyeSkip: Boolean = false
 	private var mouthSkip: Boolean = false
 	private var idCard: String? = null
 	private var name: String? = null
+	private var permission = arrayOf(Manifest.permission.CAMERA)
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -43,6 +46,52 @@ class FaceActivity : AppCompatActivity() {
 		initView()
 		initData()
 		initListener()
+		checkCamera()
+	}
+
+	private fun checkCamera() {
+		if (checkPermission(this, permission).not()) {
+			ActivityCompat.requestPermissions(
+				this,
+				permission,
+				REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS
+			)
+		} else {
+//			starPreview()
+		}
+	}
+
+	private fun checkPermission(context: Context?, permissions: Array<String>): Boolean {
+		if (context == null) {
+			return false
+		}
+		for (permission in permissions) {
+			if (ActivityCompat.checkSelfPermission(
+					context,
+					permission
+				) != PackageManager.PERMISSION_GRANTED
+			) {
+				return false
+			}
+		}
+		return true
+	}
+
+	override fun onRequestPermissionsResult(
+		requestCode: Int,
+		permissions: Array<out String>,
+		grantResults: IntArray
+	) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+		when (requestCode) {
+			REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS -> {
+				if (checkPermission(context = this, permission)) {
+//					starPreview()
+				} else {
+					Toast.makeText(this, "请授权应用权限", Toast.LENGTH_SHORT).show()
+				}
+			}
+		}
 	}
 
 	private fun initListener() {
@@ -59,7 +108,7 @@ class FaceActivity : AppCompatActivity() {
 		if (idCard.isNullOrEmpty() || name.isNullOrEmpty()) {
 			return
 		}
-		FaceManager.init(this)
+
 		GlobalScope.launch {
 			try {
 //				Log.e("cxd", Thread.currentThread().name)
@@ -202,6 +251,7 @@ class FaceActivity : AppCompatActivity() {
 		const val PARAMS_MOUTH = "mouthSkip"
 		const val PARAMS_ID_CARD = "PARAMS_ID_CARD"
 		const val PARAMS_NAME = "PARAMS_NAME"
+		private val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
 
 		fun start(
 			context: Context,

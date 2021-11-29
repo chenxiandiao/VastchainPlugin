@@ -33,8 +33,15 @@ class FaceIndexActivity : AppCompatActivity() {
 		setContentView(activityFaceIndexBinding.root)
 		idCard = intent.getStringExtra(PARAMS_ID_CARD)
 		name = intent.getStringExtra(PARAMS_NAME)
-
+		initData()
 		initListener()
+	}
+
+	private fun initData() {
+		activityFaceIndexBinding.toolbar.tvTitle.text = "人脸识别模式选择"
+		activityFaceIndexBinding.toolbar.ivBack.setOnClickListener{
+			finish()
+		}
 	}
 
 	private fun initListener() {
