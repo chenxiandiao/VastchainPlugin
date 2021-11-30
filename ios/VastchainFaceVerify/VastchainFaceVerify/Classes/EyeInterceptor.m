@@ -50,6 +50,7 @@
             if ([chain isLast]) {
                 NSLog(@"人脸检测完成");
                 _tipsLabel.text = @"人脸检测完成";
+                [self.delegate success];
             } else {
                 [FaceManager shareManager].savePhoto = YES;
                 [self showNextTips:chain];
@@ -64,6 +65,7 @@
                 if(self->_tryCount > COMPARE_COUNT) {
                     NSLog(@"人脸比对失败");
                     self->_tipsLabel.text = @"人脸识别失败,请稍后重试";
+                    [self.delegate fail:@"眨眼检测失败"];
                 } else {
                     NSLog(@"尝试继续比对");
                     [FaceManager shareManager].savePhoto = YES;
@@ -80,6 +82,7 @@
                     if ([chain isLast]) {
                         NSLog(@"人脸检测完成");
                         self->_tipsLabel.text = @"人脸检测完成";
+                        [self.delegate success];
                     } else {                        
                         [self showNextTips:chain];
                         [self performSelector:@selector(startSavePhoto) withObject:nil afterDelay:1];
@@ -91,6 +94,7 @@
                         [FaceManager shareManager].savePhoto = YES;
                     } else {
                         self->_tipsLabel.text = @"人脸识别失败,请稍后重试";
+                        [self.delegate fail:@"眨眼检测失败"];
                     }
                   
                 }

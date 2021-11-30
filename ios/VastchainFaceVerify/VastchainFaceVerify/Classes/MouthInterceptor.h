@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *requestId;
 @property UILabel *tipsLabel;
 @property NSInteger tryCount;
+@property (weak, nonatomic) id<FaceDelegate> delegate;
 
 -(id) initWithRequestId:(NSString *)requestId label:(UILabel *)tipsLabel;
 

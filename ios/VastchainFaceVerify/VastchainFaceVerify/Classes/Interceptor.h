@@ -21,6 +21,13 @@
 
 @end
 
+@protocol FaceDelegate <NSObject>
+
+@optional
+- (void)success;
+- (void)fail: (NSString*) msg;
+
+@end
 
 
 //@class Interceptor;

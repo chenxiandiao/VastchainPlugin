@@ -71,6 +71,12 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+
+- (void)saveInfo:(NSString *)name idCard:(NSString *)idCard {
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault setObject:name forKey:@"name"];
+    [userDefault setObject:idCard forKey:@"idCard"];
+}
 /*
 #pragma mark - Navigation
 

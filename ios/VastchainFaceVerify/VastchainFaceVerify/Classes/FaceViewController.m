@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 };
 
 
-@interface FaceViewController ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface FaceViewController ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, FaceDelegate>
 @property (nonatomic, weak) IBOutlet AVCamPreviewView* previewView;
 
 @property (nonatomic) AVCaptureSession* session;
@@ -156,12 +156,18 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 //                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
 //                                 nil];
         NSMutableArray *interceptors = [[NSMutableArray alloc]init];
-        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        VerifyInterceptor *verifyInterceptor = [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel];
+        verifyInterceptor.delegate = self;
+        [interceptors addObject:verifyInterceptor];
         if(_needEyeCheck) {
-            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+            EyeInterceptor *eyeInterceptor = [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            eyeInterceptor.delegate = self;
+            [interceptors addObject:eyeInterceptor];
         }
         if(_needMouthCheck) {
-            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+            MouthInterceptor *mouthInterceptor  = [[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            mouthInterceptor.delegate = self;
+            [interceptors addObject: mouthInterceptor];
         }
         self.interceptChain = [[InterceptChain alloc]init:interceptors index:0];
         return;
@@ -186,13 +192,27 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
         
         [FaceManager shareManager].savePhoto = YES;
         NSMutableArray *interceptors = [[NSMutableArray alloc]init];
-        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        VerifyInterceptor *verifyInterceptor = [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel];
+        verifyInterceptor.delegate = self;
+        [interceptors addObject:verifyInterceptor];
         if(_needEyeCheck) {
-            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+            EyeInterceptor *eyeInterceptor = [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            eyeInterceptor.delegate = self;
+            [interceptors addObject:eyeInterceptor];
         }
         if(_needMouthCheck) {
-            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+            MouthInterceptor *mouthInterceptor  = [[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            mouthInterceptor.delegate = self;
+            [interceptors addObject: mouthInterceptor];
         }
+//        NSMutableArray *interceptors = [[NSMutableArray alloc]init];
+//        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+//        if(_needEyeCheck) {
+//            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+//        }
+//        if(_needMouthCheck) {
+//            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+//        }
 //        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
 //                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId],
 //                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
@@ -621,7 +641,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 }
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    //    NSLog(@"摄像头数据");
+    
     if ([FaceManager shareManager].savePhoto) {
         self.count = self.count + 1;
         //跳一帧
@@ -668,17 +688,28 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
             //            }
             //        }
         }
+    } else {
+        NSLog(@"使用摄像头数据2");
     }
 }
 
 - (BOOL) detectFace: (UIImage*)image{
+    NSDate* tmpStartData = [NSDate date];
     CIContext *context = [CIContext context];
     NSDictionary *opts = @{
-        CIDetectorAccuracy: CIDetectorAccuracyHigh
+        CIDetectorAccuracy: CIDetectorAccuracyLow,
+        CIDetectorMinFeatureSize:@0.01
     };
     CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:opts];
+    double deltaTime = [[NSDate date] timeIntervalSinceDate:tmpStartData];
+    NSLog(@"cost time 1 = %f", deltaTime);
     CIImage *myImage = [[CIImage alloc] initWithImage:image options:nil];
-    NSArray *features = [detector featuresInImage:myImage options:opts];
+    double deltaTime2 = [[NSDate date] timeIntervalSinceDate:tmpStartData];
+    NSLog(@"cost time 2 = %f", deltaTime2);
+    
+    NSArray *features = [detector featuresInImage:myImage];
+    double deltaTime3 = [[NSDate date] timeIntervalSinceDate:tmpStartData];
+    NSLog(@"cost time 3 = %f", deltaTime3);
     if (features.count>0) {
         NSLog(@"检测人脸");
         return YES;
@@ -753,6 +784,16 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 
 - (UIImage *)mirrorImage:(UIImage *)originImage{
     return [UIImage imageWithCGImage:originImage.CGImage scale:originImage.scale orientation:UIImageOrientationLeftMirrored];
+}
+
+- (void)success{
+    NSLog(@"FaceViewController 人脸识别成功");
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)fail:(NSString *)msg {
+    NSLog(@"FaceViewController 人脸识别失败");
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
