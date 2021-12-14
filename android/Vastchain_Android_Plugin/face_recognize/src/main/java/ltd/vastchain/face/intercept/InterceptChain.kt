@@ -44,4 +44,9 @@ class InterceptChain(
 		}
 		return "normal/"
 	}
+
+	fun isInCompare(): Boolean {
+		var interceptor: Interceptor? = interceptors.firstOrNull { !it.checked() }
+		return  interceptor is VerifyInterceptor
+	}
 }

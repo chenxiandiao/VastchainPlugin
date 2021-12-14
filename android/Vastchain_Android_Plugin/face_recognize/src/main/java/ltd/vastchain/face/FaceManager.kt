@@ -69,12 +69,17 @@ object FaceManager {
 		val rotate = rotateBitmap(bitmap, 270f)
 
 		val filePath = saveBitmapToFile(rotate, fullName)
-		return if(detectFace(filePath)){
-			filePath
+		return if (chain?.isInCompare() == true) {
+			if(detectFace(filePath)){
+				filePath
+			} else {
+				File(filePath).delete()
+				""
+			}
 		} else {
-			File(filePath).delete()
-			""
+			filePath
 		}
+
 	}
 
 	private fun detectFace(file: String):Boolean {
@@ -197,7 +202,7 @@ object FaceManager {
 		if (file.isEmpty()) {
 			Log.e("cxd", "无人脸框")
 			Log.e("cxd", chain?.currentType().orEmpty())
-			if (chain?.currentType() == "compare/") {
+			if (chain?.isInCompare() == true) {
 				//人脸识别过程中没有人脸，提示请正对人脸框
 				listener?.checkFace()
 			}
