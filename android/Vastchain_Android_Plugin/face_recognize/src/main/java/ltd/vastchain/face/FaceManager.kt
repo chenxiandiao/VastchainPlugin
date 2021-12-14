@@ -3,16 +3,12 @@ package ltd.vastchain.face
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.media.FaceDetector
 import android.text.TextUtils
 import android.util.Log
 import androidx.camera.core.ImageProxy
 import ltd.vastchain.face.intercept.*
 import java.io.*
-import android.media.FaceDetector
-import android.graphics.BitmapFactory
-
-import android.graphics.Bitmap
-import ltd.vastchain.face.utils.SPUtils
 
 
 /**
@@ -185,7 +181,7 @@ object FaceManager {
 		}
 		var prefix = chain?.currentType()
 		val fullPath =
-			context?.getExternalFilesDir(null)?.absolutePath.orEmpty() + File.separator + prefix + fileName
+			context?.filesDir?.absolutePath.orEmpty() + File.separator + prefix + fileName
 		Log.e("cxd", fullPath)
 		val file = File(fullPath)
 		if (!file.exists() && file.parentFile.mkdirs() && !file.createNewFile()) {
@@ -224,8 +220,8 @@ object FaceManager {
 
 
 	fun clearDirectory() {
-		val directory = File(context?.getExternalFilesDir(null)?.absolutePath.orEmpty())
-		directory.listFiles().forEach {
+		val directory = File(context?.filesDir?.absolutePath.orEmpty())
+		directory.listFiles()?.forEach {
 			it.deleteRecursively()
 		}
 	}

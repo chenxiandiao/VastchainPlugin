@@ -40,8 +40,8 @@ class FaceActivity : AppCompatActivity() {
 		activityMainBinding = ActivityFaceBinding.inflate(layoutInflater)
 		setContentView(activityMainBinding.root)
 
-		Log.e("cxd", getExternalFilesDir(null)?.absolutePath.orEmpty())
-		Log.e("cxd", filesDir.absolutePath.orEmpty())
+//		Log.e("cxd", getExternalFilesDir(null)?.absolutePath.orEmpty())
+//		Log.e("cxd", filesDir.absolutePath.orEmpty())
 
 		initView()
 		initData()
@@ -200,6 +200,7 @@ class FaceActivity : AppCompatActivity() {
 					Toast.makeText(this@FaceActivity, "人脸检测完成", Toast.LENGTH_LONG).show()
 					tipsView?.compareEnd()
 					delay(200)
+					finish()
 					FaceManager.getFaceCallBack()?.success()
 				}
 			}
@@ -260,6 +261,7 @@ class FaceActivity : AppCompatActivity() {
 			idCard: String?,
 			name: String?
 		) {
+			FaceManager.init(context)
 			val intent = Intent(context, FaceActivity::class.java)
 			intent.putExtra(PARAMS_EYE, eyeSkip)
 			intent.putExtra(PARAMS_MOUTH, mouthSkip)

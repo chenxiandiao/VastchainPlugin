@@ -69,8 +69,8 @@ class VerifyInterceptor(private val requestId: String) : Interceptor {
 			return if (execute.isSuccessful) {
 //				Log.e("cxd", "图片上报成功")
 				val response = execute.body()
+				Log.e("cxd", response.toString())
 				response
-//				Log.e("cxd", response.toString())
 //				response?.success()
 			} else {
 //				Log.e("cxd", "错误：" + execute.errorBody()?.string().orEmpty())

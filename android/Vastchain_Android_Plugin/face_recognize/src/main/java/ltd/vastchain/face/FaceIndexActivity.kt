@@ -47,18 +47,22 @@ class FaceIndexActivity : AppCompatActivity() {
 	private fun initListener() {
 		activityFaceIndexBinding.tvGoFaceEyeMouth.setOnClickListener {
 			FaceActivity.start(this, eyeSkip = false, mouthSkip = false, idCard, name)
+			finish()
 		}
 
 		activityFaceIndexBinding.tvGoFaceEye.setOnClickListener {
 			FaceActivity.start(this, eyeSkip = false, mouthSkip = true, idCard, name)
+			finish()
 		}
 
 		activityFaceIndexBinding.tvGoFaceMouth.setOnClickListener {
 			FaceActivity.start(this, eyeSkip = true, mouthSkip = false, idCard, name)
+			finish()
 		}
 
 		activityFaceIndexBinding.tvGoFace.setOnClickListener {
 			FaceActivity.start(this, eyeSkip = true, mouthSkip = true, idCard, name)
+			finish()
 		}
 	}
 

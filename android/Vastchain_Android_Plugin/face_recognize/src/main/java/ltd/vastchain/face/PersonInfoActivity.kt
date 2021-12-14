@@ -59,6 +59,7 @@ class PersonInfoActivity : AppCompatActivity() {
 			SPUtils.put(SPConstants.NAME, name)
 
 			FaceIndexActivity.start(this, idCard, name)
+			finish()
 		}
 	}
 
