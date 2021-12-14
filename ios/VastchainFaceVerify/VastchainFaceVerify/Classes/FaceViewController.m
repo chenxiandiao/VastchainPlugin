@@ -16,6 +16,7 @@
 #import "EyeInterceptor.h"
 #import "MouthInterceptor.h"
 #import "FaceManager.h"
+#import "MBProgressHUD.h"
 
 typedef NS_ENUM(NSInteger, AVCamSetupResult) {
     AVCamSetupResultSuccess,
@@ -29,7 +30,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 };
 
 
-@interface FaceViewController ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface FaceViewController ()<AVCaptureMetadataOutputObjectsDelegate,AVCaptureVideoDataOutputSampleBufferDelegate, FaceDelegate>
 @property (nonatomic, weak) IBOutlet AVCamPreviewView* previewView;
 
 @property (nonatomic) AVCaptureSession* session;
@@ -57,6 +58,8 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //    [self.view setBackgroundColor: [UIColor redColor]];
+    
+  
     self.mouthPhotos = [NSMutableArray arrayWithCapacity:20];
     [self initCamera];
     [self clearDictonory: @"compare"];
@@ -73,15 +76,15 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     [self.leftImageView setImage:img];
     [self.rightImageView setImage:img];
     
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
-    if (!url) {
-        NSLog(@"image bundle 组件化");
-        url = [[NSBundle bundleForClass:[self class]] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
-    }
-    NSBundle *resource_bundle = [NSBundle bundleWithURL:url];
-    UIImage *circleImage = [UIImage imageNamed:@"FaceCircle" inBundle:resource_bundle compatibleWithTraitCollection:nil];
+//    NSURL *url = [[NSBundle mainBundle] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
+//    if (!url) {
+//        NSLog(@"image bundle 组件化");
+//        url = [[NSBundle bundleForClass:[self class]] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
+//    }
+//    NSBundle *resource_bundle = [NSBundle bundleWithURL:url];
+//    UIImage *circleImage = [UIImage imageNamed:@"FaceCircle" inBundle:resource_bundle compatibleWithTraitCollection:nil];
     //暂时使用主工程中的图片资源
-//    UIImage *circleImage = [UIImage imageNamed:@"FaceCircle"];
+    UIImage *circleImage = [UIImage imageNamed:@"FaceCircle"];
     [self.circleImageView setImage:circleImage];
     
     self.tipsLabel.text = @"请正对人脸框";
@@ -150,11 +153,25 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     
     if ([FaceManager shareManager].skipFaceCheck) {
         [FaceManager shareManager].savePhoto = YES;
-        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
-                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
-                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
-                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
-                                 nil];
+//        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
+//                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 [[MouthInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel],
+//                                 nil];
+        NSMutableArray *interceptors = [[NSMutableArray alloc]init];
+        VerifyInterceptor *verifyInterceptor = [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel];
+        verifyInterceptor.delegate = self;
+        [interceptors addObject:verifyInterceptor];
+        if(_needEyeCheck) {
+            EyeInterceptor *eyeInterceptor = [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            eyeInterceptor.delegate = self;
+            [interceptors addObject:eyeInterceptor];
+        }
+        if(_needMouthCheck) {
+            MouthInterceptor *mouthInterceptor  = [[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            mouthInterceptor.delegate = self;
+            [interceptors addObject: mouthInterceptor];
+        }
         self.interceptChain = [[InterceptChain alloc]init:interceptors index:0];
         return;
     }
@@ -178,14 +195,27 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
         
         [FaceManager shareManager].savePhoto = YES;
         NSMutableArray *interceptors = [[NSMutableArray alloc]init];
-        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+        VerifyInterceptor *verifyInterceptor = [[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel];
+        verifyInterceptor.delegate = self;
+        [interceptors addObject:verifyInterceptor];
         if(_needEyeCheck) {
-            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+            EyeInterceptor *eyeInterceptor = [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            eyeInterceptor.delegate = self;
+            [interceptors addObject:eyeInterceptor];
         }
         if(_needMouthCheck) {
-            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+            MouthInterceptor *mouthInterceptor  = [[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel];
+            mouthInterceptor.delegate = self;
+            [interceptors addObject: mouthInterceptor];
         }
-        
+//        NSMutableArray *interceptors = [[NSMutableArray alloc]init];
+//        [interceptors addObject:[[VerifyInterceptor alloc]initWithRequestId:_requestId label:_tipsLabel]];
+//        if(_needEyeCheck) {
+//            [interceptors addObject:[[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+//        }
+//        if(_needMouthCheck) {
+//            [interceptors addObject:[[MouthInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel]];
+//        }
 //        NSArray *interceptors = [[NSArray  alloc]initWithObjects:
 //                                 [[VerifyInterceptor alloc]initWithRequestId:_requestId],
 //                                 [[EyeInterceptor  alloc]initWithRequestId:_requestId label:_tipsLabel],
@@ -458,7 +488,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
      We do not create an AVCaptureMovieFileOutput when setting up the session because
      Live Photo is not supported when AVCaptureMovieFileOutput is added to the session.
      */
-    self.session.sessionPreset = AVCaptureSessionPreset640x480;
+    self.session.sessionPreset = AVCaptureSessionPreset640x480;    
     
     // Add video input.
     
@@ -614,13 +644,30 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 }
 
 - (void)captureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    //    NSLog(@"摄像头数据");
+    
     if ([FaceManager shareManager].savePhoto) {
         self.count = self.count + 1;
         //跳一帧
         if (self.count >= 40 && self.count%2 == 0) {
             NSString* prefix = [self.interceptChain currentType];
-            NSString *savedFile = [self saveImage:[self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]] filePrefix:prefix];
+            
+            UIImage *image = [self mirrorImage:[self imageFromSampleBuffer: sampleBuffer]];
+            
+//            NSURL *url = [[NSBundle mainBundle] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
+//            if (!url) {
+//                NSLog(@"image bundle 组件化");
+//                url = [[NSBundle bundleForClass:[self class]] URLForResource:@"VastchainFaceVerify" withExtension:@"bundle"];
+//            }
+//            NSBundle *resource_bundle = [NSBundle bundleWithURL:url];
+//            UIImage *image = [UIImage imageNamed:@"Person" inBundle:resource_bundle compatibleWithTraitCollection:nil] ;
+
+            if ([prefix isEqualToString:@"compare"]) {
+                if(![self detectFace:image]) {
+                    return;
+                }
+            }
+            
+            NSString *savedFile = [self saveImage:image filePrefix:prefix];
             [_interceptChain procced:savedFile];
             
             //        if (self.savePhoto) {
@@ -654,7 +701,34 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
             //            }
             //        }
         }
+    } else {
+        NSLog(@"使用摄像头数据2");
     }
+}
+
+- (BOOL) detectFace: (UIImage*)image{
+    NSDate* tmpStartData = [NSDate date];
+    CIContext *context = [CIContext context];
+    NSDictionary *opts = @{
+        CIDetectorAccuracy: CIDetectorAccuracyHigh,
+//        CIDetectorMinFeatureSize:@0.01
+    };
+    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:opts];
+    double deltaTime = [[NSDate date] timeIntervalSinceDate:tmpStartData];
+    NSLog(@"cost time 1 = %f", deltaTime);
+    CIImage *myImage = [[CIImage alloc] initWithImage:image options:nil];
+    double deltaTime2 = [[NSDate date] timeIntervalSinceDate:tmpStartData];
+    NSLog(@"cost time 2 = %f", deltaTime2);
+    
+    NSArray *features = [detector featuresInImage:myImage];
+    double deltaTime3 = [[NSDate date] timeIntervalSinceDate:tmpStartData];
+    NSLog(@"cost time 3 = %f", deltaTime3);
+    if (features.count>0) {
+        NSLog(@"检测人脸");
+        return YES;
+    }
+    NSLog(@"没有检测人脸");
+    return NO;
 }
 
 - (void) startMoutchCheck{
@@ -723,6 +797,26 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
 
 - (UIImage *)mirrorImage:(UIImage *)originImage{
     return [UIImage imageWithCGImage:originImage.CGImage scale:originImage.scale orientation:UIImageOrientationLeftMirrored];
+}
+
+- (void)success{
+    NSLog(@"FaceViewController 人脸识别成功");
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    hud.label.text = @"人脸识别成功";
+    hud.mode = MBProgressHUDModeText;
+    [hud hideAnimated:NO afterDelay:3.f];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+-(void)fail:(NSString *)msg {
+    NSLog(@"FaceViewController 人脸识别失败");
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    hud.label.text = msg;
+    hud.mode = MBProgressHUDModeText;
+    [hud hideAnimated:NO afterDelay:3.f];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

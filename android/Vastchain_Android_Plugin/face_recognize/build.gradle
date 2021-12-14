@@ -66,6 +66,16 @@ dependencies {
     implementation project(path: ':http')
 }
 
+//task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+//    archiveClassifier.set('javadoc')
+//    from androidJavadocs.destinationDir
+//}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
+
 // Because the components are created only during the afterEvaluate phase, you must
 // configure your publications using the afterEvaluate() lifecycle method.
 afterEvaluate {
@@ -80,6 +90,9 @@ afterEvaluate {
                 groupId = 'ltd.vastchain.android'
                 artifactId = 'faceverify'
                 version = '1.0'
+                // 增加 sourcesJar、javadocJar 任务
+                artifact androidSourcesJar
+//                artifact javadocJar
             }
         }
         repositories {

@@ -25,26 +25,31 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dPJ-N9-7iD" userLabel="Bottom Image View">
-                                <rect key="frame" x="0.0" y="583" width="390" height="261"/>
+                                <rect key="frame" x="0.0" y="607" width="390" height="237"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LNx-85-mYE" userLabel="Top Image View">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="261"/>
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="237"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="joj-s3-FSI">
-                                <rect key="frame" x="36.666666666666657" y="261" width="317" height="322"/>
+                                <rect key="frame" x="10" y="237" width="370" height="370"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="322" id="Wgu-KF-tlM"/>
-                                    <constraint firstAttribute="width" constant="317" id="cA8-CG-OXm"/>
+                                    <constraint firstAttribute="width" secondItem="joj-s3-FSI" secondAttribute="height" multiplier="1:1" id="cQA-cj-VmB"/>
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8C1-h4-WDV" userLabel="Left Image View">
-                                <rect key="frame" x="0.0" y="261" width="36.666666666666664" height="322"/>
+                                <rect key="frame" x="0.0" y="237" width="10" height="370"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="u7n-IH-yYf"/>
+                                </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A6L-dC-YZV" userLabel="Right Image View">
-                                <rect key="frame" x="353.66666666666669" y="261" width="36.333333333333314" height="322"/>
+                                <rect key="frame" x="380" y="237" width="10" height="370"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="Hgg-xA-lS5"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请正对人脸框" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZk-f8-bYh">
-                                <rect key="frame" x="128" y="215.66666666666666" width="134" height="25.333333333333343"/>
+                                <rect key="frame" x="128" y="191.66666666666666" width="134" height="25.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
@@ -60,7 +65,6 @@
                             <constraint firstItem="LNx-85-mYE" firstAttribute="trailing" secondItem="POy-MU-I2a" secondAttribute="trailing" id="90X-rL-3YR"/>
                             <constraint firstItem="8C1-h4-WDV" firstAttribute="top" secondItem="LNx-85-mYE" secondAttribute="bottom" id="ElH-5J-i6u"/>
                             <constraint firstItem="Rmh-j1-pDP" firstAttribute="top" secondItem="POy-MU-I2a" secondAttribute="top" id="ITy-US-fbZ"/>
-                            <constraint firstItem="A6L-dC-YZV" firstAttribute="leading" secondItem="joj-s3-FSI" secondAttribute="trailing" id="IVl-iu-1ca"/>
                             <constraint firstItem="8C1-h4-WDV" firstAttribute="leading" secondItem="POy-MU-I2a" secondAttribute="leading" id="Idm-Th-2vx"/>
                             <constraint firstItem="joj-s3-FSI" firstAttribute="top" secondItem="eZk-f8-bYh" secondAttribute="bottom" constant="20" id="Kkc-by-qYq"/>
                             <constraint firstItem="joj-s3-FSI" firstAttribute="top" secondItem="LNx-85-mYE" secondAttribute="bottom" id="Mge-Lz-nDF"/>
@@ -239,12 +243,12 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="001" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7pL-uQ-FHN">
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7pL-uQ-FHN">
                                 <rect key="frame" x="99" y="107.66666666666669" width="261" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="陈贤雕" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDd-ss-5IR">
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GDd-ss-5IR">
                                 <rect key="frame" x="101" y="151" width="263" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>

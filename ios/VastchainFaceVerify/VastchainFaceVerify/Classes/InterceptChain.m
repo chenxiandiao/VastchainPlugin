@@ -24,6 +24,7 @@
     if (self.index >= self.interceptors.count) {
         return;
     }
+    NSLog(@"procced");
     InterceptChain *next = [[InterceptChain alloc]init:self.interceptors index:self.index+1];
     Interceptor* interceptor = self.interceptors[self.index];
     [interceptor procceed:file chain:next];

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *name;
 @property NSString *idCard;
 
+- (void) saveInfo: (NSString*) name idCard: (NSString*) idCard;
+
 @end
 
 NS_ASSUME_NONNULL_END
