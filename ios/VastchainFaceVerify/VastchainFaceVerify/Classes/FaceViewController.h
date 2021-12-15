@@ -8,6 +8,7 @@
 
 @import AVFoundation;
 #import <UIKit/UIKit.h>
+#import "Interceptor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *name;
 @property NSString *idCard;
 
+@property (weak, nonatomic) id<FaceDelegate> delegate;
 
 @end
 

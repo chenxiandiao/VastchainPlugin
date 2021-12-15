@@ -807,6 +807,8 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     hud.mode = MBProgressHUDModeText;
     [hud hideAnimated:NO afterDelay:3.f];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    [self.delegate success];
 }
 
 -(void)fail:(NSString *)msg {
@@ -817,6 +819,7 @@ typedef NS_ENUM(NSInteger, AVCamLivePhotoMode) {
     hud.mode = MBProgressHUDModeText;
     [hud hideAnimated:NO afterDelay:3.f];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.delegate fail:@"人脸识别失败"];
 }
 
 @end

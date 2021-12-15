@@ -266,10 +266,17 @@
                                     <segue destination="0uo-TP-Uog" kind="show" id="HoG-pR-Lag"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="提示：请输入正确的身份证和姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oat-qY-PyP">
+                                <rect key="frame" x="35" y="292" width="184" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="cPg-wU-Qk1" firstAttribute="top" secondItem="ruI-D2-Lcs" secondAttribute="bottom" constant="26" id="3MG-9e-KI2"/>
+                            <constraint firstItem="Oat-qY-PyP" firstAttribute="leading" secondItem="3K5-Vl-NU8" secondAttribute="leading" constant="35" id="5h7-je-Sc9"/>
                             <constraint firstItem="hPx-8w-6su" firstAttribute="centerX" secondItem="3K5-Vl-NU8" secondAttribute="centerX" id="6Qq-uV-gP3"/>
                             <constraint firstItem="7pL-uQ-FHN" firstAttribute="leading" secondItem="cPg-wU-Qk1" secondAttribute="trailing" constant="17" id="AcO-zI-fca"/>
                             <constraint firstItem="b5p-SP-XGi" firstAttribute="leading" secondItem="3K5-Vl-NU8" secondAttribute="leading" constant="39" id="JaG-MR-I1e"/>
@@ -280,6 +287,7 @@
                             <constraint firstItem="b5p-SP-XGi" firstAttribute="firstBaseline" secondItem="cPg-wU-Qk1" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="Y0n-wf-NZJ"/>
                             <constraint firstAttribute="trailing" secondItem="hPx-8w-6su" secondAttribute="trailing" constant="67" id="Zhg-Kh-tS3"/>
                             <constraint firstItem="GDd-ss-5IR" firstAttribute="centerY" secondItem="b5p-SP-XGi" secondAttribute="centerY" id="c8j-YE-WUb"/>
+                            <constraint firstItem="Oat-qY-PyP" firstAttribute="top" secondItem="hPx-8w-6su" secondAttribute="bottom" constant="40" id="ejJ-db-2dY"/>
                             <constraint firstAttribute="trailing" secondItem="7pL-uQ-FHN" secondAttribute="trailing" constant="30" id="u1R-1w-ngZ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GDd-ss-5IR" secondAttribute="trailing" constant="10" id="u4T-r3-XyL"/>
                             <constraint firstItem="GDd-ss-5IR" firstAttribute="leading" secondItem="b5p-SP-XGi" secondAttribute="trailing" constant="10" id="x95-Rh-nx2"/>
@@ -303,6 +311,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
