@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "ltd.vastchain.plugin"
@@ -54,6 +54,7 @@ dependencies {
 //    implementation(name:'bluetooth-release', ext:'aar')
     implementation project(path: ':qrscan')
     implementation project(path: ':face_recognize')
+    implementation project(path: ':camera_record')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

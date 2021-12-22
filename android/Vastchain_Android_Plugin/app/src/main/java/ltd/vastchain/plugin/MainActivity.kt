@@ -1,14 +1,18 @@
 package ltd.vastchain.plugin
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ltd.vastchain.bluetooth.BlueManager
+import ltd.vastchain.camera.record.IRecordListener
+import ltd.vastchain.camera.record.activity.CameraRecordActivity
 import ltd.vastchain.face.FaceManager
 import ltd.vastchain.face.IFaceCallBack
 import ltd.vastchain.face.PersonInfoActivity
 import ltd.vastchain.plugin.databinding.ActivityMainBinding
 import ltd.vastchain.qrscan.QrScanManager
+import net.arvin.selector.utils.FMediaUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +55,16 @@ class MainActivity : AppCompatActivity() {
 			})
 		}
 
+		activityMainBinding.tvRecord.setOnClickListener {
+			CameraRecordActivity.start(this, 300,30, object : IRecordListener{
+				override fun success(uri: Uri?, duration: String) {
+					Log.e("cxd", uri?.toString().orEmpty())
+					Log.e("cxd", duration)
+					FMediaUtils.getCameraFirstBucketId(this@MainActivity)
+				}
+			})
+		}
+
 //		activityMainBinding.tvGoFaceEyeMouth.setOnClickListener {
 //			FaceActivity.start(this, eyeSkip = false, mouthSkip = false)
 //		}
@@ -68,4 +82,6 @@ class MainActivity : AppCompatActivity() {
 //		}
 
 	}
+
+
 }

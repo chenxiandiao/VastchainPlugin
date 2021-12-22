@@ -1,0 +1,40 @@
+ext {
+    camerax_version = '1.1.0-alpha11'
+    camerax_view = '1.0.0-alpha30'
+    appcompat_version = "1.4.0"
+    lifecycle_version = "2.4.0"
+    constraintlayout = "2.1.2"
+    kotlin_core_version = "1.7.0"
+    android = [
+            compileSdkVersion: 29,
+            buildToolsVersion: "29.0.2",
+            minSdkVersion    : 23,
+            targetSdkVersion : 28,
+            versionCode      : getReleaseDate(),
+            versionName      : '5.12.0',
+
+            camera_core      : "androidx.camera:camera-core:${camerax_version}",
+            camera_camera2   : "androidx.camera:camera-camera2:${camerax_version}",
+            camera_lifecycle : "androidx.camera:camera-lifecycle:${camerax_version}",
+            camera_video     : "androidx.camera:camera-video:${camerax_version}",
+            camera_view      : "androidx.camera:camera-view:${camerax_view}",
+
+            appcompt         : "androidx.appcompat:appcompat:$appcompat_version",
+            lifecycle        : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version",
+            constraintlayout : "androidx.constraintlayout:constraintlayout:$constraintlayout",
+            kotlin_core      : "androidx.core:core-ktx:$kotlin_core_version"
+
+    ]
+    third = [
+    ]
+    vastchain = [
+            base: 'cn.dxy.library:dxy-base:4.9'
+    ]
+
+}
+
+static def getReleaseDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+    return formattedDate.toInteger()
+}

@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         minSdk 21
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -34,40 +34,34 @@ android {
     viewBinding {
         enabled = true
     }
-
 }
 
 dependencies {
 
     implementation rootProject.ext.android.kotlin_core
-    implementation rootProject.ext.android.appcompt
     implementation 'com.google.android.material:material:1.3.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    implementation "androidx.concurrent:concurrent-futures-ktx:1.1.0"
 
+    // App compat and UI things
+    implementation rootProject.ext.android.appcompt
     implementation rootProject.ext.android.lifecycle
+    implementation rootProject.ext.android.constraintlayout
 
+    // The following line is optional, as the core library is included indirectly by camera-camera2
     // CameraX core library
     implementation rootProject.ext.android.camera_core
     // CameraX Camera2 extensions
     implementation rootProject.ext.android.camera_camera2
     // CameraX Lifecycle library
     implementation rootProject.ext.android.camera_lifecycle
-
-    // CameraX View class
+    implementation rootProject.ext.android.camera_video
+    // If you want to additionally use the CameraX View class
     implementation rootProject.ext.android.camera_view
-    //WindowManager
-    implementation 'androidx.window:window:1.0.0-alpha09'
-
-    implementation project(path: ':http')
 }
-
-//task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-//    archiveClassifier.set('javadoc')
-//    from androidJavadocs.destinationDir
-//}
 
 task androidSourcesJar(type: Jar) {
     archiveClassifier.set('sources')
@@ -86,7 +80,7 @@ afterEvaluate {
 
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'ltd.vastchain.android'
-                artifactId = 'faceverify'
+                artifactId = 'camera-record'
                 version = '1.0'
                 // 增加 sourcesJar、javadocJar 任务
                 artifact androidSourcesJar
