@@ -32,7 +32,8 @@ class MainActivity : AppCompatActivity() {
 //			BlueManager.start(this, "http://10.144.1.116:8000")
 
 //			BlueManager.start(this, "https://patrol-test.tmp.vastchain.ltd/public/h5/index.html#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
-				BlueManager.start(this, " http://10.144.1.116:80/#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
+//				BlueManager.start(this, "http://10.144.1.116:80/#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
+				BlueManager.start(this, "http://10.144.1.116:8000/storehouse")
 		}
 
 		activityMainBinding.tvGoScan.setOnClickListener {

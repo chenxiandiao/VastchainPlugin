@@ -108,6 +108,7 @@ class QrScanActivity: AppCompatActivity(),  QRCodeView.Delegate {
 		result?.let {
 			QrScanManager.invoke(it)
 		}
+		finish()
 //		mZXingView.startSpot() // 开始识别
 	}
 

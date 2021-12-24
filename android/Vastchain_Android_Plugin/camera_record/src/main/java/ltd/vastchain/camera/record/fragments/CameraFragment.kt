@@ -33,6 +33,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -62,6 +63,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.abs
 
 class CameraFragment : Fragment() {
 
@@ -83,6 +85,8 @@ class CameraFragment : Fragment() {
     private var uri: Uri? = null
     private var toasted: Boolean = false
 
+    private var time: Long = 0
+
     // Camera UI  states and inputs
     enum class UiState {
         IDLE,       // Not recording, all UI controls are active.
@@ -93,7 +97,7 @@ class CameraFragment : Fragment() {
 
     private var cameraIndex = 0
     private var qualitySelectorIndex = DEFAULT_QUALITY_SELECTOR_IDX
-    private var audioEnabled = false
+    private var audioEnabled = true
 
     private val mainThreadExecutor by lazy { ContextCompat.getMainExecutor(requireContext()) }
     private var enumerationDeferred: Deferred<Unit>? = null
@@ -176,19 +180,25 @@ class CameraFragment : Fragment() {
                     .format(System.currentTimeMillis()) + ".mp4"
         val contentValues = ContentValues().apply {
             put(MediaStore.Video.Media.DISPLAY_NAME, name)
+            put(MediaStore.Video.Media.RELATIVE_PATH, "Movies/vastchain");
         }
-//        contentValues.put(
-//            MediaStore.Files.FileColumns.DATA,
-//            getVideoPath() + "/" + name
-//        )
+        contentValues.put(
+            MediaStore.Files.FileColumns.DATA,
+            getVideoPath("vastchain") + "/" + name
+        )
+        if (Build.VERSION.SDK_INT >= 29) {
+            contentValues.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis().toString())
+        }
+        contentValues.put(MediaStore.Video.Media.MIME_TYPE, "video/*")
+
         val mediaStoreOutput = MediaStoreOutputOptions.Builder(
             requireActivity().contentResolver,
             MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-        )
+        )  .setFileSizeLimit(500*1024*1024)
             .setContentValues(contentValues)
             .build()
-        uri = mediaStoreOutput.collectionUri
 
+        Log.e("cxd", "file size:" +  mediaStoreOutput.fileSizeLimit.toString())
         // configure Recorder and Start recording to the mediaStoreOutput.
         activeRecording =
             videoCapture.output.prepareRecording(requireActivity(), mediaStoreOutput)
@@ -372,13 +382,14 @@ class CameraFragment : Fragment() {
         val recording = activeRecording
         if (recording != null) {
             recording.stop()
+            time = System.currentTimeMillis()
             activeRecording = null
         }
         fragmentCameraBinding?.captureButton?.setImageResource(R.drawable.ic_start)
 
-        callBack?.success(uri = uri, duration = duration)
-        activity?.setResult(Activity.RESULT_OK)
-        activity?.finish()
+//        callBack?.success(uri = uri, duration = duration)
+//        activity?.setResult(Activity.RESULT_OK)
+//        activity?.finish()
         return false
     }
 
@@ -404,7 +415,13 @@ class CameraFragment : Fragment() {
                 showUI(UiState.RECORDING, event.getName())
             }
             is VideoRecordEvent.Finalize -> {
-                showUI(UiState.FINALIZED, event.getName())
+                Log.e("cxd", "视频结束录制")
+                Log.e("cxd", "消耗时间：" + (System.currentTimeMillis() - time).toString())
+                callBack?.success(uri = uri, duration = duration)
+                activity?.setResult(Activity.RESULT_OK)
+                activity?.finish()
+                return
+//                showUI(UiState.FINALIZED, event.getName())
             }
             is VideoRecordEvent.Pause -> {
                 fragmentCameraBinding?.captureButton?.setImageResource(R.drawable.ic_resume)
@@ -441,6 +458,23 @@ class CameraFragment : Fragment() {
             if (!folder.exists()) {
                 val mkdirs = folder.mkdirs()
                 Log.d("Log_for_App", "getDCIMCameraPath: $mkdirs")
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            return ""
+        }
+        return absolutePath
+    }
+
+    private fun getVideoPath(folder: String): String? {
+        var absolutePath: String = ""
+        try {
+            absolutePath =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).absolutePath + File.separator + folder
+            val folder = File(absolutePath)
+            if (!folder.exists()) {
+                val mkdirs = folder.mkdirs()
+                Log.d("Log_for_App", "getDCIMCameraPath: ${folder.absolutePath}")
             }
         } catch (e: java.lang.Exception) {
             e.printStackTrace()

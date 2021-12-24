@@ -41,7 +41,7 @@ class CameraRecordActivity : AppCompatActivity() {
     }
 
     private val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
-    private var permission = arrayOf(Manifest.permission.CAMERA)
+    private var permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
