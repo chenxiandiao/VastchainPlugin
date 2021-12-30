@@ -1,11 +1,15 @@
 package ltd.vastchain.bluetooth
 
+import android.bluetooth.BluetoothDevice
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
+import ltd.vastchain.bluetooth.model.PrintModel
 import ltd.vastchain.jsbridge.CoreJsCallback
 import ltd.vastchain.jsbridge.util.JSONUtil
 import ltd.vastchain.jsbridge.util.LogUtil
 import ltd.vastchain.qrscan.QrScanManager
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -14,6 +18,8 @@ import org.json.JSONObject
  */
 
 class BlueJSBridge(var webView: WebView) {
+
+	val TAG = "BlueJSBridge"
 
 	companion object {
 		const val SET_UP = "openBluetoothAdapter"
@@ -24,14 +30,17 @@ class BlueJSBridge(var webView: WebView) {
 		const val WRITE = "writeBLECharacteristicValue"
 		const val READ = "readBLECharacteristicValue"
 		const val MTU = "setBLEMTU"
+		const val GET_BONDED_DEVICES = "getBondedDevices"
 		const val SCAN_QR_CODE = "scanQrCode"
+		const val PRINT_DATA = "printData"
+		const val LOG = "log"
 	}
 
 	private var blueListener: IBlueListener? = null
 
 	var checkPermission: ((callback: CoreJsCallback) -> Unit)? = null
 
-	var bluetoothPlugin: BluetoothPlugin? = null
+	var bluetoothPlugin: IBluePlugin? = null
 	val callback: CoreJsCallback by lazy { CoreJsCallback(this.webView) }
 
 	@JavascriptInterface
@@ -94,6 +103,28 @@ class BlueJSBridge(var webView: WebView) {
 			}
 			SCAN_QR_CODE -> {
 				QrScanManager.start(webView.context, callback = callback)
+			}
+			GET_BONDED_DEVICES -> {
+				bluetoothPlugin?.getBondedDevices()
+			}
+			PRINT_DATA -> {
+				Log.e("Printer", params?.toString().orEmpty())
+				var address = params?.optString("deviceId")
+				var msg = params?.optJSONObject("msg")
+				var url = msg?.optString("url")
+				var qrCodeId = msg?.optString("qrCodeId")
+				var name = msg?.optString("name")
+				var packageCount = msg?.optString("packageCount")
+				var totalCount = msg?.optString("totalCount")
+				var orgName = msg?.optString("orgName")
+				var printMode = PrintModel(url, qrCodeId, name, packageCount, totalCount, orgName)
+				Log.e(TAG, printMode.toString())
+				if (address.isNullOrEmpty().not()) {
+					bluetoothPlugin?.print(deviceId = address!!, printMode)
+				}
+			}
+			LOG -> {
+				Log.e("H5Log", params?.optString("msg").orEmpty())
 			}
 			else -> {
 
@@ -161,9 +192,20 @@ class BlueJSBridge(var webView: WebView) {
 			override fun setMtuFail() {
 				callback.invoke(MTU, JSONUtil.error(message = "设置mtu失败"))
 			}
+
+			override fun getBondedDevicesResult(device: Set<BluetoothDevice>?) {
+				var devicesJSON = JSONArray()
+				device?.forEach{
+					devicesJSON.put(JSONObject().apply {
+						put("deviceId", it.address)
+						put("name", it.name)
+					})
+				}
+				callback.invoke(GET_BONDED_DEVICES, JSONUtil.success().put("data", devicesJSON))
+			}
 		}
 
-		bluetoothPlugin?.blueListener = this.blueListener
+		bluetoothPlugin?.setBlueListener(this.blueListener)
 	}
 
 }

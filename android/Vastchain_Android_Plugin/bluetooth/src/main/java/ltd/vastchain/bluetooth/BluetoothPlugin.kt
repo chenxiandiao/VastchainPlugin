@@ -11,6 +11,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import ltd.vastchain.bluetooth.model.PrintModel
 import ltd.vastchain.jsbridge.util.LogUtil
 import java.util.*
 import kotlin.math.min
@@ -19,11 +20,11 @@ import kotlin.math.min
 /**
  * Created by admin on 2021/9/13.
  */
-class BluetoothPlugin(private var application: Application, private var context: Context) {
+class BluetoothPlugin(private var application: Application, private var context: Context): IBluePlugin {
 
 	private var mDeviceId: String = ""
 
-	var blueListener: IBlueListener? = null
+	private var blueListener: IBlueListener? = null
 	private var read_UUID_chara: UUID? = null
 	private var read_UUID_service: UUID? = null
 	private var write_UUID_chara: UUID? = null
@@ -42,7 +43,8 @@ class BluetoothPlugin(private var application: Application, private var context:
 	var deviceIds :MutableList<String> =  mutableListOf<String>()
 	var notifyLength = 0
 
-	fun setUp() {
+
+	override fun setUp() {
 		mBluetoothManager =
 			application.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
 		mBluetoothAdapter = mBluetoothManager?.adapter
@@ -50,7 +52,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 
 	@TargetApi(21)
 	@Throws(IllegalStateException::class)
-	fun startScan21(timeOut: Long = 0) {
+	override fun startScan21(timeOut: Long) {
 		deviceIds.clear()
 		if (mBluetoothAdapter == null) {
 			blueListener?.setUpFail()
@@ -119,7 +121,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 
 
 	@TargetApi(21)
-	fun stopScan21() {
+	override fun stopScan21() {
 		if (mBluetoothAdapter == null) {
 			blueListener?.setUpFail()
 			LogUtil.e("请先初始化蓝牙模块")
@@ -130,7 +132,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 		scanner?.stopScan(getScanCallback21())
 	}
 
-	fun connect(deviceId: String?, timeOut: Long = 0) {
+	override fun connect(deviceId: String?, timeOut: Long) {
 		if (timeOut != 0L) {
 			mHandler.postDelayed({
 				if (connectState == BluetoothProfile.STATE_DISCONNECTED) {
@@ -163,7 +165,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 		}
 	}
 
-	fun disconnect() {
+	override fun disconnect() {
 		if (mBluetoothGatt == null) {
 			blueListener?.unConnect()
 			return
@@ -172,7 +174,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 		blueListener?.disconnectSuccess()
 	}
 
-	fun writeCharacteristic(
+	override fun writeCharacteristic(
 		data: String,
 		length: Int
 	) {
@@ -229,7 +231,7 @@ class BluetoothPlugin(private var application: Application, private var context:
 		blueListener?.writeSuccess()
 	}
 
-	fun readCharacteristic() {
+	override fun readCharacteristic() {
 		if (mBluetoothAdapter == null) {
 			LogUtil.e("请先初始化蓝牙模块")
 			blueListener?.setUpFail()
@@ -252,9 +254,21 @@ class BluetoothPlugin(private var application: Application, private var context:
 	}
 
 
-	fun setMtu(mtu: Int?) {
+	override fun setMtu(mtu: Int?) {
 		mtu ?: return
 		this.mtu = mtu
+	}
+
+	override fun getBondedDevices() {
+
+	}
+
+	override fun print(deviceId: String, data: PrintModel) {
+
+	}
+
+	override fun setBlueListener(listener: IBlueListener?) {
+		this.blueListener = listener
 	}
 
 	private fun initServiceAndChara() {
@@ -302,14 +316,14 @@ class BluetoothPlugin(private var application: Application, private var context:
 		}
 	}
 
-	fun isBleSupported(): Boolean {
+	override fun isBleSupported(): Boolean {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && application
 			.packageManager.hasSystemFeature(
 				PackageManager.FEATURE_BLUETOOTH_LE
 			)
 	}
 
-	fun isEnabled(): Boolean {
+	override fun isEnabled(): Boolean {
 		return mBluetoothAdapter!!.isEnabled
 	}
 

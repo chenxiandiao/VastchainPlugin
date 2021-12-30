@@ -1,5 +1,7 @@
 package ltd.vastchain.bluetooth
 
+import android.bluetooth.BluetoothDevice
+
 /**
  * Created by admin on 2021/9/14.
  */
@@ -30,4 +32,6 @@ interface IBlueListener {
 	fun setMtuSuccess()
 
 	fun setMtuFail()
+
+	fun getBondedDevicesResult(device: Set<BluetoothDevice>?)
 }

@@ -38,7 +38,7 @@ class BluetoothActivity : AppCompatActivity() {
 	private val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
 	private var mJSBridge: BlueJSBridge? = null
 	private var webView: CoreWebView? = null
-	private var bluetoothPlugin: BluetoothPlugin? = null
+	private var bluetoothPlugin: IBluePlugin? = null
 
 	private var callback: CoreJsCallback? = null
 	private var progressBar: CoreWebProgressBar? = null
@@ -95,7 +95,7 @@ class BluetoothActivity : AppCompatActivity() {
 	}
 
 	private fun initData() {
-		bluetoothPlugin = BluetoothPlugin(application, this)
+		bluetoothPlugin = TraditionBluetoothPlugin(application, this)
 		mJSBridge?.apply {
 			bluetoothPlugin = this@BluetoothActivity.bluetoothPlugin
 			checkPermission = { callback ->
