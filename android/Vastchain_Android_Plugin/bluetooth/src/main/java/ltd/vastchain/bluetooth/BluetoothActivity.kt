@@ -56,7 +56,7 @@ class BluetoothActivity : AppCompatActivity() {
 		progressBar = findViewById(R.id.web_progressbar)
 		url = intent.getStringExtra("url") ?: URL
 		webView = findViewById(R.id.webView)
-		mJSBridge = BlueJSBridge(webView!!)
+		mJSBridge = BlueJSBridge(webView!!, this)
 		initData()
 		webView?.addJavascriptInterface(mJSBridge!!, "BlueJSBridge")
 //		webView?.loadUrl("http://10.150.229.13:8000/")

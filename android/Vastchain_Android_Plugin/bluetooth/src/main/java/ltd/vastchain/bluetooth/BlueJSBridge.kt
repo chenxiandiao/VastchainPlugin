@@ -1,5 +1,6 @@
 package ltd.vastchain.bluetooth
 
+import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.util.Log
 import android.webkit.JavascriptInterface
@@ -17,7 +18,7 @@ import org.json.JSONObject
  * Created by admin on 2021/9/10.
  */
 
-class BlueJSBridge(var webView: WebView) {
+class BlueJSBridge(var webView: WebView, val activity: Activity) {
 
 	val TAG = "BlueJSBridge"
 
@@ -34,6 +35,7 @@ class BlueJSBridge(var webView: WebView) {
 		const val SCAN_QR_CODE = "scanQrCode"
 		const val PRINT_DATA = "printData"
 		const val LOG = "log"
+		const val CLOSE_WEB_VIEW = "closeWebView"
 	}
 
 	private var blueListener: IBlueListener? = null
@@ -122,6 +124,9 @@ class BlueJSBridge(var webView: WebView) {
 				if (address.isNullOrEmpty().not()) {
 					bluetoothPlugin?.print(deviceId = address!!, printMode)
 				}
+			}
+			CLOSE_WEB_VIEW -> {
+				activity.finish()
 			}
 			LOG -> {
 				Log.e("H5Log", params?.optString("msg").orEmpty())
