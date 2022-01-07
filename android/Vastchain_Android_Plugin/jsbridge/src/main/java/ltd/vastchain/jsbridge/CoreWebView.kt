@@ -1,11 +1,12 @@
 package ltd.vastchain.jsbridge
 
 import android.content.Context
+import android.net.Uri
+import android.os.Build
 import android.util.AttributeSet
-import android.webkit.ConsoleMessage
-import android.webkit.WebChromeClient
-import android.webkit.WebSettings
-import android.webkit.WebView
+import android.util.Log
+import android.webkit.*
+import androidx.annotation.RequiresApi
 import ltd.vastchain.jsbridge.util.LogUtil
 
 
@@ -39,6 +40,14 @@ class CoreWebView: WebView {
 
 	private fun setWebSettings() {
 		val webSettings = this.settings
+		webSettings.javaScriptCanOpenWindowsAutomatically = true
+		webSettings.allowFileAccess = true
+		webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+		webSettings.setSupportZoom(true)
+		webSettings.setAppCacheEnabled(true)
+		webSettings.domStorageEnabled = true
+		webSettings.setAppCacheMaxSize(Long.MAX_VALUE)
+		webSettings.loadsImagesAutomatically = true
 		webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 		webSettings.defaultTextEncodingName = "UTF-8"
 		webSettings.loadWithOverviewMode = true
@@ -94,6 +103,16 @@ class CoreWebView: WebView {
 			override fun onProgressChanged(view: WebView?, newProgress: Int) {
 				super.onProgressChanged(view, newProgress)
 				handleWebViewClient?.onProgressChanged(view, newProgress)
+			}
+
+			@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+			override fun onShowFileChooser(
+				webView: WebView?,
+				valueCallback: ValueCallback<Array<Uri?>?>,
+				fileChooserParams: FileChooserParams?
+			): Boolean {
+				super.onShowFileChooser(webView, valueCallback, fileChooserParams)
+				return  handleWebViewClient?.onShowFileChooser(webView, valueCallback, fileChooserParams)?:true
 			}
 		}
 	}

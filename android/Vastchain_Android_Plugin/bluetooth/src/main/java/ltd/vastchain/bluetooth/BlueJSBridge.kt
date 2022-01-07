@@ -35,6 +35,7 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 		const val SCAN_QR_CODE = "scanQrCode"
 		const val PRINT_DATA = "printData"
 		const val LOG = "log"
+		const val OPEN_WAREHOUSE_ACTIVITY = "openWareHouseActivity"
 		const val CLOSE_WEB_VIEW = "closeWebView"
 	}
 
@@ -127,6 +128,13 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 			}
 			CLOSE_WEB_VIEW -> {
 				activity.finish()
+			}
+
+			OPEN_WAREHOUSE_ACTIVITY -> {
+				val qrCodeId = params?.optString("qrCodeId")
+				val type = params?.optString("type")
+				val commodityId = params?.optString("commodityId")
+				BlueManager.getListener()?.openWareHouseActivity(qrCodeId.orEmpty(), type.orEmpty(), commodityId.orEmpty())
 			}
 			LOG -> {
 				Log.e("H5Log", params?.optString("msg").orEmpty())

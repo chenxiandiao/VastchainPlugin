@@ -11,7 +11,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <application>
-        <activity android:name=".BluetoothActivity" android:theme="@style/AppTheme"/>
+        <activity android:name=".BluetoothActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

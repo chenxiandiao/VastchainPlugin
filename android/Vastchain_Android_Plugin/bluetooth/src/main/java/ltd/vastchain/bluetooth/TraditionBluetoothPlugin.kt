@@ -41,7 +41,7 @@ class TraditionBluetoothPlugin(private var application: Application, private var
                     Log.e("cxd", deviceName.orEmpty())
                     Log.e("cxd", deviceHardwareAddress.orEmpty())
 
-                    if (deviceName != null && (deviceName.startsWith("CT"))) {
+                    if (deviceName != null && (deviceName.startsWith("CT") && deviceName.endsWith("L").not())) {
                         blueListener?.scanResult(
                             deviceHardwareAddress!!,
                             deviceName

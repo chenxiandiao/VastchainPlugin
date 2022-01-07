@@ -24,7 +24,7 @@ object PrinterUtil {
             return
         }
         zpSDK.pageSetup(600, 300)
-        zpSDK.drawQrCode(30, 40, data.url, 0, 7, 0)
+        zpSDK.drawQrCode(30, 40, data.url, 0, 5, 0)
         if (data.qrCodeId.isNullOrEmpty().not()) {
             zpSDK.drawText(280, 47, data.qrCodeId, 3, 0, 1, false, false)
         }

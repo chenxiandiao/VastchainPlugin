@@ -203,7 +203,6 @@ public class zp_cpcl_BluetoothPrinter implements PrinterInterface {
                     Log.e(TAG, "myDevice");
                     return false;
                 } else {
-                    ClsUtils.createBond(myDevice.getClass(), myDevice);
                     return this.SPPOpen(myBluetoothAdapter, myDevice);
                 }
             }

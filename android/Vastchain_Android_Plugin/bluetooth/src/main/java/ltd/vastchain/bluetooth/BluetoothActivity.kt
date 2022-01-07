@@ -7,14 +7,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import ltd.vastchain.jsbridge.CoreJsCallback
 import ltd.vastchain.jsbridge.CoreWebProgressBar
 import ltd.vastchain.jsbridge.CoreWebView
@@ -53,6 +57,10 @@ class BluetoothActivity : AppCompatActivity() {
 		if (intent.getStringExtra("url").isNullOrEmpty()) {
 			LogUtil.e("intent无传递参数")
 		}
+		window.statusBarColor =   ContextCompat.getColor(this
+				,R.color.white)
+		window.decorView.systemUiVisibility =  View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+		findViewById<TextView>(R.id.tv_title).text = intent.getStringExtra("title")
 		progressBar = findViewById(R.id.web_progressbar)
 		url = intent.getStringExtra("url") ?: URL
 		webView = findViewById(R.id.webView)
@@ -79,6 +87,14 @@ class BluetoothActivity : AppCompatActivity() {
 				super.onProgressChanged(view, newProgress)
 				progressBar?.startProgressAnimation(newProgress, false)
 
+			}
+
+			override fun onShowFileChooser(
+				webView: WebView?,
+				filePathCallback: ValueCallback<Array<Uri>>?,
+				fileChooserParams: FileChooserParams?
+			): Boolean {
+				return  BlueManager.getChromeClient()?.onShowFileChooser(webView, filePathCallback, fileChooserParams)?:true
 			}
 		}
 		initListener()
@@ -114,6 +130,10 @@ class BluetoothActivity : AppCompatActivity() {
 				}
 			}
 		}
+
+//		bluetoothPlugin?.setUp()
+//		bluetoothPlugin?.startScan21(10)
+//		bluetoothPlugin?.connect("00:19:98:82:40:69")
 	}
 
 
@@ -179,4 +199,14 @@ class BluetoothActivity : AppCompatActivity() {
 			}
 		}
 	}
+
+	override fun onBackPressed() {
+		if (webView?.canGoBack() == true) {
+			webView?.goBack()
+		} else {
+			super.onBackPressed()
+		}
+	}
+
+
 }
