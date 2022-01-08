@@ -216,6 +216,10 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 				}
 				callback.invoke(GET_BONDED_DEVICES, JSONUtil.success().put("data", devicesJSON))
 			}
+
+			override fun printSuccess() {
+				callback.invoke(PRINT_DATA, JSONUtil.success(message = "打印完成"))
+			}
 		}
 
 		bluetoothPlugin?.setBlueListener(this.blueListener)

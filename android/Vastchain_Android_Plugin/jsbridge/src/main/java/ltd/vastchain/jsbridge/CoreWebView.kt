@@ -64,6 +64,8 @@ class CoreWebView: WebView {
 
 		webSettings.allowContentAccess = true
 		webSettings.allowFileAccess = true
+		webSettings.allowUniversalAccessFromFileURLs = true
+		webSettings.allowFileAccessFromFileURLs = true
 
 		//UserAgent
 //		val userAgent = StringBuilder()

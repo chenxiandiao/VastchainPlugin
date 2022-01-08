@@ -3,6 +3,7 @@ package ltd.vastchain.bluetooth.printer
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import ltd.vastchain.bluetooth.IBlueListener
 import ltd.vastchain.bluetooth.model.PrintModel
 import zpCPCLSDK.zpCPCLSDK.zp_cpcl_BluetoothPrinter
 
@@ -13,7 +14,7 @@ object PrinterUtil {
 
     var openPrinter = true
 
-    fun print(context: Context, address: String?, data: PrintModel) {
+    fun print(context: Context, address: String?, data: PrintModel, blueListener:IBlueListener?) {
         if (openPrinter.not()) {
             return
         }
@@ -23,7 +24,7 @@ object PrinterUtil {
             Toast.makeText(context, "连接失败------", Toast.LENGTH_LONG).show()
             return
         }
-        zpSDK.pageSetup(600, 300)
+        zpSDK.pageSetup(600, 350)
         zpSDK.drawQrCode(30, 40, data.url, 0, 5, 0)
         if (data.qrCodeId.isNullOrEmpty().not()) {
             zpSDK.drawText(280, 47, data.qrCodeId, 3, 0, 1, false, false)
@@ -43,5 +44,7 @@ object PrinterUtil {
 
         zpSDK.print(0, 0)
         zpSDK.disconnect()
+        Log.e("H5Log", "print llllll")
+        blueListener?.printSuccess()
     }
 }

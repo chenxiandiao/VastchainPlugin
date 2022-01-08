@@ -34,4 +34,6 @@ interface IBlueListener {
 	fun setMtuFail()
 
 	fun getBondedDevicesResult(device: Set<BluetoothDevice>?)
+
+	fun printSuccess()
 }

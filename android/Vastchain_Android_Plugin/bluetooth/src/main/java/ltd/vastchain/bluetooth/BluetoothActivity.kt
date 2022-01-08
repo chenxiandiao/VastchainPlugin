@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ltd.vastchain.bluetooth.utils.ClipUtils
 import ltd.vastchain.jsbridge.CoreJsCallback
 import ltd.vastchain.jsbridge.CoreWebProgressBar
 import ltd.vastchain.jsbridge.CoreWebView
@@ -36,6 +37,8 @@ class BluetoothActivity : AppCompatActivity() {
 	companion object {
 		const val URL = "http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456"
 //		const val URL = "http://www.baidu.com"
+
+		const val SOFT_WARE_SCAN = "softwareScan"
 	}
 
 	private val REQUEST_ENABLE_BT: Int = 100
@@ -50,6 +53,7 @@ class BluetoothActivity : AppCompatActivity() {
 	private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
 
 	private var url: String = URL
+	private var firstInit = true
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -63,6 +67,10 @@ class BluetoothActivity : AppCompatActivity() {
 		findViewById<TextView>(R.id.tv_title).text = intent.getStringExtra("title")
 		progressBar = findViewById(R.id.web_progressbar)
 		url = intent.getStringExtra("url") ?: URL
+		//TODO REMOVE
+//		if(BuildConfig.DEBUG) {
+			ClipUtils.copyText(this, url)
+//		}
 		webView = findViewById(R.id.webView)
 		mJSBridge = BlueJSBridge(webView!!, this)
 		initData()
@@ -205,6 +213,14 @@ class BluetoothActivity : AppCompatActivity() {
 			webView?.goBack()
 		} else {
 			super.onBackPressed()
+		}
+	}
+
+	override fun onResume() {
+		super.onResume()
+		firstInit = false
+		if (url.contains(SOFT_WARE_SCAN) && firstInit.not()) {
+			webView?.reload()
 		}
 	}
 

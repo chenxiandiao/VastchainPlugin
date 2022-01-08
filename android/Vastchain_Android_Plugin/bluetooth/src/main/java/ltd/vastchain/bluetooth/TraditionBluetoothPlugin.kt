@@ -112,7 +112,7 @@ class TraditionBluetoothPlugin(private var application: Application, private var
     }
 
     override fun print(deviceId: String, data:PrintModel) {
-        PrinterUtil.print(context, deviceId, data)
+        PrinterUtil.print(context, deviceId, data, this.blueListener)
     }
 
     override fun setBlueListener(listener: IBlueListener?) {
