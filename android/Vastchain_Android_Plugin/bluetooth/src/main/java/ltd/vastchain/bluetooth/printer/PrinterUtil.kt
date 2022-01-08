@@ -21,7 +21,7 @@ object PrinterUtil {
         val zpSDK = zp_cpcl_BluetoothPrinter(context)
         Log.e("Printer", address.orEmpty())
         if (!zpSDK.connect(address)) {
-            Toast.makeText(context, "连接失败------", Toast.LENGTH_LONG).show()
+//            Toast.makeText(context, "连接失败------", Toast.LENGTH_LONG).show()
             return
         }
         zpSDK.pageSetup(600, 350)

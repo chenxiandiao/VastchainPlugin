@@ -83,6 +83,7 @@ class TraditionBluetoothPlugin(private var application: Application, private var
     override fun connect(deviceId: String?, timeOut: Long) {
         val zpSDK = zp_cpcl_BluetoothPrinter(context)
         if (zpSDK.connect(deviceId)) {
+            zpSDK.disconnect()
             blueListener?.connectSuccess()
         } else {
             blueListener?.connectFail(-1, "pin码错误")
@@ -90,9 +91,9 @@ class TraditionBluetoothPlugin(private var application: Application, private var
     }
 
     override fun disconnect() {
-        val zpSDK = zp_cpcl_BluetoothPrinter(context)
-        zpSDK.disconnect()
-        blueListener?.disconnectSuccess()
+//        val zpSDK = zp_cpcl_BluetoothPrinter(context)
+//        zpSDK.disconnect()
+//        blueListener?.disconnectSuccess()
     }
 
     override fun writeCharacteristic(data: String, length: Int) {
