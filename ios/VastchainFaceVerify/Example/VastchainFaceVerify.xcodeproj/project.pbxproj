@@ -24,6 +24,10 @@
 		67F8801F0702810DCE9C08DF /* Pods_VastchainFaceVerify_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9560AE75B58F7CD405C99BB0 /* Pods_VastchainFaceVerify_Tests.framework */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		EC43F16B276C58CC00E407D6 /* mouth.wav in Resources */ = {isa = PBXBuildFile; fileRef = EC43F168276C58CB00E407D6 /* mouth.wav */; };
+		EC43F16C276C58CC00E407D6 /* eye.wav in Resources */ = {isa = PBXBuildFile; fileRef = EC43F16A276C58CC00E407D6 /* eye.wav */; };
+		EC43F16E276C590100E407D6 /* face.wav in Resources */ = {isa = PBXBuildFile; fileRef = EC43F16D276C590100E407D6 /* face.wav */; };
+		EC43F170276C59C500E407D6 /* scanEndSound.caf in Resources */ = {isa = PBXBuildFile; fileRef = EC43F16F276C59C500E407D6 /* scanEndSound.caf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,10 @@
 		9560AE75B58F7CD405C99BB0 /* Pods_VastchainFaceVerify_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VastchainFaceVerify_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3E12A83FC8487F95D82B630 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A98BF187C24517E74EFDD34E /* Pods-VastchainFaceVerify_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VastchainFaceVerify_Example.release.xcconfig"; path = "Target Support Files/Pods-VastchainFaceVerify_Example/Pods-VastchainFaceVerify_Example.release.xcconfig"; sourceTree = "<group>"; };
+		EC43F168276C58CB00E407D6 /* mouth.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = mouth.wav; path = VastchainFaceVerify/mouth.wav; sourceTree = "<group>"; };
+		EC43F16A276C58CC00E407D6 /* eye.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = eye.wav; path = VastchainFaceVerify/eye.wav; sourceTree = "<group>"; };
+		EC43F16D276C590100E407D6 /* face.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = face.wav; path = VastchainFaceVerify/face.wav; sourceTree = "<group>"; };
+		EC43F16F276C59C500E407D6 /* scanEndSound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = scanEndSound.caf; path = VastchainFaceVerify/scanEndSound.caf; sourceTree = "<group>"; };
 		FF6629829A63833236951703 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +106,10 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				EC43F16F276C59C500E407D6 /* scanEndSound.caf */,
+				EC43F16D276C590100E407D6 /* face.wav */,
+				EC43F16A276C58CC00E407D6 /* eye.wav */,
+				EC43F168276C58CB00E407D6 /* mouth.wav */,
 				60FF7A9C1954A5C5007DD14C /* Podspec Metadata */,
 				6003F593195388D20070C39A /* Example for VastchainFaceVerify */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -280,6 +292,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC43F170276C59C500E407D6 /* scanEndSound.caf in Resources */,
+				EC43F16E276C590100E407D6 /* face.wav in Resources */,
+				EC43F16B276C58CC00E407D6 /* mouth.wav in Resources */,
+				EC43F16C276C58CC00E407D6 /* eye.wav in Resources */,
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
