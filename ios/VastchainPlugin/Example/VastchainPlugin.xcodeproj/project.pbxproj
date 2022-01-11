@@ -24,21 +24,9 @@
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		CF5A838F7F0B479009D251D6 /* Pods_VastchainPlugin_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07AA3CF8F87CCB67141655A3 /* Pods_VastchainPlugin_Tests.framework */; };
 		EC0C8F41271E57A200F58995 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC0C8F3F271E57A100F58995 /* Main.storyboard */; };
-		EC3CBFC5271041A50067FE91 /* AVCamPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3CBFC4271041A50067FE91 /* AVCamPreviewView.m */; };
 		EC3CBFC8271170060067FE91 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC3CBFC7271170060067FE91 /* ImageViewController.m */; };
 		EC9E8466271538A700E52A63 /* HWCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E8465271538A700E52A63 /* HWCircleView.m */; };
 		EC9E84692715572B00E52A63 /* UIImage+BlendMode.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E84682715572B00E52A63 /* UIImage+BlendMode.m */; };
-		EC9E846B2715911C00E52A63 /* FaceVerify.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EC9E846A2715911C00E52A63 /* FaceVerify.bundle */; };
-		EC9E8470271679B200E52A63 /* InterceptChain.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E846F271679B200E52A63 /* InterceptChain.m */; };
-		EC9E847327167FEE00E52A63 /* VerifyInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E847227167FEE00E52A63 /* VerifyInterceptor.m */; };
-		EC9E84752716869900E52A63 /* Interceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E84742716869900E52A63 /* Interceptor.m */; };
-		EC9E84782716BAB800E52A63 /* LiveInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E84772716BAB800E52A63 /* LiveInterceptor.m */; };
-		EC9E847B2717C5AB00E52A63 /* MouthInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E847A2717C5AB00E52A63 /* MouthInterceptor.m */; };
-		EC9E847E27192F1800E52A63 /* FaceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E847D27192F1800E52A63 /* FaceManager.m */; };
-		EC9E848127196F1000E52A63 /* EyeInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E848027196F1000E52A63 /* EyeInterceptor.m */; };
-		EC9E84842719799400E52A63 /* FaceIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E84832719799400E52A63 /* FaceIndexViewController.m */; };
-		EC9E8487271D50B200E52A63 /* IdentityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EC9E8486271D50B100E52A63 /* IdentityViewController.m */; };
-		ECE694C22705B6A300F4509C /* FaceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECE694C12705B6A300F4509C /* FaceViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,8 +70,6 @@
 		9EA095B4005E3D3F888C9B68 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		D37027DF7A807A022B218F67 /* Pods-VastchainPlugin_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VastchainPlugin_Example.release.xcconfig"; path = "Target Support Files/Pods-VastchainPlugin_Example/Pods-VastchainPlugin_Example.release.xcconfig"; sourceTree = "<group>"; };
 		EC0C8F40271E57A200F58995 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		EC3CBFC3271041A50067FE91 /* AVCamPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVCamPreviewView.h; sourceTree = "<group>"; };
-		EC3CBFC4271041A50067FE91 /* AVCamPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVCamPreviewView.m; sourceTree = "<group>"; };
 		EC3CBFC6271170060067FE91 /* ImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		EC3CBFC7271170060067FE91 /* ImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		EC3CBFC9271188070067FE91 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
@@ -91,27 +77,6 @@
 		EC9E8465271538A700E52A63 /* HWCircleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWCircleView.m; sourceTree = "<group>"; };
 		EC9E84672715572B00E52A63 /* UIImage+BlendMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlendMode.h"; sourceTree = "<group>"; };
 		EC9E84682715572B00E52A63 /* UIImage+BlendMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlendMode.m"; sourceTree = "<group>"; };
-		EC9E846A2715911C00E52A63 /* FaceVerify.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FaceVerify.bundle; sourceTree = "<group>"; };
-		EC9E846D271678D300E52A63 /* Interceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interceptor.h; sourceTree = "<group>"; };
-		EC9E846E271679B200E52A63 /* InterceptChain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InterceptChain.h; sourceTree = "<group>"; };
-		EC9E846F271679B200E52A63 /* InterceptChain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InterceptChain.m; sourceTree = "<group>"; };
-		EC9E847127167FEE00E52A63 /* VerifyInterceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VerifyInterceptor.h; sourceTree = "<group>"; };
-		EC9E847227167FEE00E52A63 /* VerifyInterceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VerifyInterceptor.m; sourceTree = "<group>"; };
-		EC9E84742716869900E52A63 /* Interceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Interceptor.m; sourceTree = "<group>"; };
-		EC9E84762716BAB800E52A63 /* LiveInterceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LiveInterceptor.h; sourceTree = "<group>"; };
-		EC9E84772716BAB800E52A63 /* LiveInterceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveInterceptor.m; sourceTree = "<group>"; };
-		EC9E84792717C5AB00E52A63 /* MouthInterceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouthInterceptor.h; sourceTree = "<group>"; };
-		EC9E847A2717C5AB00E52A63 /* MouthInterceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MouthInterceptor.m; sourceTree = "<group>"; };
-		EC9E847C27192F1800E52A63 /* FaceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceManager.h; sourceTree = "<group>"; };
-		EC9E847D27192F1800E52A63 /* FaceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceManager.m; sourceTree = "<group>"; };
-		EC9E847F27196F1000E52A63 /* EyeInterceptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EyeInterceptor.h; sourceTree = "<group>"; };
-		EC9E848027196F1000E52A63 /* EyeInterceptor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EyeInterceptor.m; sourceTree = "<group>"; };
-		EC9E84822719799400E52A63 /* FaceIndexViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceIndexViewController.h; sourceTree = "<group>"; };
-		EC9E84832719799400E52A63 /* FaceIndexViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceIndexViewController.m; sourceTree = "<group>"; };
-		EC9E8485271D50B100E52A63 /* IdentityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IdentityViewController.h; sourceTree = "<group>"; };
-		EC9E8486271D50B100E52A63 /* IdentityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IdentityViewController.m; sourceTree = "<group>"; };
-		ECE694C02705B6A300F4509C /* FaceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FaceViewController.h; sourceTree = "<group>"; };
-		ECE694C12705B6A300F4509C /* FaceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FaceViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,9 +142,6 @@
 		6003F593195388D20070C39A /* Example for VastchainPlugin */ = {
 			isa = PBXGroup;
 			children = (
-				EC9E846C2716783300E52A63 /* FaceVerify */,
-				EC3CBFC3271041A50067FE91 /* AVCamPreviewView.h */,
-				EC3CBFC4271041A50067FE91 /* AVCamPreviewView.m */,
 				6003F59C195388D20070C39A /* MainAppDelegate.h */,
 				6003F59D195388D20070C39A /* MainAppDelegate.m */,
 				6003F5A5195388D20070C39A /* MainViewController.h */,
@@ -188,8 +150,6 @@
 				71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
-				ECE694C02705B6A300F4509C /* FaceViewController.h */,
-				ECE694C12705B6A300F4509C /* FaceViewController.m */,
 				EC3CBFC6271170060067FE91 /* ImageViewController.h */,
 				EC3CBFC7271170060067FE91 /* ImageViewController.m */,
 				EC3CBFC9271188070067FE91 /* Api.h */,
@@ -197,7 +157,6 @@
 				EC9E8465271538A700E52A63 /* HWCircleView.m */,
 				EC9E84672715572B00E52A63 /* UIImage+BlendMode.h */,
 				EC9E84682715572B00E52A63 /* UIImage+BlendMode.m */,
-				EC9E846A2715911C00E52A63 /* FaceVerify.bundle */,
 			);
 			name = "Example for VastchainPlugin";
 			path = VastchainPlugin;
@@ -252,31 +211,6 @@
 				0905A83A0D318556B588D32A /* Pods-VastchainPlugin_Tests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		EC9E846C2716783300E52A63 /* FaceVerify */ = {
-			isa = PBXGroup;
-			children = (
-				EC9E846D271678D300E52A63 /* Interceptor.h */,
-				EC9E84742716869900E52A63 /* Interceptor.m */,
-				EC9E846E271679B200E52A63 /* InterceptChain.h */,
-				EC9E846F271679B200E52A63 /* InterceptChain.m */,
-				EC9E847127167FEE00E52A63 /* VerifyInterceptor.h */,
-				EC9E847227167FEE00E52A63 /* VerifyInterceptor.m */,
-				EC9E84762716BAB800E52A63 /* LiveInterceptor.h */,
-				EC9E84772716BAB800E52A63 /* LiveInterceptor.m */,
-				EC9E84792717C5AB00E52A63 /* MouthInterceptor.h */,
-				EC9E847A2717C5AB00E52A63 /* MouthInterceptor.m */,
-				EC9E847C27192F1800E52A63 /* FaceManager.h */,
-				EC9E847D27192F1800E52A63 /* FaceManager.m */,
-				EC9E847F27196F1000E52A63 /* EyeInterceptor.h */,
-				EC9E848027196F1000E52A63 /* EyeInterceptor.m */,
-				EC9E84822719799400E52A63 /* FaceIndexViewController.h */,
-				EC9E84832719799400E52A63 /* FaceIndexViewController.m */,
-				EC9E8485271D50B100E52A63 /* IdentityViewController.h */,
-				EC9E8486271D50B100E52A63 /* IdentityViewController.m */,
-			);
-			path = FaceVerify;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +300,6 @@
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				EC0C8F41271E57A200F58995 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
-				EC9E846B2715911C00E52A63 /* FaceVerify.bundle in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,23 +388,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC9E847E27192F1800E52A63 /* FaceManager.m in Sources */,
-				EC9E8487271D50B200E52A63 /* IdentityViewController.m in Sources */,
 				EC3CBFC8271170060067FE91 /* ImageViewController.m in Sources */,
 				6003F59E195388D20070C39A /* MainAppDelegate.m in Sources */,
-				EC9E847327167FEE00E52A63 /* VerifyInterceptor.m in Sources */,
-				EC9E84782716BAB800E52A63 /* LiveInterceptor.m in Sources */,
-				EC9E847B2717C5AB00E52A63 /* MouthInterceptor.m in Sources */,
 				EC9E8466271538A700E52A63 /* HWCircleView.m in Sources */,
-				ECE694C22705B6A300F4509C /* FaceViewController.m in Sources */,
-				EC9E84752716869900E52A63 /* Interceptor.m in Sources */,
 				EC9E84692715572B00E52A63 /* UIImage+BlendMode.m in Sources */,
-				EC9E84842719799400E52A63 /* FaceIndexViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* MainViewController.m in Sources */,
-				EC9E8470271679B200E52A63 /* InterceptChain.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				EC9E848127196F1000E52A63 /* EyeInterceptor.m in Sources */,
-				EC3CBFC5271041A50067FE91 /* AVCamPreviewView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
