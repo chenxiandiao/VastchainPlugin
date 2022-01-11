@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <WebKit/WebKit.h>
+#import "BluePrinterController.h"
 
 @interface BlueViewController : UIViewController<CBCentralManagerDelegate,CBPeripheralDelegate,WKScriptMessageHandler>{
     NSString *mUrl;
@@ -16,6 +17,8 @@
 @property(nonatomic,strong)CBPeripheral *peripheral;
 @property(nonatomic,strong)CBCharacteristic *characteristic;
 @property WKWebView *myWebView;
+
+@property BluePrinterController *bluePrinterController;
 
 
 - (id) initWithUrl: (NSString*) url;
@@ -37,6 +40,9 @@
 //NSData转十六进制字符串
 - (NSString *)convertDataToHexStr:(NSData *)data;
 
+
+
+- (void) initBluePrinter;
 
 @end
 

@@ -11,6 +11,7 @@
 #import "BlueJsApi.h"
 #import "WCQRCodeVC.h"
 #import <JavaScriptCore/JavaScriptCore.h>
+#import "PrintModel.h"
 
 @interface BlueViewController () {
     NSMutableArray *peripheralDataArray;
@@ -34,6 +35,7 @@
 }
 
 - (void)viewDidLoad {
+    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     [self.view setBackgroundColor: [UIColor whiteColor]];
@@ -41,6 +43,7 @@
     [self initWebView];
     [self initListener];
     peripheralDataArray = [[NSMutableArray alloc]init];
+    [self initBluePrinter];
 }
 
 
@@ -97,6 +100,11 @@
     self.blueListener = [[IBlueListener alloc]initWithWebView:self.myWebView];
 }
 
+- (void)initBluePrinter {
+    self.bluePrinterController = [[BluePrinterController alloc]init];
+    self.bluePrinterController.blueListener = self.blueListener;
+}
+
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
     if (![message.name  isEqual: @"BlueJSBridge"]) {
         return;
@@ -116,10 +124,11 @@
     if ([method isEqualToString: SET_UP]) {
         [self initBlue];
     } else if ([method isEqualToString:SCAN]) {
-        NSInteger timeOut = [[params objectForKey:@"timeout"] integerValue]/1000;
-        NSLog(@"超时时间:%@", params);
-        [self scan];
-        [self performSelector:@selector(stopScan) withObject:nil afterDelay:timeOut];
+        [self.bluePrinterController startScan];
+//        NSInteger timeOut = [[params objectForKey:@"timeout"] integerValue]/1000;
+//        NSLog(@"超时时间:%@", params);
+//        [self scan];
+//        [self performSelector:@selector(stopScan) withObject:nil afterDelay:timeOut];
     } else if ([method isEqualToString:CONNECT]) {
         NSString *uuid = [params objectForKey:@"deviceId"];
         NSLog(@"uuid:%@", uuid);
@@ -133,6 +142,19 @@
         [self stopScan:YES];
     } else if([method isEqualToString:SCAN_QR_CODE]) {
         [self openScanPage];
+    } else if([method isEqualToString:PRITN_DATA]) {
+        NSString *address = [params objectForKey:@"deviceId"];
+        NSDictionary *msg = [params objectForKey:@"msg"];
+        NSString *url = [msg objectForKey:@"url"];
+        NSString *qrCodeId = [msg objectForKey:@"qrCodeId"];
+        NSString *name = [msg objectForKey:@"name"];
+        NSString *packageCount = [msg objectForKey:@"packageCount"];
+        NSString *totalCount = [msg objectForKey:@"totalCount"];
+        NSString *orgName = [msg objectForKey:@"orgName"];
+        PrintModel *model = [[PrintModel alloc]init];
+        NSLog(@"%@", orgName);
+        [model initWithUrl:url qrCodeId:qrCodeId name:name packageCount:packageCount totalCount:totalCount orgName:orgName];
+        [self.bluePrinterController printData:address printModel:model];
     }
 }
 
