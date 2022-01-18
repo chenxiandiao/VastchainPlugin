@@ -22,6 +22,7 @@
 #define LOG  @"log"
 #define SCAN_QR_CODE @"scanQrCode"
 #define PRITN_DATA @"printData"
+#define CLOSE_WEB_VIEW @"closeWebView"
 
 
 

@@ -12,6 +12,10 @@
 #import "WCQRCodeVC.h"
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "PrintModel.h"
+#import "MBProgressHUD.h"
+
+static CGFloat const navigationBarHeight = 64;
+static CGFloat const progressViewHeight = 1;
 
 @interface BlueViewController () {
     NSMutableArray *peripheralDataArray;
@@ -20,6 +24,8 @@
 @property(nonatomic,copy)void(^connectBlock)(BOOL,NSError*);
 
 @property(nonatomic,strong)IBlueListener *blueListener;
+
+@property MBProgressHUD *hud;
 
 @end
 
@@ -41,22 +47,47 @@
     [self.view setBackgroundColor: [UIColor whiteColor]];
     [self initToolBar];
     [self initWebView];
+    [self initProgressView];
     [self initListener];
     peripheralDataArray = [[NSMutableArray alloc]init];
     [self initBluePrinter];
 }
 
-
+- (void)initProgressView {
+//    if (!_progressView) {
+//        _progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+//        _progressView.trackTintColor = [UIColor clearColor];
+//        // 高度默认有导航栏且有穿透效果
+//        _progressView.frame = CGRectMake(0, navigationBarHeight, self.view.bounds.size.width, progressViewHeight);
+//        // 设置进度条颜色
+//        _progressView.tintColor = [UIColor colorWithRed:1.0 green:(128/255.0f) blue:128/255.0f alpha:1.0];
+//    }
+//
+//    [self.view addSubview:_progressView];
+    
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud.bezelView.color = [UIColor blackColor];
+    [_hud setContentColor:[UIColor whiteColor]];
+    _hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    _hud.label.text = @"加载中...";
+    _hud.mode = MBProgressHUDModeIndeterminate;
+}
 
 - (void) initToolBar{
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
     UIImageView *backBtn = [[UIImageView alloc]initWithFrame:CGRectMake(10,height,44,44)];
     [backBtn setContentMode:UIViewContentModeCenter];
-    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
-                                stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
-    NSLog(@"bundlePath:%@", bundlePath);
-    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
-    [backBtn setImage:[UIImage imageNamed:@"BackIcon" inBundle:resource_bundle compatibleWithTraitCollection:nil]];
+    
+//    NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
+//                                stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
+//    NSLog(@"bundlePath:%@", bundlePath);
+//    NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
+//    [backBtn setImage:[UIImage imageNamed:@"BackIcon" inBundle:resource_bundle compatibleWithTraitCollection:nil]];
+    // 暂时使用主工程中的返回图片，集成到flutter项目中有问题
+    UIImage *backImage = [UIImage imageNamed:@"BackIcon"];
+    [backBtn setImage:backImage];
+    
+    
     [self.view addSubview:backBtn];
     backBtn.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(goBack)];
@@ -67,20 +98,22 @@
     aLabel.font = [UIFont boldSystemFontOfSize:16];
     aLabel.backgroundColor = [UIColor clearColor];
     aLabel.textAlignment = NSTextAlignmentCenter;
-    aLabel.text = @"蓝牙打卡";
+    aLabel.text = @"";
     [self.view addSubview:aLabel];
     
 }
 
 - (void)initWebView {
     //    self.myWebView = [[WKWebView alloc]initWithFrame:self.view.bounds];
+    NSLog(@"height:%f",self.view.bounds.size.height);
     CGFloat height = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    self.myWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, height+60, self.view.bounds.size.width, self.view.bounds.size.height -44)];
+    self.myWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, height+44, self.view.bounds.size.width, self.view.bounds.size.height - (height+44))];
     //    NSString *url = @"http://10.159.179.214:8000";
     //    NSString *url = @"http://10.150.229.13:8000";
     //    NSString *url = @"http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456";
     //    NSString *url = @"http://www.baidu.com";
     NSString *url = mUrl;
+    NSLog(@"url:%@", url);
     NSString *bundlePath = [[NSBundle bundleForClass:[self class]].resourcePath
                                 stringByAppendingPathComponent:@"/VastchainPlugin.bundle"];
     NSBundle *resource_bundle = [NSBundle bundleWithPath:bundlePath];
@@ -94,6 +127,42 @@
     [self.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     [self.view addSubview:self.myWebView];
     [self.myWebView.configuration.userContentController addScriptMessageHandler:self name:@"BlueJSBridge"];
+    [self.myWebView addObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) options:0 context:nil];
+    
+    // 获取当前UserAgent, 并对其进行修改
+     [self.myWebView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id userAgent, NSError * _Nullable error) {
+       if ([userAgent isKindOfClass:[NSString class]]) {
+           
+           NSString *newUserAgent = userAgent;
+           
+           NSString *willAppendedString = [NSString stringWithFormat:@" %@", @"VastchainIOSApp/1.0.0"];
+           
+           if (![userAgent containsString:@"VastchainIOSApp"]) {
+               newUserAgent = [userAgent stringByAppendingString:willAppendedString];
+           }
+           NSLog(@"%@", newUserAgent);
+           NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:newUserAgent, @"UserAgent", nil];
+           
+           [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+           [[NSUserDefaults standardUserDefaults] synchronize];
+           
+           // 关键代码, 必须实现这个方法, 否则第一次打开UA还是原始值, 待第二次打开webview才是正确的UA;
+           [self.myWebView setCustomUserAgent:newUserAgent];
+       }
+     }];
+}
+
+
+
+/// KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(estimatedProgress))] && object == self.myWebView) {
+        if(self.myWebView.estimatedProgress >= 0.97) {
+            [_hud hideAnimated:YES];
+        }
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (void)initListener{
@@ -131,15 +200,39 @@
 //        [self performSelector:@selector(stopScan) withObject:nil afterDelay:timeOut];
     } else if ([method isEqualToString:CONNECT]) {
         NSString *uuid = [params objectForKey:@"deviceId"];
-        NSLog(@"uuid:%@", uuid);
-        [self connect:uuid];
+        NSString *name = [params objectForKey:@"deviceName"];
+//        NSLog(@"uuid:%@", uuid);
+//        [self connect:uuid];
+        BOOL flag = [self.bluePrinterController connect:name];
+        if(flag) {
+            [self.blueListener connectSuccess];
+        } else {
+            [self.blueListener connectFail:-1 message:@"连接失败"];
+        }
+        
     } else if ([method isEqualToString:DISCONNECT]) {
         [self cancelPeripheral: self.peripheral];
     }else if([method isEqualToString:WRITE]) {
+//        NSLog(@"发送数据:%@", uuid);
         NSString *data = [params objectForKey:@"data"];
+        NSLog(@"发送数据:%@", data);
         [self write:data];
+       
+//        NSString *address = [params objectForKey:@"deviceId"];
+//        NSDictionary *msg = [params objectForKey:@"msg"];
+//        NSString *url = [msg objectForKey:@"url"];
+//        NSString *qrCodeId = [msg objectForKey:@"qrCodeId"];
+//        NSString *name = [msg objectForKey:@"name"];
+//        NSString *packageCount = [msg objectForKey:@"packageCount"];
+//        NSString *totalCount = [msg objectForKey:@"totalCount"];
+//        NSString *orgName = @"11";
+//        PrintModel *model = [[PrintModel alloc]init];
+//        NSLog(@"%@", orgName);
+//        [model initWithUrl:url qrCodeId:qrCodeId name:name packageCount:packageCount totalCount:totalCount orgName:orgName];
+//        [self.bluePrinterController printData:address printModel:model];
     } else if([method isEqualToString:STOP_SCAN]) {
-        [self stopScan:YES];
+//        [self stopScan:YES];
+        [self.bluePrinterController stopScan];
     } else if([method isEqualToString:SCAN_QR_CODE]) {
         [self openScanPage];
     } else if([method isEqualToString:PRITN_DATA]) {
@@ -155,6 +248,8 @@
         NSLog(@"%@", orgName);
         [model initWithUrl:url qrCodeId:qrCodeId name:name packageCount:packageCount totalCount:totalCount orgName:orgName];
         [self.bluePrinterController printData:address printModel:model];
+    } else if([method isEqualToString:CLOSE_WEB_VIEW]) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -183,7 +278,6 @@
     NSLog(@"centralManagerDidUpdateState");
     if([self isBluetoothAvailabel]) {
         [self.blueListener setUpSuccess];
-        //        [self scan];
     }
     
 }
@@ -246,7 +340,7 @@
     //        NSLog(@"Discovered %@", peripheral.name);
     //    }
     
-    if ([peripheral.name hasSuffix:@"2034"] || [peripheral.name hasSuffix:@"23E"]) {
+    if ([peripheral.name hasPrefix:@"CT"]) {
         if(![peripheralDataArray containsObject:peripheral]) {
             [peripheralDataArray addObject:peripheral];
             NSLog(@"uuid:%@", [peripheral.identifier UUIDString]);
@@ -254,6 +348,12 @@
         }
     }
     
+//    if ([peripheral.name hasPrefix:@"CT"]) {
+//        NSData *data = [advertisementData objectForKey:@"kCBAdvDataManufacturerData"];
+//        NSString *mac = [self convertDataToHexStr:data];
+//        NSLog(mac);
+//    }
+  
     //    if ([peripheral.name hasSuffix:@"2034"] || [peripheral.name hasSuffix:@"23E"]) {
     //        NSLog(@"发现要的蓝牙%@", peripheral.name);
     //        self.peripheral = peripheral;
@@ -377,7 +477,8 @@
 - (void)write:(NSString*) data {
     if (self.characteristic!=NULL) {
         NSLog(@"开始写数据");
-        NSData *sendData =  [self convertHexStrToData:data];
+//        NSData *sendData =  [self convertHexStrToData:data];
+        NSData *sendData =[data dataUsingEncoding:NSUTF8StringEncoding];
         [self.peripheral writeValue:sendData forCharacteristic:self.characteristic type:CBCharacteristicWriteWithoutResponse];
     }
 }

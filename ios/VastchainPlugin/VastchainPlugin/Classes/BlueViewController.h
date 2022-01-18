@@ -17,6 +17,7 @@
 @property(nonatomic,strong)CBPeripheral *peripheral;
 @property(nonatomic,strong)CBCharacteristic *characteristic;
 @property WKWebView *myWebView;
+@property (nonatomic, strong) UIProgressView *progressView;
 
 @property BluePrinterController *bluePrinterController;
 

@@ -32,4 +32,7 @@
 - (void) readCallback: (NSString*) data;
 - (void) qrScanResult: (NSString*) data;
 - (void) invoke: (NSString*) method data: (NSString*) data;
+
+- (void) printSuccess;
+- (void) printError:(NSInteger) errCode message: (NSString*) message;
 @end

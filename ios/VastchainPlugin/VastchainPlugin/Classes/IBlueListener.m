@@ -137,5 +137,15 @@
         NSLog(@"js返回");
     }];
 }
+
+- (void)printSuccess {
+    NSString* response = [self success:MESSAGE_SUCCESS];
+    [self invoke:PRITN_DATA data:response];
+}
+
+- (void)printError:(NSInteger)errCode message:(NSString *)message {
+    NSString* response = [self error:MESSAGE_FAIL];
+    [self invoke:PRITN_DATA data:response];
+}
 @end
 

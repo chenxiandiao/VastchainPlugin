@@ -77,6 +77,7 @@
 		EC9E8465271538A700E52A63 /* HWCircleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HWCircleView.m; sourceTree = "<group>"; };
 		EC9E84672715572B00E52A63 /* UIImage+BlendMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+BlendMode.h"; sourceTree = "<group>"; };
 		EC9E84682715572B00E52A63 /* UIImage+BlendMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BlendMode.m"; sourceTree = "<group>"; };
+		ECD1DF8127953E7400BBBC91 /* zicox_ios_sdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = zicox_ios_sdk.framework; path = ../VastchainPlugin/Classes/zicox_ios_sdk.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +130,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ECD1DF8127953E7400BBBC91 /* zicox_ios_sdk.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
@@ -469,6 +471,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -509,6 +512,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -530,10 +534,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2G393W563F;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VastchainPlugin/VastchainPlugin-Prefix.pch";
 				INFOPLIST_FILE = "VastchainPlugin/VastchainPlugin-Info.plist";
 				MODULE_NAME = ExampleApp;
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ltd.vastchain.plugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -548,10 +554,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2G393W563F;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VastchainPlugin/VastchainPlugin-Prefix.pch";
 				INFOPLIST_FILE = "VastchainPlugin/VastchainPlugin-Info.plist";
 				MODULE_NAME = ExampleApp;
+				OTHER_CFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ltd.vastchain.plugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

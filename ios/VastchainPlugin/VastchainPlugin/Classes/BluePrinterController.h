@@ -19,9 +19,11 @@
 
 -(void) startScan;
 
--(void) printData:(NSString*) address printModel: (PrintModel*) data;
+-(void) printData:(NSString*) deviceName printModel: (PrintModel*) data;
 
+-(void) stopScan;
 
+-(BOOL) connect:(NSString*) deviceName;
 
 @end
 

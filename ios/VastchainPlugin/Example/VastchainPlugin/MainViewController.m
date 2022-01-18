@@ -54,7 +54,8 @@
 }
 
 - (void) openBlue {
-    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116/#/qrCode/home"];
+//    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116/#/qrCode/home"];
+    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116/#/qrCode/home?token=C3OLWT0Hp1_hLthxOCcsh_96nDzyB0io&org_id=265972383548284928&name=%E8%B0%A2%E4%BD%B3%E6%85%A7"];
     [self.navigationController pushViewController:viewController animated:NO];
 }
 
