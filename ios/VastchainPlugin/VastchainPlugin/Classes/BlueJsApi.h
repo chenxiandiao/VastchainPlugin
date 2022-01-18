@@ -21,6 +21,10 @@
 #define MTU  @"setBLEMTU"
 #define LOG  @"log"
 #define SCAN_QR_CODE @"scanQrCode"
+#define PRITN_DATA @"printData"
+
+
+
 
 #define MESSAGE_SUCCESS @"成功"
 #define MESSAGE_FAIL @"失败"

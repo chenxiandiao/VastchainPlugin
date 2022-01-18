@@ -41,6 +41,8 @@ s.resource_bundles = {
 #    'VastchainPlugin' => ['VastchainPlugin/Assets/**/*.{storyboard,xib,xcassets,json,imageset,png}']
     'VastchainPlugin' => ['VastchainPlugin/Assets/*']
 }
+s.vendored_frameworks = ['VastchainPlugin/Classes/zicox_ios_sdk.framework']
+#s.frameworks = ['VastchainPlugin/Classes/zicox_ios_sdk.framework']
 #s.resource = ['VastchainPlugin/Assets/Face.storyboard']
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

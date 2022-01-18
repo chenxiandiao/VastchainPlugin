@@ -75,6 +75,7 @@
     NSMutableDictionary *data = [NSMutableDictionary dictionaryWithObjectsAndKeys:address,@"deviceId", name, @"name", nil];
     [responsObj setObject:data forKey:@"data"];
     NSString *response =  [self dictToJson:responsObj];
+    NSLog(@"respons:%@",response);
     [self invoke:SCAN data:response];
 }
 

@@ -20,14 +20,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Lw-41-Fz3">
-                                <rect key="frame" x="126" y="318" width="123" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="打开人脸识别页面"/>
-                                <connections>
-                                    <segue destination="Ovc-vQ-VMU" kind="show" id="U3b-k2-cm9"/>
-                                </connections>
-                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n49-kd-qlz">
                                 <rect key="frame" x="150" y="388" width="62" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -36,7 +28,7 @@
                                     <action selector="clickReadImageBtn:" destination="whP-gf-Uak" eventType="touchUpInside" id="sz6-lg-97c"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mrd-oW-iQ3">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mrd-oW-iQ3">
                                 <rect key="frame" x="150" y="259" width="77" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="打开扫一扫"/>
@@ -52,12 +44,19 @@
                                     <action selector="clickStoryBoardTest:" destination="whP-gf-Uak" eventType="touchUpInside" id="P7r-wt-lEr"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zT7-qn-uIw">
+                                <rect key="frame" x="143" y="211" width="90" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="打开webview"/>
+                                <connections>
+                                    <action selector="clickOpenWebView:" destination="whP-gf-Uak" eventType="touchUpInside" id="7tT-Gy-hAo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="IRP-4U-5cY"/>
                     <connections>
-                        <outlet property="faceBtn" destination="1Lw-41-Fz3" id="yi6-mB-R9B"/>
                         <outlet property="openQrScanbtn" destination="mrd-oW-iQ3" id="sHD-6l-msN"/>
                         <outlet property="readImageBtn" destination="n49-kd-qlz" id="dRs-UF-qd2"/>
                     </connections>
@@ -244,7 +243,7 @@
                         <viewControllerLayoutGuide type="bottom" id="XHN-qQ-0MQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="g2v-gH-dHc">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAz-xh-99I">
