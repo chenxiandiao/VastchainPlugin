@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.webkit.*
 import androidx.annotation.RequiresApi
+import ltd.vastchain.jsbridge.util.AppUAUtils
 import ltd.vastchain.jsbridge.util.LogUtil
 
 
@@ -39,6 +39,7 @@ class CoreWebView: WebView {
 	}
 
 	private fun setWebSettings() {
+		AppUAUtils.context = this.context
 		val webSettings = this.settings
 		webSettings.javaScriptCanOpenWindowsAutomatically = true
 		webSettings.allowFileAccess = true
@@ -66,6 +67,7 @@ class CoreWebView: WebView {
 		webSettings.allowFileAccess = true
 		webSettings.allowUniversalAccessFromFileURLs = true
 		webSettings.allowFileAccessFromFileURLs = true
+		webSettings.userAgentString = AppUAUtils.getWebViewUserAgent()
 
 		//UserAgent
 //		val userAgent = StringBuilder()

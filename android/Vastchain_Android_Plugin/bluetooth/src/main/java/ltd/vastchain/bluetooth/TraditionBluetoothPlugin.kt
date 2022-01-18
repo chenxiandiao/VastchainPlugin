@@ -38,10 +38,11 @@ class TraditionBluetoothPlugin(private var application: Application, private var
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
                     val deviceName = device?.name
                     val deviceHardwareAddress = device?.address // MAC address
-                    Log.e("cxd", deviceName.orEmpty())
-                    Log.e("cxd", deviceHardwareAddress.orEmpty())
 
-                    if (deviceName != null && (deviceName.startsWith("CT") && deviceName.endsWith("L").not())) {
+
+                    if (deviceName != null && (deviceName.startsWith("CT"))) {
+                        Log.e("cxd", deviceName.orEmpty())
+                        Log.e("cxd", deviceHardwareAddress.orEmpty())
                         blueListener?.scanResult(
                             deviceHardwareAddress!!,
                             deviceName
