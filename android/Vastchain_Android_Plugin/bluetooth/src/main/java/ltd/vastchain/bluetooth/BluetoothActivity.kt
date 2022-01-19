@@ -87,8 +87,18 @@ class BluetoothActivity : AppCompatActivity() {
 			override fun onPageFinished(view: WebView, url: String) {
 				println("结束加载了")
 				progressBar?.startProgressAnimation(100, true)
+				var js = """
+                    console.log = (function(oriLogFunc){
+                            return function(str){
+                                        oriLogFunc.call(console,str);
+                                        //这里，在执行自定义console.log的时候，将str传递出去。
+                                        window.BlueJSBridge.blueInvoke("log",str);
+                                    }
+                            })(console.log);
+                """
+				webView?.evaluateJavascript("javascript:$js") {
+				}
 			}
-
 		}
 		webView?.handleWebViewClient = object : WebChromeClient(){
 			override fun onProgressChanged(view: WebView?, newProgress: Int) {

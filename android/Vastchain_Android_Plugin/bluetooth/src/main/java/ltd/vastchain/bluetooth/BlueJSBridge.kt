@@ -53,6 +53,9 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 			params?.let {
 				LogUtil.e("cxd", "params:" + it)
 			}
+			if (method == LOG) {
+				return
+			}
 			var jsonObject: JSONObject? = null
 			if (params != null) {
 				jsonObject = JSONObject(params)
