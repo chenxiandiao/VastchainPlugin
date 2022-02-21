@@ -6,5 +6,6 @@
 
     <application>
         <activity android:name=".QrScanActivity"></activity>
+        <activity android:name=".huawei.HwQrScanActivity" android:screenOrientation="portrait"></activity>
     </application>
 </manifest>

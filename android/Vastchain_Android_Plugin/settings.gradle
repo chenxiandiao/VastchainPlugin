@@ -8,6 +8,7 @@ dependencyResolutionManagement {
         maven {
             url 'D:\\maven'
         }
+        maven {url 'https://developer.huawei.com/repo/'}
     }
 }
 rootProject.name = "Vastchain_Android_Plugin"

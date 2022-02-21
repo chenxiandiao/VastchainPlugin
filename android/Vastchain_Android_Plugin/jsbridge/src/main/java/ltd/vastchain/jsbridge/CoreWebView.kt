@@ -41,30 +41,32 @@ class CoreWebView: WebView {
 	private fun setWebSettings() {
 		AppUAUtils.context = this.context
 		val webSettings = this.settings
+
+		webSettings.setSupportZoom(true)
+		webSettings.setSupportMultipleWindows(true)
+		webSettings.setGeolocationEnabled(true)
+		webSettings.setAppCacheEnabled(true)
+		webSettings.setAppCacheMaxSize(Long.MAX_VALUE)
+		webSettings.setPluginState(WebSettings.PluginState.ON_DEMAND)
+
+		webSettings.builtInZoomControls = true
+		webSettings.cacheMode = WebSettings.LOAD_NO_CACHE
+		webSettings.displayZoomControls = false
 		webSettings.javaScriptCanOpenWindowsAutomatically = true
 		webSettings.allowFileAccess = true
 		webSettings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-		webSettings.setSupportZoom(true)
-		webSettings.setAppCacheEnabled(true)
-		webSettings.domStorageEnabled = true
-		webSettings.setAppCacheMaxSize(Long.MAX_VALUE)
-		webSettings.loadsImagesAutomatically = true
+
 		webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
 		webSettings.defaultTextEncodingName = "UTF-8"
 		webSettings.loadWithOverviewMode = true
 		webSettings.useWideViewPort = true
 		webSettings.textZoom = 100
-		//允许js代码
 		webSettings.javaScriptEnabled = true
-		webSettings.javaScriptCanOpenWindowsAutomatically = true
-		//允许SessionStorage/LocalStorage存储
 		webSettings.domStorageEnabled = true
-		//自动加载图片
 		webSettings.loadsImagesAutomatically = true
-		webSettings.mediaPlaybackRequiresUserGesture = true
 
+		webSettings.mediaPlaybackRequiresUserGesture = true
 		webSettings.allowContentAccess = true
-		webSettings.allowFileAccess = true
 		webSettings.allowUniversalAccessFromFileURLs = true
 		webSettings.allowFileAccessFromFileURLs = true
 		webSettings.userAgentString = AppUAUtils.getWebViewUserAgent()
