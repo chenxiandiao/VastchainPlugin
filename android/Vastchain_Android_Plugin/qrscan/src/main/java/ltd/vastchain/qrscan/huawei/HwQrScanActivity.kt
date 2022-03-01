@@ -84,6 +84,7 @@ class HwQrScanActivity : AppCompatActivity() {
 
     private fun startQrScan() {
         ScanUtil.startScan(this, REQUEST_CODE_SCAN_ONE, HmsScanAnalyzerOptions.Creator().create())
+        finish()
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

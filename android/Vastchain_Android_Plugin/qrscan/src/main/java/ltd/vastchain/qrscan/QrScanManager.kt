@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import ltd.vastchain.jsbridge.CoreJsCallback
 import ltd.vastchain.jsbridge.util.JSONUtil
+import ltd.vastchain.qrscan.QrScanActivity
+import ltd.vastchain.qrscan.huawei.HwQrScanActivity
 
 /**
  * Created by admin on 2021/9/27.
@@ -15,12 +17,14 @@ object QrScanManager {
 	var callback: CoreJsCallback? = null
 
 	fun start(context: Context) {
+//		val intent = Intent(context, HwQrScanActivity::class.java)
 		val intent = Intent(context, QrScanActivity::class.java)
 		context.startActivity(intent)
 	}
 
 	fun start(context: Context, callback: CoreJsCallback) {
 		this.callback = callback
+//		val intent = Intent(context, HwQrScanActivity::class.java)
 		val intent = Intent(context, QrScanActivity::class.java)
 		context.startActivity(intent)
 	}

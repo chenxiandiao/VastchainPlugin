@@ -33,8 +33,19 @@ class MainActivity : AppCompatActivity() {
 
 //			BlueManager.start(this, "https://patrol-test.tmp.vastchain.ltd/public/h5/index.html#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
 //				BlueManager.start(this, "http://10.144.1.116:80/#/orderList?token=ImLZFS5TuM7bUPv_KFZI6OGmj4INi0ci&org_id=241886752633565184")
-				BlueManager.start(this, "http://10.144.1.116:8000/storehouse")
+//				BlueManager.start(this, "http://10.144.1.116:8000/storehouse")
+//			BlueManager.start(this, "http://10.144.1.116/#/qrCode/device/discover")
+//			264072416197742592
+//			BlueManager.start(this, "http://10.144.1.116/#/qrCode/home?org_id=241574126971662336&token=m6fL_cPQicrdwJHXZ3BZvAJ3dLRz486w")
+//			BlueManager.start(this, "http://10.144.2.167:8090/#/ordinaryScan?qr_code_id=264717701021556736&token=n5zVhfXqdewWtdnsj_AMD5l8w9aDYh5Q")
+//			BlueManager.start(this, "http://10.144.2.167:8090/#/softwareScan?org_id=241574126971662336&token=n5zVhfXqdewWtdnsj_AMD5l8w9aDYh5Q&qr_code_id=264717701021556736")
+//			BlueManager.start(this, "https://patrol-test.tmp.vastchain.ltd/public/h5/index.html#/formRepord?structId=158020541405261824&token=Toc2rcuZvgvXdsL72K04loCtiCtSUCOV&org_id=129940902556438528")
+//			BlueManager.start(this, "http://10.144.1.116:80/#/test")
+//			BlueManager.start(this, "http://10.144.1.116:8080/examples/webgl_loader_gltf.html")
+			BlueManager.start(this, "http://10.144.1.116:10086/#/pages/tabs/home")
+//			BlueManager.start(this, "https://threejs.org/examples/?q=gltf#webgl_loader_gltf_compressed")
 		}
+
 
 		activityMainBinding.tvGoScan.setOnClickListener {
 //			val intent = Intent(this, TestScanActivity::class.java)
