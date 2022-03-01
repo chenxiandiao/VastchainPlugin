@@ -19,10 +19,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ltd.vastchain.bluetooth.data.UrlConstants
 import ltd.vastchain.bluetooth.utils.ClipUtils
-import ltd.vastchain.jsbridge.CoreJsCallback
-import ltd.vastchain.jsbridge.CoreWebProgressBar
-import ltd.vastchain.jsbridge.CoreWebView
+import ltd.vastchain.jsbridge.*
 import ltd.vastchain.jsbridge.util.JSONUtil
 import ltd.vastchain.jsbridge.util.LogUtil
 
@@ -43,7 +42,8 @@ class BluetoothActivity : AppCompatActivity() {
 
 	private val REQUEST_ENABLE_BT: Int = 100
 	private val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
-	private var mJSBridge: BlueJSBridge? = null
+	private var mBlueJSBridge: BlueJSBridge? = null
+	private var mCoreJsBridge: JsBridge? = null
 	private var webView: CoreWebView? = null
 	private var bluetoothPlugin: IBluePlugin? = null
 
@@ -72,9 +72,12 @@ class BluetoothActivity : AppCompatActivity() {
 			ClipUtils.copyText(this, url)
 //		}
 		webView = findViewById(R.id.webView)
-		mJSBridge = BlueJSBridge(webView!!, this)
+		mBlueJSBridge = BlueJSBridge(webView!!, this)
 		initData()
-		webView?.addJavascriptInterface(mJSBridge!!, "BlueJSBridge")
+		webView?.addJavascriptInterface(mBlueJSBridge!!, "BlueJSBridge")
+
+		mCoreJsBridge = JsBridge(webView!!, this)
+		webView?.addJavascriptInterface(mCoreJsBridge!!, "nativeBridge")
 //		webView?.loadUrl("http://10.150.229.13:8000/")
 		webView?.loadUrl(url)
 		webView?.webViewClient = object : WebViewClient() {
@@ -120,17 +123,13 @@ class BluetoothActivity : AppCompatActivity() {
 
 	private fun initListener() {
 		findViewById<View>(R.id.v_back).setOnClickListener{
-			if(webView?.canGoBack() == true) {
-				webView?.goBack()
-			} else {
-				finish()
-			}
+			onBackPressed()
 		}
 	}
 
 	private fun initData() {
 		bluetoothPlugin = TraditionBluetoothPlugin(application, this)
-		mJSBridge?.apply {
+		mBlueJSBridge?.apply {
 			bluetoothPlugin = this@BluetoothActivity.bluetoothPlugin
 			checkPermission = { callback ->
 				this@BluetoothActivity.callback = callback
@@ -219,6 +218,13 @@ class BluetoothActivity : AppCompatActivity() {
 	}
 
 	override fun onBackPressed() {
+		// 控制页面回退
+		LogUtil.e("onBackPressed1")
+		if (UrlConstants.checkInUrl(url)) {
+			LogUtil.e("onBackPressed2")
+			mCoreJsBridge?.goBack()
+			return
+		}
 		if (webView?.canGoBack() == true) {
 			webView?.goBack()
 		} else {
