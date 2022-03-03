@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
@@ -46,6 +47,7 @@ class BluetoothActivity : AppCompatActivity() {
 	private var mCoreJsBridge: JsBridge? = null
 	private var webView: CoreWebView? = null
 	private var bluetoothPlugin: IBluePlugin? = null
+	private var mTvTitle: TextView? = null
 
 	private var callback: CoreJsCallback? = null
 	private var progressBar: CoreWebProgressBar? = null
@@ -64,13 +66,16 @@ class BluetoothActivity : AppCompatActivity() {
 		window.statusBarColor =   ContextCompat.getColor(this
 				,R.color.white)
 		window.decorView.systemUiVisibility =  View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-		findViewById<TextView>(R.id.tv_title).text = intent.getStringExtra("title")
+		mTvTitle = findViewById(R.id.tv_title)
+		mTvTitle?.text = intent.getStringExtra("title")
 		progressBar = findViewById(R.id.web_progressbar)
 		url = intent.getStringExtra("url") ?: URL
-		//TODO REMOVE
-//		if(BuildConfig.DEBUG) {
+		if(url.contains(UrlConstants.STOREHOUSE_HOME)) {
+			mTvTitle?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+		}
+		if(BuildConfig.DEBUG) {
 			ClipUtils.copyText(this, url)
-//		}
+		}
 		webView = findViewById(R.id.webView)
 		mBlueJSBridge = BlueJSBridge(webView!!, this)
 		initData()

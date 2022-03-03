@@ -4,7 +4,7 @@ package ltd.vastchain.bluetooth.data
  * Created by admin on 2022/2/22.
  */
 object UrlConstants {
-
+    const val STOREHOUSE_HOME = "/softwareScan"
     const val STOREHOUSE_SELL_OUT = "/storehouse/basic/exWarehousingSell"
     const val STOREHOUSE_BACK = "/storehouse/basic/useBackWarehousing"
 
