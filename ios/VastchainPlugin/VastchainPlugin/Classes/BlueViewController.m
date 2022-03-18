@@ -557,10 +557,10 @@ static CGFloat const progressViewHeight = 1;
 
 - (void) goBack {
     NSLog(@"返回");
-    if ([mUrl containsString:@"/storehouse/basic/exWarehousingSell"]) {
-        [self.jsBridge navigateBack];
-        return;
-    }
+//    if ([mUrl containsString:@"/storehouse/basic/exWarehousingSell"]) {
+//        [self.jsBridge navigateBack];
+//        return;
+//    }
     if([self.myWebView canGoBack]) {
         [self.myWebView goBack];
     } else {
