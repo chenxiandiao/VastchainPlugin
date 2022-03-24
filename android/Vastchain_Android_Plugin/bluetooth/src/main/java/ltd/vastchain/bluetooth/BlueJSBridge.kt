@@ -137,7 +137,9 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 				val qrCodeId = params?.optString("qrCodeId")
 				val type = params?.optString("type")
 				val commodityId = params?.optString("commodityId")
-				BlueManager.getListener()?.openWareHouseActivity(qrCodeId.orEmpty(), type.orEmpty(), commodityId.orEmpty())
+				val sceneFunctionType = params?.optString("scene_function_type")
+				BlueManager.getListener()?.openWareHouseActivity(qrCodeId.orEmpty(), type.orEmpty(),
+					commodityId.orEmpty(), sceneFunctionType.orEmpty())
 			}
 			LOG -> {
 				Log.e("H5Log", params?.optString("msg").orEmpty())

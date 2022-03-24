@@ -11,7 +11,7 @@ object UrlConstants {
     private val BACK_CONFIRM_URL = mutableListOf<String>()
     init {
         BACK_CONFIRM_URL.apply {
-            add(STOREHOUSE_SELL_OUT)
+//            add(STOREHOUSE_SELL_OUT)
             add(STOREHOUSE_BACK)
         }
     }
