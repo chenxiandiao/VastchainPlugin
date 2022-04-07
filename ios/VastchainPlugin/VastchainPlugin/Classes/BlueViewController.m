@@ -27,6 +27,7 @@ static CGFloat const progressViewHeight = 1;
 
 @property(nonatomic,strong)IBlueListener *blueListener;
 @property(nonatomic,strong)IJsBridge *jsBridge;
+@property NSArray *navigateInteceptUrl;
 
 @property MBProgressHUD *hud;
 
@@ -54,6 +55,7 @@ static CGFloat const progressViewHeight = 1;
     [self initListener];
     peripheralDataArray = [[NSMutableArray alloc]init];
     [self initBluePrinter];
+    self.navigateInteceptUrl = [[NSArray alloc]initWithObjects:@"/storehouse/basic/useBackWarehousing", nil];
 }
 
 - (void)initProgressView {
@@ -561,6 +563,17 @@ static CGFloat const progressViewHeight = 1;
 //        [self.jsBridge navigateBack];
 //        return;
 //    }
+    BOOL intercept = NO;
+    for(NSString *url in self.navigateInteceptUrl) {
+        if([mUrl containsString:url]){
+            intercept = YES;
+            break;
+        }
+    }
+    if(intercept) {
+        [self.jsBridge navigateBack];
+        return;
+    }
     if([self.myWebView canGoBack]) {
         [self.myWebView goBack];
     } else {

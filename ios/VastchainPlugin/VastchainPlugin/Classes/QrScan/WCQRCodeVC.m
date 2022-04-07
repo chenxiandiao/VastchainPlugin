@@ -10,6 +10,13 @@
 #import "SGQRCode.h"
 #import "ScanSuccessJumpVC.h"
 #import "MBProgressHUD+SGQRCode.h"
+#import <AVFoundation/AVFoundation.h>
+
+typedef NS_ENUM(NSInteger, AVCamSetupResult) {
+    AVCamSetupResultSuccess,
+    AVCamSetupResultCameraNotAuthorized,
+    AVCamSetupResultSessionConfigurationFailed
+};
 
 
 @interface WCQRCodeVC () {
@@ -20,19 +27,117 @@
 @property (nonatomic, strong) UILabel *promptLabel;
 @property (nonatomic, assign) BOOL isSelectedFlashlightBtn;
 @property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic) AVCamSetupResult setupResult;
+@property (nonatomic) dispatch_queue_t sessionQueue;
 @end
 
 @implementation WCQRCodeVC
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    self.view.backgroundColor = [UIColor blackColor];
+    self.setupResult = AVCamSetupResultSuccess;
+    self.sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+    switch ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo])
+    {
+        case AVAuthorizationStatusAuthorized:
+        {
+            // The user has previously granted access to the camera.
+            NSLog(@"已允许摄像头权限");
+            break;
+        }
+        case AVAuthorizationStatusNotDetermined:
+        {
+            /*
+             The user has not yet been presented with the option to grant
+             video access. We suspend the session queue to delay session
+             setup until the access request has completed.
+             
+             Note that audio access will be implicitly requested when we
+             create an AVCaptureDeviceInput for audio during session setup.
+             */
+            dispatch_suspend(self.sessionQueue);
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (!granted) {
+                    self.setupResult = AVCamSetupResultCameraNotAuthorized;
+                }
+                dispatch_resume(self.sessionQueue);
+            }];
+            break;
+        }
+        default:
+        {
+            // The user has previously denied access.
+            self.setupResult = AVCamSetupResultCameraNotAuthorized;
+            break;
+        }
+    }
+    
+    if (self.setupResult == AVCamSetupResultSuccess) {
+        scanCode = [SGScanCode scanCode];
+
+        [self setupQRCodeScan];
+        [self setupNavigationBar];
+        [self.view addSubview:self.scanView];
+        [self.view addSubview:self.promptLabel];
+        [self initCloseImageView];
+        // 为了 UI 效果
+        [self.view addSubview:self.bottomView];
+    }
+}
+ 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     /// 二维码开启方法
-    [scanCode startRunningWithBefore:nil completion:nil];
+    
+    dispatch_async(self.sessionQueue, ^{
+        switch (self.setupResult)
+        {
+            case AVCamSetupResultSuccess:
+            {
+                NSLog(@"打开摄像头");
+                [scanCode startRunningWithBefore:nil completion:nil];
+                break;
+            }
+            case AVCamSetupResultCameraNotAuthorized:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSString* message = NSLocalizedString(@"请授权访问你的相机权限", @"Alert message when the user has denied access to the camera");
+                    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"取消", @"Alert OK button") style:UIAlertActionStyleCancel handler:^(UIAlertAction* action) {                        
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }];
+                    [alertController addAction:cancelAction];
+                    // Provide quick access to Settings.
+                    UIAlertAction* settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"去设置", @"Alert button to open Settings") style:UIAlertActionStyleDefault handler:^(UIAlertAction* action) {
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+                    }];
+                    [alertController addAction:settingsAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                });
+                break;
+            }
+            case AVCamSetupResultSessionConfigurationFailed:
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSString* message = NSLocalizedString(@"无法打开相机", @"Alert message when something goes wrong during capture session configuration");
+                    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"确定", @"Alert OK button") style:UIAlertActionStyleCancel handler:nil];
+                    [alertController addAction:cancelAction];
+                    [self presentViewController:alertController animated:YES completion:nil];
+                });
+                break;
+            }
+        }
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.scanView startScanning];
+    if (self.setupResult == AVCamSetupResultSuccess) {
+        [self.scanView startScanning];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -45,22 +150,6 @@
 - (void)dealloc {
     NSLog(@"WCQRCodeVC - dealloc");
     [self removeScanningView];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor blackColor];
-    
-    scanCode = [SGScanCode scanCode];
-    
-    [self setupQRCodeScan];
-    [self setupNavigationBar];
-    [self.view addSubview:self.scanView];
-    [self.view addSubview:self.promptLabel];
-    [self initCloseImageView];
-    /// 为了 UI 效果
-//    [self.view addSubview:self.bottomView];
 }
 
 - (void)setupQRCodeScan {
