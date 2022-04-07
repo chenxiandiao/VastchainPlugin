@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ltd.vastchain.bluetooth.bridge.NativeBridge
 import ltd.vastchain.bluetooth.data.UrlConstants
 import ltd.vastchain.bluetooth.utils.ClipUtils
 import ltd.vastchain.jsbridge.*
@@ -44,7 +45,7 @@ class BluetoothActivity : AppCompatActivity() {
 	private val REQUEST_ENABLE_BT: Int = 100
 	private val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
 	private var mBlueJSBridge: BlueJSBridge? = null
-	private var mCoreJsBridge: JsBridge? = null
+	private var mCoreJsBridge: NativeBridge? = null
 	private var webView: CoreWebView? = null
 	private var bluetoothPlugin: IBluePlugin? = null
 	private var mTvTitle: TextView? = null
@@ -81,7 +82,7 @@ class BluetoothActivity : AppCompatActivity() {
 		initData()
 		webView?.addJavascriptInterface(mBlueJSBridge!!, "BlueJSBridge")
 
-		mCoreJsBridge = JsBridge(webView!!, this)
+		mCoreJsBridge = NativeBridge(webView!!, this)
 		webView?.addJavascriptInterface(mCoreJsBridge!!, "nativeBridge")
 //		webView?.loadUrl("http://10.150.229.13:8000/")
 		webView?.loadUrl(url)
