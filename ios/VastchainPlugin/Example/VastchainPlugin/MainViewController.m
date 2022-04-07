@@ -55,8 +55,13 @@
 
 - (void) openBlue {
 //    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116/#/qrCode/home"];
-    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116/#/qrCode/home?token=C3OLWT0Hp1_hLthxOCcsh_96nDzyB0io&org_id=265972383548284928&name=%E8%B0%A2%E4%BD%B3%E6%85%A7"];
+    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.2.167:8089/#/storehouse/basic/useBackWarehousing?token=FuZ-eZsufWu02Xx3vkqvAEOWzqjFty8L&org_id=271955190993424384&place_id=283978561106186240&commodity_id=&qr_code_id=&warehouse_id=273606059880853504&scene_function_type=C,B,A"];
+//    %E9%99%%E8%B4%A4%E9%9B%95
+//    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8080/examples/webgl_loader_gltf.html"];
+//    BlueViewController *viewController = [[BlueViewController alloc]initWithUrl:@"http://10.144.1.116:8080/examples/webgl_loader_gltf_compressed.html"];
     [self.navigationController pushViewController:viewController animated:NO];
+    
+//http://10.144.3.113:8089/#/storehouse/basic/exWarehousingSell?token=R5MK0IGgx6naRUa_UN5dHqE-xccaRUE9&org_id=271955190993424384&place_id=283978561106186240&commodity_id=&qr_code_id=&warehouse_id=273606059880853504&scene_function_type=C,B,A
 }
 
 

@@ -102,7 +102,7 @@
 - (void)wrapPrintDatas:(PrintModel*) data
 {
     [self.bluetooth StartPage:600 pageHeight:350 skip:false rotate:0];// skip:true为定位到标签，false为不定位
-    [self.bluetooth zp_darwQRCode:30 y:40 unit_width:4 text:data.url];
+    [self.bluetooth zp_darwQRCode:30 y:40 unit_width:5 text:data.url];
     if (data.qrCodeId != nil || [data.qrCodeId isEqualToString:@""] == NO) {
         [self.bluetooth zp_drawText:280 y:47 text:data.qrCodeId font:12 fontsize:1 bold:0 rotate:0];
     }

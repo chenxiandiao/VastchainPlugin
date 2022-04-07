@@ -58,6 +58,7 @@
     [self setupNavigationBar];
     [self.view addSubview:self.scanView];
     [self.view addSubview:self.promptLabel];
+    [self initCloseImageView];
     /// 为了 UI 效果
 //    [self.view addSubview:self.bottomView];
 }
@@ -110,6 +111,21 @@
     }
     return _scanView;
 }
+
+- (void)initCloseImageView {
+    UIImageView *closeImageView = [[UIImageView alloc]init];
+    closeImageView.frame = CGRectMake(self.view.frame.size.width-60, 50, 30, 30);
+    UIImage *circleImage = [UIImage imageNamed:@"CloseIcon"];
+    [closeImageView setImage:circleImage];
+    [closeImageView setUserInteractionEnabled:YES];
+    [closeImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickCloseBtn:)]];
+    [self.view addSubview:closeImageView];
+}
+
+- (void)clickCloseBtn:(UIImage *)button {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)removeScanningView {
     [self.scanView stopScanning];
     [self.scanView removeFromSuperview];

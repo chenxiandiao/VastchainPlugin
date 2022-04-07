@@ -8,7 +8,9 @@
 
 #import "BlueViewController.h"
 #import "IBlueListener.h"
+#import "IJsBridge.h"
 #import "BlueJsApi.h"
+#import "JsApi.h"
 #import "WCQRCodeVC.h"
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "PrintModel.h"
@@ -24,6 +26,7 @@ static CGFloat const progressViewHeight = 1;
 @property(nonatomic,copy)void(^connectBlock)(BOOL,NSError*);
 
 @property(nonatomic,strong)IBlueListener *blueListener;
+@property(nonatomic,strong)IJsBridge *jsBridge;
 
 @property MBProgressHUD *hud;
 
@@ -124,9 +127,12 @@ static CGFloat const progressViewHeight = 1;
     
     WKUserScript *userScript = [[WKUserScript alloc] initWithSource:javaScriptSource injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     [self.myWebView.configuration.userContentController addUserScript:userScript];
+//    NSString *tmpUrl = [url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+//    NSLog(@"url:%@", tmpUrl);
     [self.myWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
     [self.view addSubview:self.myWebView];
     [self.myWebView.configuration.userContentController addScriptMessageHandler:self name:@"BlueJSBridge"];
+    [self.myWebView.configuration.userContentController addScriptMessageHandler:self name:@"nativeBridge"];
     [self.myWebView addObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) options:0 context:nil];
     
     // 获取当前UserAgent, 并对其进行修改
@@ -167,6 +173,7 @@ static CGFloat const progressViewHeight = 1;
 
 - (void)initListener{
     self.blueListener = [[IBlueListener alloc]initWithWebView:self.myWebView];
+    self.jsBridge = [[IJsBridge alloc]initWithWebView:self.myWebView];
 }
 
 - (void)initBluePrinter {
@@ -175,10 +182,12 @@ static CGFloat const progressViewHeight = 1;
 }
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    if (![message.name  isEqual: @"BlueJSBridge"]) {
+    NSLog(@"name:%@", message.name);
+    NSLog(@"body:%@", message.body);
+    if (![message.name  isEqual: @"BlueJSBridge"] && ![message.name isEqual:@"nativeBridge"]) {
+        NSLog(@"2222:%@", message.body);
         return;
     }
-    NSLog(@"body:%@", message.body);
     
     if ([message.body hasPrefix:@"log:"]) {
         NSLog(@"h5日志:%@", message.body);
@@ -249,6 +258,8 @@ static CGFloat const progressViewHeight = 1;
         [model initWithUrl:url qrCodeId:qrCodeId name:name packageCount:packageCount totalCount:totalCount orgName:orgName];
         [self.bluePrinterController printData:address printModel:model];
     } else if([method isEqualToString:CLOSE_WEB_VIEW]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else if([method isEqualToString:JS_CLOSE_WEB_VIEW]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -546,6 +557,10 @@ static CGFloat const progressViewHeight = 1;
 
 - (void) goBack {
     NSLog(@"返回");
+//    if ([mUrl containsString:@"/storehouse/basic/exWarehousingSell"]) {
+//        [self.jsBridge navigateBack];
+//        return;
+//    }
     if([self.myWebView canGoBack]) {
         [self.myWebView goBack];
     } else {
