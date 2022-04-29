@@ -16,5 +16,7 @@ interface IWebViewListener {
         sceneFunctionType: String
     )
 
+    fun openWareHouseActivity(params: JSONObject)
+
     fun getDataFromApp(type: String, data: JSONObject? = null): JSONObject
 }
