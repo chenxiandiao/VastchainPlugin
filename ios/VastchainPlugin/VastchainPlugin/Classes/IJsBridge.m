@@ -53,6 +53,14 @@
     return [self dictToJson:data];
 }
 
+- (NSString*)success:(NSString*) message innerData:(NSDictionary*) innerData {
+    NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:10];
+    [data setObject:@0 forKey:@"code"];
+    [data setObject:message forKey:@"message"];
+    [data setObject:innerData forKey:@"data"];
+    return [self dictToJson:data];
+}
+
 - (NSString*)error:(NSString*) message {
     NSMutableDictionary *data = [NSMutableDictionary dictionaryWithCapacity:10];
     [data setObject:@-1 forKey:@"code"];
@@ -63,6 +71,11 @@
 - (void)navigateBack{
     NSString* response = [self success:MESSAGE_SUCCESS];
     [self invoke:NavigateBack data:response];
+}
+
+- (void) getAppInfo:(NSDictionary*) data {
+    NSString* response = [self success:MESSAGE_SUCCESS innerData:data];
+    [self invoke:JS_GET_APP_INFO data:response];
 }
 
 - (void) invoke: (NSString*) method data: (NSString*) data{

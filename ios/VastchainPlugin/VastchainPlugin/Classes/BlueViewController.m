@@ -16,6 +16,7 @@
 #import "PrintModel.h"
 #import "MBProgressHUD.h"
 
+
 static CGFloat const navigationBarHeight = 64;
 static CGFloat const progressViewHeight = 1;
 
@@ -30,6 +31,7 @@ static CGFloat const progressViewHeight = 1;
 @property NSArray *navigateInteceptUrl;
 
 @property MBProgressHUD *hud;
+@property NSDictionary* appData;
 
 @end
 
@@ -40,6 +42,15 @@ static CGFloat const progressViewHeight = 1;
     self = [super init];
     if (self){
         mUrl = url;
+    }
+    return self;
+}
+
+- (id) initWithUrl: (NSString*) url data: (NSDictionary*)data {
+    self = [super init];
+    if (self){
+        mUrl = url;
+        _appData = data;
     }
     return self;
 }
@@ -136,7 +147,12 @@ static CGFloat const progressViewHeight = 1;
     [self.myWebView.configuration.userContentController addScriptMessageHandler:self name:@"BlueJSBridge"];
     [self.myWebView.configuration.userContentController addScriptMessageHandler:self name:@"nativeBridge"];
     [self.myWebView addObserver:self forKeyPath:NSStringFromSelector(@selector(estimatedProgress)) options:0 context:nil];
+//    [self.myWebView setAllowsBackForwardNavigationGestures:YES];
     
+//    UISwipeGestureRecognizer *swipe =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeAction:)];
+//    swipe.direction = UISwipeGestureRecognizerDirectionRight;
+//    swipe.delegate = self;
+//    [self.myWebView addGestureRecognizer:swipe];
     // 获取当前UserAgent, 并对其进行修改
      [self.myWebView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id userAgent, NSError * _Nullable error) {
        if ([userAgent isKindOfClass:[NSString class]]) {
@@ -160,6 +176,16 @@ static CGFloat const progressViewHeight = 1;
      }];
 }
 
+- (void) swipeAction:(UISwipeGestureRecognizer*) swiper{
+    NSLog(@"%lu", swiper.direction);
+    [self goBack];
+}
+
+ 
+ // Allow multiple gestures concurrently
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
 
 
 /// KVO
@@ -263,6 +289,8 @@ static CGFloat const progressViewHeight = 1;
         [self.navigationController popViewControllerAnimated:YES];
     } else if([method isEqualToString:JS_CLOSE_WEB_VIEW]) {
         [self.navigationController popViewControllerAnimated:YES];
+    } else if([method isEqualToString:JS_GET_APP_INFO]) {
+        [self.jsBridge getAppInfo:_appData];
     }
 }
 

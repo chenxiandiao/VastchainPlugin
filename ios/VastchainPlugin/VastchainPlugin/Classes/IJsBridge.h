@@ -19,4 +19,6 @@
 }
 - (id) initWithWebView: (WKWebView*) webview;
 - (void) navigateBack;
+
+- (void) getAppInfo:(NSDictionary*) data;
 @end

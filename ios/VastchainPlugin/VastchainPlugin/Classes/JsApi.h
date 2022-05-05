@@ -12,6 +12,7 @@
 #endif /* JsApi_h */
 
 #define JS_CLOSE_WEB_VIEW @"navigateBack"
+#define JS_GET_APP_INFO @"getAppInfo"
 #define NavigateBack @"route/back"
 #define MESSAGE_SUCCESS @"成功"
 #define MESSAGE_FAIL @"失败"

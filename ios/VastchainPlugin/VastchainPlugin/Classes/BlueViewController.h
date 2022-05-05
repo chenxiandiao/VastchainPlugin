@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 #import "BluePrinterController.h"
 
-@interface BlueViewController : UIViewController<CBCentralManagerDelegate,CBPeripheralDelegate,WKScriptMessageHandler>{
+@interface BlueViewController : UIViewController<CBCentralManagerDelegate,CBPeripheralDelegate,WKScriptMessageHandler,UIGestureRecognizerDelegate>{
     NSString *mUrl;
 }
 @property(nonatomic,strong)CBCentralManager *myCentralManager;
@@ -23,6 +23,7 @@
 
 
 - (id) initWithUrl: (NSString*) url;
+- (id) initWithUrl: (NSString*) url data:(NSDictionary*)data;
 - (void) initWebView;
 - (void) initBlue;
 - (void) scan;
