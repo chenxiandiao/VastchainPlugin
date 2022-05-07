@@ -10,6 +10,7 @@ import ltd.vastchain.camera.record.activity.CameraRecordActivity
 import ltd.vastchain.face.FaceManager
 import ltd.vastchain.face.IFaceCallBack
 import ltd.vastchain.face.PersonInfoActivity
+import ltd.vastchain.pay.NftManager
 import ltd.vastchain.plugin.databinding.ActivityMainBinding
 import ltd.vastchain.qrscan.QrScanManager
 import net.arvin.selector.utils.FMediaUtils
@@ -42,8 +43,9 @@ class MainActivity : AppCompatActivity() {
 //			BlueManager.start(this, "https://patrol-test.tmp.vastchain.ltd/public/h5/index.html#/formRepord?structId=158020541405261824&token=Toc2rcuZvgvXdsL72K04loCtiCtSUCOV&org_id=129940902556438528")
 //			BlueManager.start(this, "http://10.144.1.116:80/#/test")
 //			BlueManager.start(this, "http://10.144.1.116:8080/examples/webgl_loader_gltf.html")
-			BlueManager.start(this, "http://10.144.1.116:10086/#/pages/tabs/home")
+//			BlueManager.start(this, "http://10.144.1.116:10086/#/pages/tabs/home")
 //			BlueManager.start(this, "https://threejs.org/examples/?q=gltf#webgl_loader_gltf_compressed")
+				NftManager.start(this, "", "https://www.baidu.com","数字藏品")
 		}
 
 
