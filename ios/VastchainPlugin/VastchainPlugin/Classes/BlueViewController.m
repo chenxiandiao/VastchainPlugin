@@ -66,7 +66,12 @@ static CGFloat const progressViewHeight = 1;
     [self initListener];
     peripheralDataArray = [[NSMutableArray alloc]init];
     [self initBluePrinter];
-    self.navigateInteceptUrl = [[NSArray alloc]initWithObjects:@"/storehouse/basic/useBackWarehousing", nil];
+    self.navigateInteceptUrl = [[NSArray alloc]initWithObjects:@"/storehouse/basic/useBackWarehousing",
+                                @"storehouse/basic/returnGoods",
+                                @"storehouse/basic/componiesReceive",
+                                @"storehouse/basic/workspaceUse",
+                                @"storehouse/basic/returnTailing",
+                                nil];
 }
 
 - (void)initProgressView {
