@@ -101,19 +101,59 @@
 
 - (void)wrapPrintDatas:(PrintModel*) data
 {
+    if([data isWareHouse]) {
+        [self printStorehouse:data];
+    } else if([data isConfigCommodity]) {
+        [self printConfigCommodity:data];
+    } else {
+        [self printNoConfigCommodity:data];
+    }
+}
+
+- (void)printStorehouse:(PrintModel*) data {
+    NSLog(@"打印仓库二维码");
+    [self.bluetooth StartPage:600 pageHeight:350 skip:false rotate:0];// skip:true为定位到标签，false为不定位
+    [self.bluetooth zp_darwQRCode:30 y:40 unit_width:5 text:data.url];
+    if (data.storehouseName != nil && [data.storehouseName isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:47 text:data.storehouseName font:12 fontsize:1 bold:0 rotate:0];
+    }
+    if (data.storehouseOrgName != nil && [data.storehouseOrgName isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:89 text:data.storehouseOrgName font:12 fontsize:1 bold:0 rotate:0];
+    }
+    if (data.qrCodeId != nil && [data.qrCodeId isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:169 text:data.qrCodeId font:12 fontsize:1 bold:0 rotate:0];
+    }
+    if (data.orgName != nil && [data.orgName isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:211 text:data.orgName font:12 fontsize:1 bold:0 rotate:0];
+    }
+    [self.bluetooth end];
+}
+
+- (void)printConfigCommodity:(PrintModel*) data {
+    NSLog(@"打印配置的商品二维码");
+    [self.bluetooth StartPage:600 pageHeight:350 skip:false rotate:0];// skip:true为定位到标签，false为不定位
+    [self.bluetooth zp_darwQRCode:30 y:40 unit_width:5 text:data.url];
+    if (data.name != nil && [data.name isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:47 text:data.name font:12 fontsize:1 bold:0 rotate:0];
+    }
+    if (data.totalCount != nil && [data.totalCount isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:89 text:data.totalCount font:12 fontsize:1 bold:0 rotate:0];
+    }
+    if (data.qrCodeId != nil && [data.qrCodeId isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:169 text:data.qrCodeId font:12 fontsize:1 bold:0 rotate:0];
+    }
+    if (data.orgName != nil && [data.orgName isEqualToString:@""] == NO) {
+        [self.bluetooth zp_drawText:280 y:211 text:data.orgName font:12 fontsize:1 bold:0 rotate:0];
+    }
+    [self.bluetooth end];
+}
+
+- (void)printNoConfigCommodity:(PrintModel*) data {
+    NSLog(@"打印无配置二维码");
     [self.bluetooth StartPage:600 pageHeight:350 skip:false rotate:0];// skip:true为定位到标签，false为不定位
     [self.bluetooth zp_darwQRCode:30 y:40 unit_width:5 text:data.url];
     if (data.qrCodeId != nil || [data.qrCodeId isEqualToString:@""] == NO) {
         [self.bluetooth zp_drawText:280 y:47 text:data.qrCodeId font:12 fontsize:1 bold:0 rotate:0];
-    }
-    if (data.name != nil || [data.name isEqualToString:@""] == NO) {
-        [self.bluetooth zp_drawText:280 y:89 text:data.name font:12 fontsize:1 bold:0 rotate:0];
-    }
-    if (data.packageCount != nil || [data.packageCount isEqualToString:@""] == NO) {
-        [self.bluetooth zp_drawText:280 y:132 text:data.packageCount font:12 fontsize:1 bold:0 rotate:0];
-    }
-    if (data.totalCount != nil || [data.totalCount isEqualToString:@""] == NO) {
-        [self.bluetooth zp_drawText:280 y:169 text:data.totalCount font:12 fontsize:1 bold:0 rotate:0];
     }
     if (data.orgName != nil || [data.orgName isEqualToString:@""] == NO) {
         [self.bluetooth zp_drawText:280 y:211 text:data.orgName font:12 fontsize:1 bold:0 rotate:0];
