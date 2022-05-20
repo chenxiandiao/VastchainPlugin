@@ -66,7 +66,12 @@ static CGFloat const progressViewHeight = 1;
     [self initListener];
     peripheralDataArray = [[NSMutableArray alloc]init];
     [self initBluePrinter];
-    self.navigateInteceptUrl = [[NSArray alloc]initWithObjects:@"/storehouse/basic/useBackWarehousing", nil];
+    self.navigateInteceptUrl = [[NSArray alloc]initWithObjects:@"/storehouse/basic/useBackWarehousing",
+                                @"storehouse/basic/returnGoods",
+                                @"storehouse/basic/componiesReceive",
+                                @"storehouse/basic/workspaceUse",
+                                @"storehouse/basic/returnTailing",
+                                nil];
 }
 
 - (void)initProgressView {
@@ -278,12 +283,20 @@ static CGFloat const progressViewHeight = 1;
         NSString *url = [msg objectForKey:@"url"];
         NSString *qrCodeId = [msg objectForKey:@"qrCodeId"];
         NSString *name = [msg objectForKey:@"name"];
-        NSString *packageCount = [msg objectForKey:@"packageCount"];
         NSString *totalCount = [msg objectForKey:@"totalCount"];
         NSString *orgName = [msg objectForKey:@"orgName"];
+        NSString *storehouseName = [msg objectForKey:@"storehouseName"];
+        NSString *storehouseOrgName = [msg objectForKey:@"storehouseOrgName"];
         PrintModel *model = [[PrintModel alloc]init];
+        if(storehouseName!=nil) {
+            [model initStoreHouse:url qrCodeId:qrCodeId orgName:orgName storehouseName:storehouseName storehouseOrgName:storehouseOrgName];
+        } else if (name!=nil) {
+            [model initConfigCommodity:url qrCodeId:qrCodeId name:name totalCount:totalCount orgName:orgName];
+        } else {
+            [model initNoConfigCommodity:url qrCodeId:qrCodeId orgName:orgName];
+        }
         NSLog(@"%@", orgName);
-        [model initWithUrl:url qrCodeId:qrCodeId name:name packageCount:packageCount totalCount:totalCount orgName:orgName];
+       
         [self.bluePrinterController printData:address printModel:model];
     } else if([method isEqualToString:CLOSE_WEB_VIEW]) {
         [self.navigationController popViewControllerAnimated:YES];
