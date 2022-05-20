@@ -13,6 +13,9 @@ object BlueManager {
 	private var iWebViewListener: IWebViewListener? = null
 	private var webChromeClient: WebChromeClient? = null
 
+	var urlPrefix = ""
+
+
 	fun getListener(): IWebViewListener? {
 		return iWebViewListener
 	}
@@ -29,12 +32,12 @@ object BlueManager {
 		return webChromeClient
 	}
 
-
-	fun start(context: Context, url: String, title: String?="") {
+	fun start(context: Context, url: String, title: String?="", initBlue: Boolean = false) {
 		LogUtil.e("url:$url")
 		val intent = Intent(context, BluetoothActivity::class.java)
 		intent.putExtra("url", url)
 		intent.putExtra("title", title)
+		intent.putExtra("initBlue", initBlue)
 		context.startActivity(intent)
 	}
 }

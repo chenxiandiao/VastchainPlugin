@@ -10,7 +10,7 @@ object UrlConstants {
     private const val STOREHOUSE_RETURN_GOODS = "/storehouse/basic/returnGoods"
     private const val STOREHOUSE_MINBAO_Receive = "/storehouse/basic/componiesReceive"
     private const val STOREHOUSE_MINBAO_USE = "/storehouse/basic/workspaceUse"
-    private const val STOREHOUSE_MINBAO_BACK = "'/storehouse/basic/returnTailing"
+    private const val STOREHOUSE_MINBAO_BACK = "/storehouse/basic/returnTailing"
 
     private val BACK_CONFIRM_URL = mutableListOf<String>()
     init {

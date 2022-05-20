@@ -123,7 +123,9 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 				var packageCount = msg?.optString("packageCount")
 				var totalCount = msg?.optString("totalCount")
 				var orgName = msg?.optString("orgName")
-				var printMode = PrintModel(url, qrCodeId, name, packageCount, totalCount, orgName)
+				var storehouseName = msg?.optString("storehouseName")
+				var storehouseOrgName = msg?.optString("storehouseOrgName")
+				var printMode = PrintModel(url, qrCodeId, name, packageCount, totalCount, orgName, storehouseName, storehouseOrgName)
 				Log.e(TAG, printMode.toString())
 				if (address.isNullOrEmpty().not()) {
 					bluetoothPlugin?.print(deviceId = address!!, printMode)
@@ -134,12 +136,6 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 			}
 
 			OPEN_WAREHOUSE_ACTIVITY -> {
-//				val qrCodeId = params?.optString("qrCodeId")
-//				val type = params?.optString("type")
-//				val commodityId = params?.optString("commodityId")
-//				val sceneFunctionType = params?.optString("scene_function_type")
-//				BlueManager.getListener()?.openWareHouseActivity(qrCodeId.orEmpty(), type.orEmpty(),
-//					commodityId.orEmpty(), sceneFunctionType.orEmpty())
 				BlueManager.getListener()?.openWareHouseActivity(params!!)
 			}
 			LOG -> {

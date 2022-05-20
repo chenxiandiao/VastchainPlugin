@@ -27,7 +27,22 @@ object WxPayHandler {
         // 将该app注册到微信
         this.appId = appId
         this.context = context.applicationContext
-        wxApi?.registerApp(appId)
+        val registered = wxApi?.registerApp(appId)
+        if (registered == true) {
+            Log.e("cxd", "微信注册成功")
+        }
+    }
+
+    fun testPay() {
+        val item = JSONObject()
+        item.put("partnerId","1532938261")
+        item.put("prepayId","1101000000140415649af9fc314aa427")
+        item.put("packageValue","Sign=WXPay")
+        item.put("nonceStr","1101000000140429eb40476f8896f4c9")
+        item.put("timeStamp","1398746574")
+        item.put("sign","7FFECB600D7157C5AA49810D2D8F28BC2811827B")
+//        item.put("signType", "")
+        pay(item)
     }
 
     fun pay(item: JSONObject) {
@@ -49,6 +64,13 @@ object WxPayHandler {
         request.signType = item.optString("signType")
         request.extData = item.optString("extData")
         val done = wxApi?.sendReq(request)
+        if (done == true) {
+            Log.e("cxd", "发送支付信息")
+        }
+    }
+
+    fun openWx() {
+        wxApi?.openWXApp()
     }
 
     private fun checkWXApi(): Boolean {

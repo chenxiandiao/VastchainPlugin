@@ -1,7 +1,10 @@
 package ltd.vastchain.plugin
 
+import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ltd.vastchain.bluetooth.BlueManager
@@ -44,8 +47,11 @@ class MainActivity : AppCompatActivity() {
 //			BlueManager.start(this, "http://10.144.1.116:80/#/test")
 //			BlueManager.start(this, "http://10.144.1.116:8080/examples/webgl_loader_gltf.html")
 //			BlueManager.start(this, "http://10.144.1.116:10086/#/pages/tabs/home")
-//			BlueManager.start(this, "https://threejs.org/examples/?q=gltf#webgl_loader_gltf_compressed")
-				NftManager.start(this, "", "https://www.baidu.com","数字藏品")
+//			BlueManager.start(this, "http://10.144.1.116/#/storehouse/home?token=toyPfamrYeMc15IuhnLrqQeP2YKA6dYu&org_id=271955190993424384")
+//			BlueManager.start(this, "https://ant.design/components/upload-cn/")
+			BlueManager.start(this, "http://10.144.1.116/#/qrCode/test")
+//				NftManager.start(this, "", "https://ant.design/components/upload-cn/","数字藏品")
+//			NftManager.start(this, "wx069a0a9508ff7905", "https://www.baidu.com","数字藏品")
 		}
 
 
@@ -95,6 +101,17 @@ class MainActivity : AppCompatActivity() {
 //			FaceActivity.start(this, eyeSkip = true, mouthSkip = true)
 //		}
 
+
+
+	}
+
+	fun selectImage2() {
+		val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+			type = "image/*"
+			addCategory(Intent.CATEGORY_OPENABLE)
+		}
+		// Only the system receives the ACTION_OPEN_DOCUMENT, so no need to test.
+		startActivity(intent)
 	}
 
 

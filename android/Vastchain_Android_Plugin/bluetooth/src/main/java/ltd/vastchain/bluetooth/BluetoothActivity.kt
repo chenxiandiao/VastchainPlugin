@@ -37,13 +37,13 @@ class BluetoothActivity : AppCompatActivity() {
 
 	companion object {
 		const val URL = "http://10.155.87.121:10086/#/subPackage/warehouseManage/pages/wareHouseOperation/index?token=MmoXuOXOnvy8_r0Qstk4al1pHgdq-mmH&orgID=139723245184659456"
-//		const val URL = "http://www.baidu.com"
-
 		const val SOFT_WARE_SCAN = "softwareScan"
+		const val REQUEST_ENABLE_BT: Int = 100
+		const val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
+		const val REQUEST_TELE_CALL_PERMISSION = 125
 	}
 
-	private val REQUEST_ENABLE_BT: Int = 100
-	private val REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124
+
 	private var mBlueJSBridge: BlueJSBridge? = null
 	private var mCoreJsBridge: NativeBridge? = null
 	private var webView: CoreWebView? = null
@@ -54,9 +54,10 @@ class BluetoothActivity : AppCompatActivity() {
 	private var progressBar: CoreWebProgressBar? = null
 
 	private var permission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-
+	private var callPermission = arrayOf(Manifest.permission.CALL_PHONE)
 	private var url: String = URL
 	private var firstInit = true
+	private var phone: String? = ""
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -82,9 +83,16 @@ class BluetoothActivity : AppCompatActivity() {
 		initData()
 		webView?.addJavascriptInterface(mBlueJSBridge!!, "BlueJSBridge")
 
-		mCoreJsBridge = NativeBridge(webView!!, this)
+		mCoreJsBridge = NativeBridge(webView!!, this).apply {
+			phoneCallback = {
+				phone = it
+				checkPhone {
+					LogUtil.e("cxd", it)
+					realCall(phone = it)
+				}
+			}
+		}
 		webView?.addJavascriptInterface(mCoreJsBridge!!, "nativeBridge")
-//		webView?.loadUrl("http://10.150.229.13:8000/")
 		webView?.loadUrl(url)
 		webView?.webViewClient = object : WebViewClient() {
 			override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
@@ -113,7 +121,6 @@ class BluetoothActivity : AppCompatActivity() {
 			override fun onProgressChanged(view: WebView?, newProgress: Int) {
 				super.onProgressChanged(view, newProgress)
 				progressBar?.startProgressAnimation(newProgress, false)
-
 			}
 
 			override fun onShowFileChooser(
@@ -134,6 +141,10 @@ class BluetoothActivity : AppCompatActivity() {
 	}
 
 	private fun initData() {
+		var initBlue = intent.getBooleanExtra("initBlue", false)
+		if (initBlue.not()) {
+			return
+		}
 		bluetoothPlugin = TraditionBluetoothPlugin(application, this)
 		mBlueJSBridge?.apply {
 			bluetoothPlugin = this@BluetoothActivity.bluetoothPlugin
@@ -220,6 +231,13 @@ class BluetoothActivity : AppCompatActivity() {
 					Toast.makeText(this, "请授权应用权限", Toast.LENGTH_SHORT).show()
 				}
 			}
+			REQUEST_TELE_CALL_PERMISSION-> {
+				if (checkPermission(context = this, permission)) {
+					realCall(phone)
+				} else {
+					Toast.makeText(this, "请授权应用权限", Toast.LENGTH_SHORT).show()
+				}
+			}
 		}
 	}
 
@@ -246,5 +264,23 @@ class BluetoothActivity : AppCompatActivity() {
 		}
 	}
 
+	private fun checkPhone(callback: ()->Unit) {
+		if (checkPermission(this, callPermission).not()) {
+			ActivityCompat.requestPermissions(
+				this,
+				callPermission,
+				REQUEST_TELE_CALL_PERMISSION
+			)
+		} else {
+			callback.invoke()
+		}
+	}
 
+	private fun realCall(phone: String?) {
+		if (phone.isNullOrEmpty()) {
+			return
+		}
+		val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phone"))
+		startActivity(intent)
+	}
 }

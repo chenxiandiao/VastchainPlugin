@@ -9,5 +9,16 @@ data class PrintModel(
     val name: String?,
     val packageCount: String?,
     val totalCount: String?,
-    val orgName: String?
-)
+    val orgName: String?,
+    val storehouseName: String?,
+    val storehouseOrgName: String?
+) {
+
+    fun isWarehouse(): Boolean {
+        return !storehouseName.isNullOrEmpty()
+    }
+
+    fun isConfigCommodity(): Boolean {
+        return !name.isNullOrEmpty()
+    }
+}
