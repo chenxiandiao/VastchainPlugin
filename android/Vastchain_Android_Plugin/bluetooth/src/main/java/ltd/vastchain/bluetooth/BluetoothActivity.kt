@@ -232,7 +232,7 @@ class BluetoothActivity : AppCompatActivity() {
 				}
 			}
 			REQUEST_TELE_CALL_PERMISSION-> {
-				if (checkPermission(context = this, permission)) {
+				if (checkPermission(context = this, callPermission)) {
 					realCall(phone)
 				} else {
 					Toast.makeText(this, "请授权应用权限", Toast.LENGTH_SHORT).show()
