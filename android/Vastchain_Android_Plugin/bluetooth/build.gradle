@@ -61,6 +61,7 @@ afterEvaluate {
                 groupId = 'ltd.vastchain.android'
                 artifactId = 'bluetooth'
                 version = '1.0.5'
+                artifact androidSourcesJar
             }
         }
         repositories {
@@ -70,4 +71,13 @@ afterEvaluate {
             }
         }
     }
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
 }
