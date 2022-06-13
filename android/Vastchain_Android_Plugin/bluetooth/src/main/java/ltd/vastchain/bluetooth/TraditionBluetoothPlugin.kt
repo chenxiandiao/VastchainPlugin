@@ -40,7 +40,7 @@ class TraditionBluetoothPlugin(private var application: Application, private var
                     val deviceHardwareAddress = device?.address // MAC address
 
 
-                    if (deviceName != null && (deviceName.startsWith("CT")) && deviceName.endsWith("L").not()) {
+                    if (deviceName != null) {
                         Log.e("cxd", deviceName.orEmpty())
                         Log.e("cxd", deviceHardwareAddress.orEmpty())
                         blueListener?.scanResult(

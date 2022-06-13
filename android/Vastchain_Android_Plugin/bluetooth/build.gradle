@@ -60,7 +60,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'ltd.vastchain.android'
                 artifactId = 'bluetooth'
-                version = '1.0.5'
+                version = '1.0.6'
                 artifact androidSourcesJar
             }
         }
@@ -69,6 +69,16 @@ afterEvaluate {
                 //指定要上传的maven私服仓库
                 url = "file:\\D:\\maven"
             }
+
+//            maven {
+//                name = 'maven-snapshots'
+//                allowInsecureProtocol = true
+//                url = 'http://124.222.248.126:8081/repository/maven-snapshots/'
+//                credentials {
+//                    username 'admin'
+//                    password 'admin123456'
+//                }
+//            }
         }
     }
 }
