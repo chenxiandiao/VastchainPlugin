@@ -2,6 +2,7 @@ package ltd.vastchain.bluetooth
 
 import android.app.Application
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.BroadcastReceiver
@@ -39,8 +40,7 @@ class TraditionBluetoothPlugin(private var application: Application, private var
                     val deviceName = device?.name
                     val deviceHardwareAddress = device?.address // MAC address
 
-
-                    if (deviceName != null) {
+                    if (deviceName != null && device.bluetoothClass?.majorDeviceClass == BluetoothClass.Device.Major.IMAGING) {
                         Log.e("cxd", deviceName.orEmpty())
                         Log.e("cxd", deviceHardwareAddress.orEmpty())
                         blueListener?.scanResult(
