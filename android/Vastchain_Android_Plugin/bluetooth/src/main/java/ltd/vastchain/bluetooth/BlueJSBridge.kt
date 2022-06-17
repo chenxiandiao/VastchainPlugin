@@ -80,7 +80,7 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 				checkPermission?.invoke(callback)
 			}
 			SCAN -> {
-				var timeout = params?.optLong("timeout") ?: 0
+				var timeout = params?.optLong("timeout") ?: 10
 				bluetoothPlugin?.startScan21(timeout)
 			}
 			STOP_SCAN -> {

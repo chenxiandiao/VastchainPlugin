@@ -11,6 +11,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
@@ -75,6 +77,12 @@ class TraditionBluetoothPlugin(private var application: Application, private var
         context.registerReceiver(receiver, filter)
 
         mBluetoothAdapter?.startDiscovery()
+        Handler(Looper.getMainLooper()).postDelayed({
+            LogUtil.e("超时停止扫描")
+            blueListener?.scanStopByTimeOut()
+            stopScan21()
+        }, timeOut)
+
     }
 
     override fun stopScan21() {
