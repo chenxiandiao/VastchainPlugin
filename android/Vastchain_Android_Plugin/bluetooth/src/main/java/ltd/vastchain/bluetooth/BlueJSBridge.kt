@@ -222,6 +222,10 @@ class BlueJSBridge(var webView: WebView, val activity: Activity) {
 			override fun printSuccess() {
 				callback.invoke(PRINT_DATA, JSONUtil.success(message = "打印完成"))
 			}
+
+			override fun printFail() {
+				callback.invoke(PRINT_DATA, JSONUtil.error(message = "打印失败"))
+			}
 		}
 
 		bluetoothPlugin?.setBlueListener(this.blueListener)

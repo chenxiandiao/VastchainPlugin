@@ -36,6 +36,7 @@ object PrinterUtil {
         Log.e("Printer", address.orEmpty())
         if (!zpSDK.connect(address)) {
 //            Toast.makeText(context, "连接失败------", Toast.LENGTH_LONG).show()
+            blueListener?.printFail()
             return
         }
         zpSDK.pageSetup(600, 350)
@@ -70,6 +71,7 @@ object PrinterUtil {
         Log.e("Printer", address.orEmpty())
         if (!zpSDK.connect(address)) {
 //            Toast.makeText(context, "连接失败------", Toast.LENGTH_LONG).show()
+            blueListener?.printFail()
             return
         }
         zpSDK.pageSetup(600, 350)
@@ -100,6 +102,7 @@ object PrinterUtil {
         Log.e("Printer", address.orEmpty())
         if (!zpSDK.connect(address)) {
 //            Toast.makeText(context, "连接失败------", Toast.LENGTH_LONG).show()
+            blueListener?.printFail()
             return
         }
         zpSDK.pageSetup(600, 350)
