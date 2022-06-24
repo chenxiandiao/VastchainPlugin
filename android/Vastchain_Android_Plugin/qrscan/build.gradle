@@ -64,9 +64,17 @@ afterEvaluate {
             }
         }
         repositories {
+//            maven {
+//                //指定要上传的maven私服仓库
+//                url = "file:\\D:\\maven"
+//            }
             maven {
-                //指定要上传的maven私服仓库
-                url = "file:\\D:\\maven"
+                allowInsecureProtocol = true
+                url = "${codingArtifactsRepoUrl}"
+                credentials {
+                    username "${codingArtifactsGradleUsername}"
+                    password "${codingArtifactsGradlePassword}"g
+                }
             }
         }
     }
