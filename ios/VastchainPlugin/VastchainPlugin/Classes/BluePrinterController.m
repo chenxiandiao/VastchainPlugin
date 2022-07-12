@@ -35,19 +35,28 @@
     ^( CBPeripheral*peripheral)
     {
         NSLog(@"uuid:%@", peripheral.name);
-        if ([peripheral.name hasPrefix:@"CT"]) {
+//        if ([peripheral.name hasPrefix:@"CT"]) {
             if(![self.listDevices containsObject:peripheral]) {
                 [self.listDevices addObject:peripheral];
-                [self.blueListener scanResult:[peripheral.identifier UUIDString] name:peripheral.name];
+                if([peripheral.name hasSuffix:@"L"]) {
+                    [self.blueListener scanResult:[peripheral.identifier UUIDString] name:peripheral.name];
+                }
+                else {
+                    [self.blueListener scanResult:[peripheral.identifier UUIDString] name:[NSString stringWithFormat:@"%@L", peripheral.name]];
+                }
             } else {
-                [self.blueListener scanResult:[peripheral.identifier UUIDString] name:peripheral.name];
+                if([peripheral.name hasSuffix:@"L"]) {
+                    [self.blueListener scanResult:[peripheral.identifier UUIDString] name:peripheral.name];
+                } else {
+                    [self.blueListener scanResult:[peripheral.identifier UUIDString] name:[NSString stringWithFormat:@"%@L", peripheral.name]];
+                }
             }
-        }
+//        }
     };
     
     [self.bluetooth scanStart:callback];
     
-    double delayInSeconds = 5.0;
+    double delayInSeconds = 10.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds* NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.bluetooth scanStop];
@@ -60,7 +69,7 @@
 
 -(BOOL) connect:(NSString*) deviceName {
     for (CBPeripheral *item in self.listDevices) {
-        if([item.name isEqualToString:deviceName]) {
+        if([item.name isEqualToString:deviceName] || [deviceName hasPrefix:item.name]) {
             self.peripheral = item;
         }
     }
@@ -69,7 +78,7 @@
 
 - (void)printData:(NSString *)deviceName printModel:(PrintModel *)data {
     for (CBPeripheral *item in self.listDevices) {
-        if([item.name isEqualToString:deviceName]) {
+        if([item.name isEqualToString:deviceName] || [deviceName hasPrefix:item.name]) {
             self.peripheral = item;
         }
     }
